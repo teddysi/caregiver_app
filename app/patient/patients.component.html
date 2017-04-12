@@ -1,0 +1,11 @@
+<ActionBar title="Meus Pacientes" class="action-bar">
+</ActionBar>
+<StackLayout class="page">
+    <ListView [items]="patients" class="list-group">
+        <ng-template let-item="item">
+            <Label [nsRouterLink]="['/patient', item.id]" [text]="item.name"
+                class="list-group-item"></Label>
+        </ng-template>
+    </ListView>
+</StackLayout>
+
