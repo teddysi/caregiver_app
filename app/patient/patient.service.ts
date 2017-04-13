@@ -25,7 +25,7 @@ export class PatientService {
     getPatients(): Observable<Patient[]> {
          //futuramente adicionar o token
         let headers = this.createRequestHeader();
-        return this.http.get("http://192.168.33.12:8080/api/v1/patients", { headers: headers })
+        return this.http.get("http://192.168.0.102:8080/api/v1/patients", { headers: headers })
             .map(res => res.json());
 
     }

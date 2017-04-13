@@ -14,6 +14,7 @@ import { PatientService } from "../patient/patient.service";
 export class MaterialsComponent implements OnInit {
 	patient: Patient;
 
+
 	constructor(
 		private patientService: PatientService,
 		private route: ActivatedRoute
@@ -21,6 +22,7 @@ export class MaterialsComponent implements OnInit {
 
 	ngOnInit(): void {
 		const id = +this.route.snapshot.params["id"];
+		console.log("#### ID " +id);
 		this.patient = this.patientService.getPatient(id);
 	}
 }

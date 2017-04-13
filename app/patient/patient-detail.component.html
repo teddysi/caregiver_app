@@ -1,7 +1,16 @@
-<ActionBar title="Detalhes" class="action-bar"></ActionBar>
+<ActionBar [title]="patient.name"  class="action-bar">
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patients']"></NavigationButton>
+</ActionBar>
 <FlexboxLayout flexDirection="column" class="page">
     <FlexboxLayout class="m-15">
-        <Label class="h2" [text]="patient.id + patient.name"></Label>
+        <StackLayout orientation="vertical">
+            <Label class="h2" [text]="'ID: '+ patient.id "></Label>
+        
+       
+     
+            <Label class="h2" [text]="'Nome: '+ patient.name" textWrap="true"></Label>
+        </StackLayout>
+       
        
     </FlexboxLayout>
     <TextView text="Foto:" editable="false"></TextView>
@@ -13,20 +22,9 @@
 
     
 
-<TextView text="Materiais disponiveis:" editable="false"></TextView>
-<Button text="Ver Materiais Disponiveis" >></Button>
-
+<TextView text=" " editable="false"></TextView>
+<Button text="Ver Materiais Disponiveis" [nsRouterLink]="['/patient',patient.id,'materials']" class="link"  ></Button>
 
 
   
-    <ListView [items]="patient.materials" class="list-group">
-        <ng-template let-item="item" let-odd="odd" let-even="even">
-          <StackLayout>
-            <Label [text]="item"  class="list-group-item"></Label>
-            
-          </StackLayout>
-        </ng-template>
-    </ListView>
-    <Label [nsRouterLink]="['/patient', patient.id]" [text]="Materiais" class="list-group-item"></Label>
-
 </FlexboxLayout> 

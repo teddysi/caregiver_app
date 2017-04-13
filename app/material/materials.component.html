@@ -1,8 +1,11 @@
-<ActionBar title="Materiais" class="action-bar"></ActionBar>
+
+<ActionBar [title]="'Materiais [' +patient.name +']'" class="action-bar">
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id]"></NavigationButton>
+</ActionBar>
 <StackLayout class="page">
-    <ListView [items]="patients.materials" class="list-group">
-        <ng-template let-item="item">
-            <Label [text]="item.name" class="list-group-item"></Label>
-        </ng-template>
-    </ListView>
+    <ListView [items]="patient.materials" class="list-group">
+    <ng-template let-item="item">
+            <Label [nsRouterLink]="['/', item]" [text]="item"
+                class="list-group-item"></Label>
+        </ng-template></ListView>
 </StackLayout>
