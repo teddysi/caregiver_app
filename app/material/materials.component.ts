@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { Patient } from "../patient/patient";
+
 import { PatientService } from "../patient/patient.service";
 
 @Component({
@@ -13,8 +14,7 @@ import { PatientService } from "../patient/patient.service";
 
 export class MaterialsComponent implements OnInit {
 	patient: Patient;
-
-
+ 
 	constructor(
 		private patientService: PatientService,
 		private route: ActivatedRoute
@@ -24,5 +24,6 @@ export class MaterialsComponent implements OnInit {
 		const id = +this.route.snapshot.params["id"];
 		console.log("#### ID " +id);
 		this.patient = this.patientService.getPatient(id);
+
 	}
 }

@@ -3,9 +3,9 @@
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id]"></NavigationButton>
 </ActionBar>
 <StackLayout class="page">
-    <ListView [items]="patient.materials" class="list-group">
+  <ListView [items]="patient.materials" class="list-group">
     <ng-template let-item="item">
-            <Label [nsRouterLink]="['/', item]" [text]="item"
-                class="list-group-item"></Label>
-        </ng-template></ListView>
+        <Label [nsRouterLink]="['/patient',patient.id,'material',item.idx]" [text]="'['+item.type+ '] - '+item.name" class="list-group-item"></Label>
+    </ng-template>
+</ListView>
 </StackLayout>

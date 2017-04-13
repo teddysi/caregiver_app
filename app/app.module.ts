@@ -11,6 +11,7 @@ import { PatientDetailComponent } from "./patient/patient-detail.component";
 
 import { HttpModule } from '@angular/http';
 import { MaterialsComponent } from "./material/materials.component";
+import { MaterialDetailComponent } from "./material/material-detail.component";
 
 
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
@@ -33,6 +34,7 @@ import { MaterialsComponent } from "./material/materials.component";
         PatientsComponent,
         PatientDetailComponent,
         MaterialsComponent,
+        MaterialDetailComponent
        
     ],
     providers: [
