@@ -5,6 +5,10 @@ import { Patient } from "../patient/patient";
 import { PatientService } from "../patient/patient.service";
 import { Material } from "./material";
 
+import app = require("application");
+import platform = require("platform");
+
+
 import 'nativescript-pdf-view';
 
 @Component({
@@ -23,10 +27,12 @@ export class MaterialDetailComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["idx"]; 
         this.patient = this.patientService.getPatient(id);
         this.material = this.patient.materials[idx];
+        console.log('>>>>> ' + this.material.strLink );
         
     }
 }

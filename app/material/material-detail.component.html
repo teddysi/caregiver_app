@@ -1,10 +1,12 @@
 <ActionBar [title]="material.name" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
 </ActionBar>
-<FlexboxLayout flexDirection="column" class="page">
-    
-<Image src="material.strLink"></Image>
 
+
+<FlexboxLayout flexDirection="column" class="page">
+  
+<Image [src]="material.strLink" ></Image>
+<PDFView [src]="material.strLink" (load)="onLoad()"></PDFView>
 
 
 </FlexboxLayout>
