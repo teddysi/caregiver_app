@@ -2,11 +2,36 @@
 
 </ActionBar>
 <StackLayout class="page">
-    <ListView [items]="patients" class="list-group">
+    <ListView [items]="patients" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
             <Label [nsRouterLink]="['/patient', item.id]" [text]="item.name"
                 class="list-group-item"></Label>
         </ng-template>
     </ListView>
 </StackLayout>
+<!--
+<ScrollView>
+    <StackLayout sdkExampleTitle sdkToggleNavButton class="form">
+        <StackLayout class="input-field">
+            <Label class="label" text="Folder Name" textWrap="true"></Label>
+            <TextField class="input input-border" hint="Enter Folder Name" [(ngModel)]="folderName" editable="true"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="File Name" textWrap="true"></Label>
+            <TextField class="input input-border" hint="Enter File Name" [(ngModel)]="fileName" editable="true"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="Text Content" textWrap="true"></Label>
+            <TextField class="input input-border" hint="Enter Text Content" [(ngModel)]="fileTextContent" editable="true"></TextField>
+        </StackLayout>
+        <Button class="btn btn-primary btn-active" text="Create" (tap)="onCreateFile()"></Button>
+        <GridLayout rows="*, *" columns="*" [visibility]="isItemVisible ? 'visible' : 'collapsed'">
+            <Label class="body p-15" row="0" [text]="successMessage" textWrap="true"></Label>
+            <Label class="body p-15" row="1" [text]="'File content: ' + writtenContent" textWrap="true"></Label>
+        </GridLayout>
+    </StackLayout>
+</ScrollView>
+-->
+<ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center" verticalAlignment="center">
+</ActivityIndicator>
 

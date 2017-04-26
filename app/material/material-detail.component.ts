@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Patient } from "../patient/patient";
 import { PatientService } from "../patient/patient.service";
 import { Material } from "./material";
+import { Need } from "../need/need";
 
 import app = require("application");
 import platform = require("platform");
@@ -31,7 +32,7 @@ export class MaterialDetailComponent implements OnInit {
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["idx"]; 
         this.patient = this.patientService.getPatient(id);
-        this.material = this.patient.materials[idx];
+        //this.material = this.patient.needs.;
         console.log('>>>>> ' + this.material.strLink );
         
     }

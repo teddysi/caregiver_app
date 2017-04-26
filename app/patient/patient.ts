@@ -1,8 +1,8 @@
-import {Material} from "../material/material"
+import {Need} from "../need/need";
+
 export class Patient {
     id: number;
     name: string;
     problem: string;
-    materials: Material[];
-
+    needs: Need[];
 }

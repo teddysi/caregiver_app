@@ -1,0 +1,31 @@
+
+
+<ActionBar title="Testes" class="action-bar">
+</ActionBar>
+
+<!--ScrollView dentro de um StackLayout elimina imagens e butoes-->
+<StackLayout>
+    <StackLayout>
+        <Button text="Change pic" (tap)="submit('res://teste')"></Button>
+        <Image #myImage stretch="none" horizontalAlignment="center"></Image>
+    </StackLayout>
+    <StackLayout>
+        <VideoPlayer #myVideo
+        src="https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+        autoplay="false" 
+        height="300"
+        controls="true"
+        >
+        </VideoPlayer>
+    </StackLayout>
+    -->
+    <!--
+    <StackLayout orientation="vertical">
+        <TextView #myTextContent text="ola" >
+        </TextView>
+    </StackLayout>
+    -->
+    <!--
+    <PDFView #myPdf ></PDFView>
+    -->
+</StackLayout>

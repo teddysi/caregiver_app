@@ -3,5 +3,4 @@ export class Material {
     name: string;
     type: string;
     strLink: string;
-
 }

@@ -1,10 +1,7 @@
 import app = require("application");
 import platform = require("platform");
-
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
 import { Patient } from "./patient";
 import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
@@ -18,30 +15,27 @@ export class PatientService {
 
     public patients: Patient[]
 
-
-    constructor(private http: Http) { }
-
+    constructor(private http: Http) {        
+    }
 
     getPatients(): Observable<Patient[]> {
+        //se tem conetividade:
          //futuramente adicionar o token
         let headers = this.createRequestHeader();
-        return this.http.get("http://192.168.0.102:8080/api/v1/patients", { headers: headers })
+        return this.http.get("http://10.200.19.57:8080/api/v1/patients", { headers: headers })
             .map(res => res.json());
 
+        //se não tem conetividade
     }
 
 
     public setPatients(patients) {
-        this.patients = patients
+        this.patients = patients;
     }
 
-
-   
     getPatient(id: number): Patient {
-
         return this.patients.filter(patient => patient.id === id)[0];
     }
-
 
     /**
      * 
