@@ -1,0 +1,73 @@
+{
+    "materials": {
+        "images": {
+            "image1": {
+                "ID": "",
+                "Name": "",
+                "Type": "",
+                "Description": "",
+                "Dimensons": "",
+                "Size": "",
+                "Date-creation": ""
+            },
+            "image2": {
+                "ID": "",
+                "Name": "",
+                "Type": "",
+                "Description": "",
+                "Dimensons": "",
+                "Size": "",
+                "Date-creation": ""
+            }
+        }, 
+        "videos": {
+           "video1": {
+                "ID": "",
+                "Name": "",
+                "Type": "",
+                "Description": "",
+                "Duration": "",
+                "Size": "",
+                "Date-creation": ""
+            }
+        },
+        "texts": {
+            "titles": {
+                "title1": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                },
+                "title2": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                }
+            },
+            "content": {
+                "content1": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                },
+                "content2": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                }
+            },
+            "subtitles": {
+                "subtitle1": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                },
+                "subtitle2": {
+                    "ID": "",
+                    "text": "",
+                    "Date-creation": ""
+                }
+            }
+        }
+    }
+}

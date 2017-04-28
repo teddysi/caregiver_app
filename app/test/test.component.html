@@ -4,7 +4,9 @@
 </ActionBar>
 
 <!--ScrollView dentro de um StackLayout elimina imagens e butoes-->
+
 <StackLayout>
+    <!--
     <StackLayout>
         <Button text="Change pic" (tap)="submit('res://teste')"></Button>
         <Image #myImage stretch="none" horizontalAlignment="center"></Image>
@@ -19,12 +21,11 @@
         </VideoPlayer>
     </StackLayout>
     -->
-    <!--
+    
     <StackLayout orientation="vertical">
-        <TextView #myTextContent text="ola" >
-        </TextView>
+        <label [text]="oneway" >
+        </label>
     </StackLayout>
-    -->
     <!--
     <PDFView #myPdf ></PDFView>
     -->
