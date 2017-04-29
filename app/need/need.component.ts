@@ -5,11 +5,14 @@ import ImageModule = require("ui/image");
 
 import * as fs from "file-system";
 import { Patient } from "../patient/patient";
-import { NeedService } from "../need/need.service";
+
+import {ActivatedRoute} from '@angular/router';
+
+
+import { PatientService } from "../patient/patient.service";
 
 @Component({
     selector: "ns-items",
-    providers: [NeedService],
     moduleId: module.id,
     templateUrl: "./need.component.html",
 })
@@ -17,12 +20,13 @@ import { NeedService } from "../need/need.service";
 export class NeedComponent implements OnInit {
     patient: Patient;
 
-   
-    constructor(private needService: NeedService) { 
-        
-    }
-    
+    constructor(
+        private patientService: PatientService,
+        private route: ActivatedRoute
+    ) { }
+
     ngOnInit(): void {
-        
+        const id = +this.route.snapshot.params["id"];
+        this.patient = this.patientService.getPatient(id);
     }
 }

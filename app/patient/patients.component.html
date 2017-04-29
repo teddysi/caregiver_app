@@ -4,8 +4,22 @@
 <StackLayout class="page">
     <ListView [items]="patients" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
-            <Label [nsRouterLink]="['/patient', item.id]" [text]="item.name"
-                class="list-group-item"></Label>
+
+
+
+
+            <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">
+              
+                <Label class="h3" [text]="'ID: '+ item.id "></Label>
+                <Label class="h2" [text]="'Nome: '+ item.name" textWrap="true"></Label>
+                <Label class="h3" [text]="'Descrição: '+ item.problem" textWrap="true"></Label>
+
+
+            </StackLayout>
+
+
+
+
         </ng-template>
     </ListView>
 </StackLayout>
@@ -32,6 +46,6 @@
     </StackLayout>
 </ScrollView>
 -->
-<ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center" verticalAlignment="center">
+<ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center"
+    verticalAlignment="center">
 </ActivityIndicator>
-

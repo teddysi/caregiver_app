@@ -3,4 +3,6 @@ export class Material {
     name: string;
     type: string;
     strLink: string;
+    description:string;
+    dateCreation:string;
 }

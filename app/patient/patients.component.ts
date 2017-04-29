@@ -6,6 +6,8 @@ import * as fs from "file-system";
 import { PatientService } from "./patient.service";
 import { Patient } from "./patient";
 
+import { Router } from "@angular/router";
+
 @Component({
     selector: "ns-items",
     moduleId: module.id,
@@ -27,10 +29,11 @@ export class PatientsComponent implements OnInit {
     public file: fs.File;
     public folder: fs.Folder;
 
-    constructor(private patientService: PatientService) { 
+    constructor(private patientService: PatientService, private router: Router) { 
         
     }
 
+   
     ngOnInit(): void {
       //subscrever o a lista de pacientes
       
@@ -42,6 +45,8 @@ export class PatientsComponent implements OnInit {
             );
             this.isLoading = false;
             this.listLoaded = true;
+
+    
         
     }
     private onGetDataSuccess(res) {
@@ -51,6 +56,11 @@ export class PatientsComponent implements OnInit {
         //adicionar items à lista de pacientes do service
         this.patientService.setPatients(this.patients)
         
+        // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
+        if (this.patients.length == 1) {
+            this.router.navigate(["/patient/1/needs"]);
+        }   
+
     }
 
     /**

@@ -1,11 +1,47 @@
-
-<ActionBar [title]="'Materiais [' +patient.name +']'" class="action-bar">
-    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id]"></NavigationButton>
+<ActionBar [title]="need.name" class="action-bar">
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'needs']"></NavigationButton>
 </ActionBar>
 <StackLayout class="page">
-  <ListView [items]="patient.materials" class="list-group">
-    <ng-template let-item="item">
-        <Label [nsRouterLink]="['/patient',patient.id,'material',item.idx]" [text]="'['+item.type+ '] - '+item.name" class="list-group-item"></Label>
-    </ng-template>
+    <ListView [items]="materials" class="list-group" [class.visible]="listLoaded">
+        <ng-template let-item="item">
+
+
+
+
+            <StackLayout  orientation="vertical">
+               <Label [text]="item.name" class="title"></Label>
+                
+    
+               <Image *ngIf="item.type == 'jpg'" [src]="item.strLink" stretch="aspectFill" height="300" width="400" ></Image>
+               <label *ngIf="item.type == 'txt'" [text]="item.description" textWrap="true"></label>
+               <VideoPlayer *ngIf="item.type == 'mp4'" [src]="item.strLink" autoplay="true" height="300" controls="true"> </VideoPlayer>
+              
+</StackLayout>
+
+
+
+
+</ng-template>
 </ListView>
 </StackLayout>
+<!--
+<GridLayout [auto-grid-rows]="autoCreateRows" flexWrap="wrap" orientation="vertical" *ngFor="let material of materials"
+    class="list-items">
+    <FlexboxLayout *ngIf="material.type == 'jpg'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
+        <Label [text]="material.name" class="title"></Label>
+        <Image [src]="material.strLink"></Image>
+
+    </FlexboxLayout>
+
+    <FlexboxLayout *ngIf="material.type == 'mp4'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
+        <Label [text]="material.name" class="title"></Label>
+        <VideoPlayer *ngIf="isMp4" [src]="material.strLink" autoplay="true" height="300" controls="true"> </VideoPlayer>
+    </FlexboxLayout>
+    <FlexboxLayout *ngIf="material.type == 'txt'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
+        <Label [text]="material.name" class="title"></Label>
+        <label [text]="material.description" textWrap="true"></label>
+
+    </FlexboxLayout>
+
+</GridLayout>
+-->

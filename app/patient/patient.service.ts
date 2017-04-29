@@ -22,11 +22,11 @@ export class PatientService {
         //se tem conetividade:
          //futuramente adicionar o token
         let headers = this.createRequestHeader();
-        return this.http.get("http://10.200.19.57:8080/api/v1/patients", { headers: headers })
+        return this.http.get("http://192.168.0.102:8080/api/v1/patients", { headers: headers })
             .map(res => res.json());
 
         //se não tem conetividade
-    }
+    } 
 
 
     public setPatients(patients) {
