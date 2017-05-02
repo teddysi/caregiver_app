@@ -6,36 +6,21 @@ import "rxjs/add/operator/map";
 
 import { User } from "./user";
 import { Config } from "../config";
+import { ConnectorService } from "../connector/connector.service";
 
 @Injectable()
 export class UserService {
-  constructor(private http: Http) {}
+  constructor(private http: Http, private connectorService: ConnectorService) {}
   
   register(user: User) {
-    Config.token = 'token';
-
-    return true;
-    /*
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-
-    return this.http.post(
-      Config.apiUrl + "Users",
-      JSON.stringify({
-        Username: user.name,
-        Password: user.password
-      }),
-      { headers: headers }
-      
-    )
-    .catch(this.handleErrors);
-    */
+    return this.connectorService.requestLogin(user.name, user.password);
   }
 
   handleErrors(error: Response) {
     console.log(JSON.stringify(error.json()));
     return Observable.throw(error);
   }
+
   /*
     login(user: User) {
         let headers = new Headers();

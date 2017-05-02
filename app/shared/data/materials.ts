@@ -1,4 +1,5 @@
-export class User {
+export class Materials {
   name: string;
   password: string;
+
 }

@@ -1,4 +1,5 @@
-export class User {
+export class Needs {
   name: string;
   password: string;
+
 }

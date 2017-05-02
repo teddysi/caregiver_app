@@ -11,8 +11,8 @@ import { NeedComponent } from "./need/need.component";
 import { TestComponent } from "./test/test.component";
  
 const routes: Routes = [
-    //{ path: "", component: LoginComponent }, 
-    { path: "", redirectTo: "/patients", pathMatch: "full" },
+    { path: "", component: LoginComponent }, 
+    //{ path: "", redirectTo: "/patients", pathMatch: "full" },
     { path: "test", component: TestComponent },
     { path: "needs", component: NeedComponent },
     { path: "patients", component: PatientsComponent },

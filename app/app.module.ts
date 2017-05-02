@@ -5,6 +5,8 @@ import { AppRoutingModule, navigatableComponents } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { HttpModule } from '@angular/http';
+import { TestComponent } from "./test/test.component";
+import { ConnectorService } from "./shared/connector/connector.service";
 
 import { PatientService } from "./patient/patient.service";
 import { PatientsComponent } from "./patient/patients.component";
@@ -15,8 +17,10 @@ import { MaterialDetailComponent } from "./material/material-detail.component";
 
 import { NeedComponent } from "./need/need.component";
 
-import { TestComponent } from "./test/test.component";
+import { DataService } from "./shared/data/data.service";
 
+import { platformNativeScriptDynamic} from "nativescript-angular/platform";
+import { Database } from "./shared/data/database";
 
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
 
@@ -45,7 +49,9 @@ import { TestComponent } from "./test/test.component";
     ],
     providers: [
         PatientService,
-        
+        ConnectorService,
+        DataService,
+        Database,
        
     ],
     schemas: [

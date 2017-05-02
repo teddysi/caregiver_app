@@ -1,4 +1,5 @@
-export class User {
+export class MaterialOrder {
   name: string;
   password: string;
+
 }

@@ -35,8 +35,6 @@ export class PatientsComponent implements OnInit {
 
    
     ngOnInit(): void {
-      //subscrever o a lista de pacientes
-      
       this.isLoading = true;
         this.patientService.getPatients()
             .subscribe(
@@ -45,12 +43,10 @@ export class PatientsComponent implements OnInit {
             );
             this.isLoading = false;
             this.listLoaded = true;
-
-    
-        
     }
     private onGetDataSuccess(res) {
         //tratar resposta
+        console.log(JSON.stringify(res, null, 4));
         this.patients = res;
         console.log("this.patients " + this.patients)
         //adicionar items à lista de pacientes do service
@@ -71,6 +67,7 @@ export class PatientsComponent implements OnInit {
      * @memberOf ItemsComponent
      */
     private onGetDataError(error: Response | any) {
+        console.log('aqui10')
         const body = error.json() || "";
         const err = body.error || JSON.stringify(body);
         console.log("onGetDataError: " + err);
