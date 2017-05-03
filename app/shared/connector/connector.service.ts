@@ -28,8 +28,8 @@ export class ConnectorService {
 
     requestLogin(username, password): Observable<User> {
         let headers = this.createLoginHeader();
-        //let request = "http://192.168.1.100/" + '/caregivers/login?username=' + username + '&' + 'password=' + password;
-        let request = "http://192.168.1.100/caregivers/login?username=fidel46&password=carepw";
+        let request = ' http://192.168.1.84/' + '/caregivers/login?username=' + username + '&' + 'password=' + password;
+        //let request = "http://192.168.1.86/caregivers/login?username=fidel46&password=carepw";
 
         return this.http.post(request, { headers: headers })
             .map(res => res.json());

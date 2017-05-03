@@ -17,16 +17,16 @@ import { View } from "ui/core/view";
 
 export class LoginComponent implements OnInit{
     user: User;
-    isLoggingIn = true;
-
+    isLoggingIn = true; 
     constructor(private router: Router, private userService: UserService, private ConnectorService: ConnectorService, private page: Page, private dataService: DataService) {
       this.user = new User();
     }
 
     ngOnInit() {
       var user_token = this.dataService.getToken();
-      console.log(user_token);
+     
       if(user_token) {
+        console.log(user_token);
         this.login();
       }
       //se o utilizador tiver token guardada entrar no ecrã seguinte->os meus pacientes e saltar o registo. ou seja aqui faz sempre o login automaticamente com a token.
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit{
         alert("Por favor complete os campos.");
       }
       
-      this.login();
+      //this.login();
     }
 
     
@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit{
 
     validRegister(user) {
       this.dataService.setUser(user);
+      this.router.navigate(["/patients"])
       return true;
     }
 

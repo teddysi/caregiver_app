@@ -15,7 +15,7 @@ export class DataService {
 
     constructor(private database: Database) {
         this.data = database.getDatabase();
-        //this.deleteData();
+        this.deleteData();
     }
 
     ngOnInit() {
