@@ -26,13 +26,10 @@ export class LoginComponent implements OnInit{
       var user_token = this.dataService.getToken();
      
       if(user_token) {
-        console.log(user_token);
+        this.ConnectorService.setConnectorToken(user_token);
         this.login();
       }
-      //se o utilizador tiver token guardada entrar no ecrã seguinte->os meus pacientes e saltar o registo. ou seja aqui faz sempre o login automaticamente com a token.
-      //
       //tb se pode ponderar a expiração da token. se já tiver mais que XX dias, apagar a token e mostrar janela de login
-      
     }
     
     submit() {      
@@ -41,8 +38,6 @@ export class LoginComponent implements OnInit{
       } else {
         alert("Por favor complete os campos.");
       }
-      
-      //this.login();
     }
 
     

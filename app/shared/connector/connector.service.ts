@@ -19,7 +19,8 @@ export class ConnectorService {
     private data: any;
     
     constructor(private http: Http, private router: Router) {
-        //this.connector.serverURL = Config.apiUrl;
+        this.connector = new Connector();
+        this.connector.serverURL = '192.168.0.43';
     }
 
     ngOnInit() {
@@ -28,12 +29,19 @@ export class ConnectorService {
 
     requestLogin(username, password): Observable<User> {
         let headers = this.createLoginHeader();
-        let request = ' http://192.168.1.84/' + '/caregivers/login?username=' + username + '&' + 'password=' + password;
-        //let request = "http://192.168.1.86/caregivers/login?username=fidel46&password=carepw";
+        //let request = 'http://' + this.connector.serverURL + '/caregivers/login?username=' + username + '&' + 'password=' + password;
+        let request = "http://" + this.connector.serverURL + "/caregivers/login?username=fidel46&password=carepw";
 
         return this.http.post(request, { headers: headers })
             .map(res => res.json());
-    } 
+    }
+
+    getAllData(): Observable<Data[]> {
+        let headers = this.createRequestHeader();
+        let request = "http://" + this.connector.serverURL + "ir buscar todos os materiais";
+        
+        return this.http.get(request, { headers: headers }).map(res => res.json());
+    }
 
     sync() {
         console.log('syncing');
@@ -94,5 +102,12 @@ export class ConnectorService {
         headers.append("AuthToken", "my-token");
         headers.append("Content-Type", "application/json");
         return headers;
+    }
+
+    public getConnector() {
+        return this.connector;
+    }
+    public setConnectorToken(user_token) {
+        this.connector.accessToken = user_token;
     }
 }

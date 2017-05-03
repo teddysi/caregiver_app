@@ -13,17 +13,30 @@ export class Database {
         if(!this.isInstantiated) {
             
             this.storage = new Couchbase("caregiver");
-            this.storage.createView("data", "1", (document, emitter) => {
-                emitter.emit(document._id, document); 
-            });
-            this.storage.createView("user", "2", (document, emitter) => {
-                if(document.type == "user") {
-                    emitter.emit(document._id, document);
-                }
-            });
-           
+            this.createDBViews();       
             this.isInstantiated = true;
         }
+    }
+
+    public createDBViews() {
+        //para ver para ver na bd os dados dos materiais retirados do servidor
+        this.storage.createView("data", "1", (document, emitter) => {
+            if(document.type == "data") {
+                emitter.emit(document._id, document);
+            } 
+        });
+        //para ver para ver na bd caregiver os dados de todos os utilizadores da app
+        this.storage.createView("user", "2", (document, emitter) => {
+            if(document.type == "user") {
+                emitter.emit(document._id, document);
+            }
+        });
+        //para ver na bd caregiver os dados de acesso ao servidor. Ainda n utilizado
+        this.storage.createView("config", "3", (document, emitter) => {
+            if(document.type == "config") {
+                emitter.emit(document._id, document);
+            } 
+        });
     }
     public getDatabase() {
         return this.storage;

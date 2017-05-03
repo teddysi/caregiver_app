@@ -35,6 +35,7 @@ export class PatientsComponent implements OnInit {
 
    
     ngOnInit(): void {
+        
       this.isLoading = true;
         this.patientService.getPatients()
             .subscribe(

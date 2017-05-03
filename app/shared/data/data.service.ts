@@ -7,15 +7,16 @@ import { Couchbase } from "nativescript-couchbase";
 import { Database } from "./database";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { ConnectorService } from "../connector/connector.service";
 
 @Injectable()
 export class DataService {
 
     public data: any;
 
-    constructor(private database: Database) {
-        this.data = database.getDatabase();
-        this.deleteData();
+    constructor(private database: Database, private connectorService: ConnectorService) {
+        //this.data = database.getDatabase();
+        //this.deleteData();
     }
 
     ngOnInit() {
@@ -27,6 +28,19 @@ export class DataService {
             "user": registeredUser
         })
     }
+    getAllData() {
+        //verificar se há conectividade
+        //se houver verificar atualizacoes e vai buscar se houver (deve ir buscar só o q está para atualizar)
+       
+        if(this.database.getDatabase().executeQuery("data").length > 0) {
+            //Só tá a criar qd os dados estão vazios. n atualiza nada
+            this.setData(this.connectorService.getAllData());
+        }
+        console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
+        return this.database.getDatabase().executeQuery("data");
+
+        //se não houver conetividade ou se n houver nada para atualizar devolve os dados da bd dos materiais
+    }
     setPatients() {
 
     }
@@ -34,18 +48,10 @@ export class DataService {
 
     }
     setData(data) {
-        /*
-        console.log('ola');
-        let rows = this.database.getDatabase().executeQuery("data");
-        console.log(rows.length);
-        for(let i = 0; i < rows.length; i++) {
-            this.data.push(rows[i]);
-            console.log('a inserir');
-        }
-
-        console.log(JSON.stringify(this.data, null, 4));
-        */
-        //this.data = data;
+       this.database.getDatabase().createDocument({
+            "type": "data",
+            "data": data
+       });
     }
     setNeeds() {
 
