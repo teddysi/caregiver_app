@@ -18,7 +18,7 @@ import { MaterialDetailComponent } from "./material/material-detail.component";
 import { NeedComponent } from "./need/need.component";
 
 import { DataService } from "./shared/data/data.service";
-
+import { UserService } from "./shared/user/user.service";
 import { platformNativeScriptDynamic} from "nativescript-angular/platform";
 import { Database } from "./shared/data/database";
 
@@ -48,10 +48,12 @@ import { Database } from "./shared/data/database";
        
     ],
     providers: [
+        UserService,
         PatientService,
         ConnectorService,
         DataService,
         Database,
+        
        
     ],
     schemas: [

@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-
 import { User } from "./user";
 import { Config } from "../config";
 import { ConnectorService } from "../connector/connector.service";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export class UserService {
+    private user: User;
+
   constructor(private http: Http, private connectorService: ConnectorService) {}
   
   register(user: User) {
@@ -42,5 +43,12 @@ export class UserService {
         .catch(this.handleErrors);
     }
     */
+    
+    createUser($newUser)
+    {
+        this.user = new User();
+        console.log(JSON.stringify($newUser, null, 4));
+    }
+    
 }
 

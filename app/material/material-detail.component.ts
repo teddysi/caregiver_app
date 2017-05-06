@@ -33,7 +33,7 @@ export class MaterialDetailComponent implements OnInit {
         const idx = +this.route.snapshot.params["idx"]; 
         this.patient = this.patientService.getPatient(id);
         //this.material = this.patient.needs.;
-        console.log('>>>>> ' + this.material.strLink );
+        console.log('>>>>> ' + this.material.url );
         
     }
 }

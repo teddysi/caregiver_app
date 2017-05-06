@@ -27,6 +27,7 @@ export class NeedComponent implements OnInit {
 
     ngOnInit(): void {
         const id = +this.route.snapshot.params["id"];
-        this.patient = this.patientService.getPatient(id);
+             this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
+            // return this.patients.filter(patient => patient.id === id)[0];
     }
 }

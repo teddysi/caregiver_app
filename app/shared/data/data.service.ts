@@ -6,6 +6,7 @@ import { Patients } from "./patients";
 import { Couchbase } from "nativescript-couchbase";
 import { Database } from "./database";
 import { Observable } from 'rxjs/Observable';
+import { UserService } from '../user/user.service';
 import 'rxjs/add/operator/map';
 import { ConnectorService } from "../connector/connector.service";
 
@@ -13,10 +14,20 @@ import { ConnectorService } from "../connector/connector.service";
 export class DataService {
 
     public data: any;
+<<<<<<< HEAD
 
     constructor(private database: Database, private connectorService: ConnectorService) {
         //this.data = database.getDatabase();
         //this.deleteData();
+=======
+ 
+    constructor(private database: Database, //private userService: UserService erro ao injetar
+        ) {
+        //this.data = database.getDatabase();
+        this.deleteData('user');
+        this.showData('data');
+        this.showData('user');
+>>>>>>> 49503d25fee8f5eee665ca5ac57ebb8177b46ef7
     }
 
     ngOnInit() {
@@ -26,7 +37,8 @@ export class DataService {
         this.database.getDatabase().createDocument({
             "type": "user",
             "user": registeredUser
-        })
+        });
+        //this.userService.createUser(registeredUser);
     }
     getAllData() {
         //verificar se há conectividade
@@ -57,12 +69,22 @@ export class DataService {
 
     }
 
-    getToken() {
+    getToken(): string {
         var user;
         if(user = this.getLatestUserToRegister()) {
+
             return user.caregiver_token;
         }
-        return false;
+        return null;
+    }
+
+    getUserID(): string {
+        var user;
+        if(user = this.getLatestUserToRegister()) {
+            
+            return user.id;
+        }
+        return null;
     }
 
     getLatestUserToRegister() {
@@ -81,9 +103,9 @@ export class DataService {
         return false;
     }
 
-    public deleteData() {
-        let documents = this.database.getDatabase().executeQuery("user");
-
+    public deleteData(view) {
+        let documents = this.database.getDatabase().executeQuery(view);
+        console.log('A apagar bd: ' + view);
         // loop over all documents
         for (let i = 0; i < documents.length; i++) {
             // delete each document
@@ -97,5 +119,12 @@ export class DataService {
             return this.database.getDatabase().executeQuery("user");
         }         
         return false;
+    }
+
+    public showData(view) {
+        console.log('A mostrar bd: ' + view);
+        if(this.database.getDatabase().executeQuery(view).length > 0) {     
+            console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
+        }
     }
 }
