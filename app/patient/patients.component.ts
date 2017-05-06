@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
     selector: "ns-items",
     moduleId: module.id,
     styleUrls: ["./patient-common.css"],
-    templateUrl: "./patients.component.html",
+    templateUrl: "./patients.component.html", 
 })
 export class PatientsComponent implements OnInit {
     patients: Patient[];
@@ -45,7 +45,7 @@ export class PatientsComponent implements OnInit {
             this.listLoaded = true;
     }
     private onGetDataSuccess(res) {
-        //tratar resposta
+        //tratar resposta 
         console.log(JSON.stringify(res, null, 4));
         this.patients = res;
         console.log("this.patients " + this.patients)
@@ -54,7 +54,8 @@ export class PatientsComponent implements OnInit {
         
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         if (this.patients.length == 1) {
-            this.router.navigate(["/patient/1/needs"]);
+     
+            this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         }   
 
     }

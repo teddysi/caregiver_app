@@ -1,4 +1,4 @@
-<ActionBar [title]="need.name" class="action-bar">
+<ActionBar [title]="need.description" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'needs']"></NavigationButton>
 </ActionBar>
 <StackLayout class="page">
@@ -10,11 +10,12 @@
 
             <StackLayout  orientation="vertical">
                <Label [text]="item.name" class="title"></Label>
+               <Label [text]="item.url" class="title"></Label>
                 
     
-               <Image *ngIf="item.type == 'jpg'" [src]="item.strLink" stretch="aspectFill" height="300" width="400" ></Image>
-               <label *ngIf="item.type == 'txt'" [text]="item.description" textWrap="true"></label>
-               <VideoPlayer *ngIf="item.type == 'mp4'" [src]="item.strLink" autoplay="true" height="300" controls="true"> </VideoPlayer>
+               <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400" ></Image>
+             <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true"></label>
+               <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
               
 </StackLayout>
 

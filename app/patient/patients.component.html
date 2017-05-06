@@ -8,11 +8,12 @@
 
 
 
+         <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
             <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">
               
-                <Label class="h3" [text]="'ID: '+ item.id "></Label>
+                <Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>
                 <Label class="h2" [text]="'Nome: '+ item.name" textWrap="true"></Label>
-                <Label class="h3" [text]="'Descrição: '+ item.problem" textWrap="true"></Label>
+                <Label class="h3" [text]="'Morada: '+ item.location" textWrap="true"></Label>
 
 
             </StackLayout>

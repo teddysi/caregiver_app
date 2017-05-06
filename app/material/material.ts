@@ -1,8 +1,15 @@
 export class Material {
-    idx: number;
-    name: string;
+    
+
+    id: number;
     type: string;
-    strLink: string;
-    description:string;
-    dateCreation:string;
+    description: string;
+    name: string;
+    body: string; //no caso de tipo texto
+    path: string;
+    url: string;
+    
+    created_by: number;
+    created_at: string;
+    updated_at: string;
 }
