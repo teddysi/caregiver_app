@@ -8,18 +8,11 @@ import { Database } from "./database";
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user/user.service';
 import 'rxjs/add/operator/map';
-import { ConnectorService } from "../connector/connector.service";
 
 @Injectable()
 export class DataService {
 
     public data: any;
-<<<<<<< HEAD
-
-    constructor(private database: Database, private connectorService: ConnectorService) {
-        //this.data = database.getDatabase();
-        //this.deleteData();
-=======
  
     constructor(private database: Database, //private userService: UserService erro ao injetar
         ) {
@@ -27,7 +20,6 @@ export class DataService {
         this.deleteData('user');
         this.showData('data');
         this.showData('user');
->>>>>>> 49503d25fee8f5eee665ca5ac57ebb8177b46ef7
     }
 
     ngOnInit() {
@@ -40,19 +32,6 @@ export class DataService {
         });
         //this.userService.createUser(registeredUser);
     }
-    getAllData() {
-        //verificar se há conectividade
-        //se houver verificar atualizacoes e vai buscar se houver (deve ir buscar só o q está para atualizar)
-       
-        if(this.database.getDatabase().executeQuery("data").length > 0) {
-            //Só tá a criar qd os dados estão vazios. n atualiza nada
-            this.setData(this.connectorService.getAllData());
-        }
-        console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
-        return this.database.getDatabase().executeQuery("data");
-
-        //se não houver conetividade ou se n houver nada para atualizar devolve os dados da bd dos materiais
-    }
     setPatients() {
 
     }
@@ -60,10 +39,18 @@ export class DataService {
 
     }
     setData(data) {
-       this.database.getDatabase().createDocument({
-            "type": "data",
-            "data": data
-       });
+        /*
+        console.log('ola');
+        let rows = this.database.getDatabase().executeQuery("data");
+        console.log(rows.length);
+        for(let i = 0; i < rows.length; i++) {
+            this.data.push(rows[i]);
+            console.log('a inserir');
+        }
+
+        console.log(JSON.stringify(this.data, null, 4));
+        */
+        //this.data = data;
     }
     setNeeds() {
 

@@ -10,7 +10,6 @@ import { DataService } from "../shared/data/data.service";
 import {  ConnectorService} from "../shared/connector/connector.service";
 import { UserService } from "../shared/user/user.service";
 
-
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
 
@@ -24,14 +23,9 @@ export class PatientService {
          
     }
 
-    getPatients() {
+    getPatients(): Observable<Patient[]> {
         //se tem conetividade:
-<<<<<<< HEAD
-         //futuramente adicionar o token
-         /* //request to node server
-=======
          //futuramente adicionar o token console.log("ZZZ -> "+this.dataService.getUserId)
->>>>>>> 49503d25fee8f5eee665ca5ac57ebb8177b46ef7
         let headers = this.createRequestHeader();
 
         let request = 'http://192.168.99.100/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
@@ -41,11 +35,6 @@ export class PatientService {
             .map(res => res.json());
         //se não tem conetividade
         //return this.dataService.getData();
-        */
-        /**
-         * Get data vai buscar todos os dados para usar a flow já implementada. No futuro vai buscar os dados dos pacientes
-         */
-        return this.dataService.getAllData();
     } 
 
 
@@ -55,10 +44,6 @@ export class PatientService {
 
     getPatient(id: number): Patient {
         return this.patients.filter(patient => patient.id === id)[0];
-<<<<<<< HEAD
-    }    
-}
-=======
     }
 
     /**
@@ -84,4 +69,3 @@ export class PatientService {
 
 
 
->>>>>>> 49503d25fee8f5eee665ca5ac57ebb8177b46ef7
