@@ -4,20 +4,39 @@
 <StackLayout class="page">
     <ListView [items]="materials" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
-            <StackLayout  orientation="vertical">
+            <StackLayout orientation="vertical">
+                <label text=" "></label>
+
+                <!-- type = image -->
+                <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400"></Image>
+                <label *ngIf="item.type == 'image'" [text]="item.description" textWrap="true" class="materialImageDescription"></label>
+                
+                <!-- type = text -->
+                <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
+                <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
                
-               <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400" ></Image>
-             <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
-             
-               <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="false" height="300" controls="true"> </VideoPlayer>
-              
-</StackLayout>
+                <!-- type = video -->
+                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="false" height="300" controls="true"> </VideoPlayer>
+                 <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
+                
+                <!-- type = emergencyContact-->
+                <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
+                <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
+
+                <!-- type = annex-->
+                <label *ngIf="item.type == 'annex'" [text]="item.description" href="item.url" textWrap="true"></label>
+                
+                
+
+                
+                <label text=" " ></label> 
+            </StackLayout>
 
 
 
 
-</ng-template>
-</ListView>
+        </ng-template>
+    </ListView>
 </StackLayout>
 <!--
 <GridLayout [auto-grid-rows]="autoCreateRows" flexWrap="wrap" orientation="vertical" *ngFor="let material of materials"

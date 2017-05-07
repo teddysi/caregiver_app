@@ -10,18 +10,20 @@
 
          <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
             <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">
-                //Adicionar espaço para foto
+                <!--Adicionar espaço para foto
                 //Adicionar idade
-                //Adicionar 
+                //Adicionar -->
                 <!--<Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>-->
-                <GridLayout rows="*, *" columns="2*,*">
-                    <Image src="http://192.168.99.100/caregivers/public/images/person-placeholder.jpg" stretch="none" width="100" height="80" class="patient-photo" row="1" col="0"></Image>
+                <GridLayout rows="*, *" columns="1*,*">
+                    <Image src="~/materials/image/user.jpg" stretch="none" width="100" height="80" class="patient-photo" row="1" col="0"></Image>
                     <Label class="h2 utente" [text]="item.name" textWrap="true" row="1" col="1"></Label>
+                    <!--<Label [text]="'Morada: '+ item.location" textWrap="true" class="patientLocation"></Label>-->
+                    <Label [text]="item.location" textWrap="true" class="patientLocation" row="2" col="1"></Label>
                 </GridLayout>
-                <!--<Label class="h3" [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
+               <!-- <Label  [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
 
 
-            </StackLayout>
+            </StackLayout> 
 
 
 

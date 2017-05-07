@@ -8,6 +8,7 @@ export class Material {
     body: string; //no caso de tipo texto
     path: string;
     url: string;
+    number:number; //number contact emergency
     
     created_by: number;
     created_at: string;

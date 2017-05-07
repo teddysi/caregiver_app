@@ -2,15 +2,17 @@
 
 <ActionBar [title]="'Materiais Disponíveis'" class="action-bar">
 <!--<ActionBar [title]="'Materiais Disponiveis [' +patient.name +']'" class="action-bar">-->
+<NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patients']"></NavigationButton>
 
- <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" tap="onNavBtnTap"></NavigationButton>  
+ <!--<NavigationButton text="Voltar" android.systemIcon="ic_menu_back" tap="onNavBtnTap"></NavigationButton> --> 
 </ActionBar>
 
 <StackLayout class="page">
     <ListView [items]="patient.needs" class="list-group">
         <ng-template let-item="item">
        
-      <Label [nsRouterLink]="['/patient',patient.id,'need',item.id]" [text]="'['+item.id+ '] - '+item.description" class="list-group-item"></Label>
+      <Label [nsRouterLink]="['/patient',patient.id,'need',item.id]" [text]="item.description" textWrap="true" class="needList"></Label>
+      <!--<Label [nsRouterLink]="['/patient',patient.id,'need',item.id]" [text]="'['+item.id+ '] - '+item.description" class="needList"></Label>-->
       
         </ng-template>
     </ListView>

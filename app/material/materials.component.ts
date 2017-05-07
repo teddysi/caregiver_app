@@ -33,7 +33,7 @@ export class MaterialsComponent implements OnInit {
 		this.materials = this.need.materials;
 		console.log(JSON.stringify(this.materials, null, 4));
 		
-		let i;
+		/*let i;
 		let control = false;
 		if(!control)
 		for(i=0;i<this.materials.length;i++){
@@ -43,7 +43,7 @@ export class MaterialsComponent implements OnInit {
 			}
 			control = true;		
 		}
-
-
+		*/
+		
 	}
 }
