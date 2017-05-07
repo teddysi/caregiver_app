@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { Observable as RxObservable } from "rxjs/Rx";
 import { DataService } from "../shared/data/data.service";
-import {  ConnectorService} from "../shared/connector/connector.service";
+import { ConnectorService } from "../shared/connector/connector.service";
 import { UserService } from "../shared/user/user.service";
 
 import "rxjs/add/operator/map";

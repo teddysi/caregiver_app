@@ -3,7 +3,7 @@
 <ActionBar [title]="'Materiais Disponíveis'" class="action-bar">
 <!--<ActionBar [title]="'Materiais Disponiveis [' +patient.name +']'" class="action-bar">-->
 
- <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patients']"></NavigationButton>  
+ <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" tap="onNavBtnTap"></NavigationButton>  
 </ActionBar>
 
 <StackLayout class="page">

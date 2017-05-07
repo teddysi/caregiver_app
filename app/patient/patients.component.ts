@@ -7,6 +7,8 @@ import { PatientService } from "./patient.service";
 import { Patient } from "./patient";
 
 import { Router } from "@angular/router";
+import { CreateViewEventData } from "ui/placeholder";
+
 
 @Component({
     selector: "ns-items",

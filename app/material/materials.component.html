@@ -4,18 +4,12 @@
 <StackLayout class="page">
     <ListView [items]="materials" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
-
-
-
-
             <StackLayout  orientation="vertical">
-               <Label [text]="item.name" class="title"></Label>
-               <Label [text]="item.url" class="title"></Label>
-                
-    
+               
                <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400" ></Image>
-             <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true"></label>
-               <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
+             <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
+             
+               <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="false" height="300" controls="true"> </VideoPlayer>
               
 </StackLayout>
 

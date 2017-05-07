@@ -1,8 +1,8 @@
-<ActionBar title="Os Meus Pacientes" class="action-bar">
+<ActionBar title="Utentes" class="action-bar">
 
 </ActionBar>
 <StackLayout class="page">
-    <ListView [items]="patients" class="list-group" [class.visible]="listLoaded">
+    <ListView [items]="patients" class="list-group" [class.visible]="listLoaded" separatorColor="white">
         <ng-template let-item="item">
 
 
@@ -10,10 +10,15 @@
 
          <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
             <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">
-              
-                <Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>
-                <Label class="h2" [text]="'Nome: '+ item.name" textWrap="true"></Label>
-                <Label class="h3" [text]="'Morada: '+ item.location" textWrap="true"></Label>
+                //Adicionar espaço para foto
+                //Adicionar idade
+                //Adicionar 
+                <!--<Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>-->
+                <GridLayout rows="*, *" columns="2*,*">
+                    <Image src="http://192.168.99.100/caregivers/public/images/person-placeholder.jpg" stretch="none" width="100" height="80" class="patient-photo" row="1" col="0"></Image>
+                    <Label class="h2 utente" [text]="item.name" textWrap="true" row="1" col="1"></Label>
+                </GridLayout>
+                <!--<Label class="h3" [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
 
 
             </StackLayout>

@@ -10,3 +10,23 @@ of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme.
 */
 @import 'nativescript-theme-core/css/core.light.css';
+
+.action-bar {
+  background-color: #006666;
+  color: white;
+  
+}
+
+.action-bar .title{
+    font-family: Courier New, Courier, monospace;
+}
+
+.page {
+  background-color:#e6ffff;
+  font-family: Courier New, Courier, monospace;
+}
+
+.utente {
+  padding: 10px 50px;
+  font-size: 14px;
+}

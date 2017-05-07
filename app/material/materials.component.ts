@@ -18,40 +18,32 @@ export class MaterialsComponent implements OnInit {
 	need: Need;
 	materials: Material [];
 
-
-
-
 	constructor(
 		private patientService: PatientService,
 		private route: ActivatedRoute
 	) { }
 
 	ngOnInit(): void {
-
-		
-
-	
-
-		//
 		
 		const id = +this.route.snapshot.params["id"];
 		const idx = +this.route.snapshot.params["id_need"];
-		//this.patient = this.patientService.getPatient(id);
+
 		this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
-	
 		this.need = this.patient.needs.filter(need => need.id === idx)[0];
-		//this.need = this.patient.needs[idx];
 		this.materials = this.need.materials;
-		console.log('>>>>> ' + this.materials);
-		let i;
+		console.log(JSON.stringify(this.materials, null, 4));
 		
+		let i;
+		let control = false;
+		if(!control)
 		for(i=0;i<this.materials.length;i++){
-			if(this.materials[i].type=='imagem' || this.materials[i].type=='video'){
-			this.materials[i].url+=this.materials[i].path;
+			if(this.materials[i].url && this.materials[i].path) {
+				this.materials[i].url+=this.materials[i].path;
+				this.materials[i].path = '';
 			}
+			control = true;		
 		}
 
-	
 
 	}
 }
