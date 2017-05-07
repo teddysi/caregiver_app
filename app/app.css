@@ -53,6 +53,15 @@ refer to http://docs.nativescript.org/ui/theme.
 
 .needList{
   font-family: Courier New, Courier, monospace;
-  font-size: 16px;
-   padding: 5px 5px 5px 5px;
+  font-size: 18px;
+   padding: 10px 10px 10px 10px;
+}
+.listViewPassosMaterial{
+
+   padding: 10px 10px 10px 10px;
+}
+
+.materialAnnex{
+  background-color: #70ACA6;
+  color: black;
 }

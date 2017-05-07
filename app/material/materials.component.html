@@ -4,7 +4,7 @@
 <StackLayout class="page">
     <ListView [items]="materials" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
-            <StackLayout orientation="vertical">
+            <StackLayout orientation="vertical" class="listViewPassosMaterial">
                 <label text=" "></label>
 
                 <!-- type = image -->
@@ -16,7 +16,7 @@
                 <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
                
                 <!-- type = video -->
-                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="false" height="300" controls="true"> </VideoPlayer>
+                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
                  <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
                 
                 <!-- type = emergencyContact-->
@@ -24,12 +24,10 @@
                 <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
 
                 <!-- type = annex-->
-                <label *ngIf="item.type == 'annex'" [text]="item.description" href="item.url" textWrap="true"></label>
+               <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
+                <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
                 
-                
-
-                
-                <label text=" " ></label> 
+                <label text=" "></label>
             </StackLayout>
 
 

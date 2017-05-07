@@ -20,8 +20,10 @@
     "@angular/platform-browser-dynamic": "4.0.0",
     "@angular/router": "4.0.0",
     "file-system": "^2.2.2",
+    "nativescript-android-utils": "^1.0.2",
     "nativescript-angular": "1.5.1",
     "nativescript-couchbase": "^1.0.17",
+    "nativescript-open-app": "^0.2.0",
     "nativescript-pdf-view": "^1.2.1",
     "nativescript-theme-core": "~1.0.2",
     "nativescript-videoplayer": "^2.5.0",
@@ -35,7 +37,7 @@
     "babel-types": "6.4.5",
     "babylon": "6.4.5",
     "lazy": "1.0.11",
-    "nativescript-dev-android-snapshot": "^0.*.*",
+    "nativescript-dev-android-snapshot": "0.0.9",
     "nativescript-dev-typescript": "~0.3.5",
     "typescript": "~2.1.0"
   }

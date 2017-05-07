@@ -27,9 +27,11 @@ export class PatientsComponent implements OnInit {
     public successMessage: string;
     public writtenContent: string;
     public isItemVisible: boolean = false;
+    public firstTime: boolean = true;
 
     public file: fs.File;
     public folder: fs.Folder;
+
 
     constructor(private patientService: PatientService, private router: Router) { 
         
@@ -55,8 +57,8 @@ export class PatientsComponent implements OnInit {
         this.patientService.setPatients(this.patients)
         
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
-        if (this.patients.length == 1) {
-     
+        if (this.patients.length == 1 && this.firstTime==true) {
+           this.firstTime=false;
             this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         }   
 
