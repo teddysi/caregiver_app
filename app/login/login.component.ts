@@ -8,6 +8,8 @@ import { Page } from "ui/page";
 import { Color } from "color";
 import { View } from "ui/core/view";
 
+import dialogs = require("ui/dialogs");
+
 @Component({
   selector: "my-app",
   providers: [UserService, ConnectorService],
@@ -25,8 +27,8 @@ export class LoginComponent implements OnInit{
     ngOnInit() {
       var user_token = this.dataService.getToken();
      
-      if(user_token) {
-        console.log(user_token);
+      if(user_token) { 
+        //this.userService.createUser(this.dataService.getLatestUserToRegister());
         this.login();
       }
       //se o utilizador tiver token guardada entrar no ecrã seguinte->os meus pacientes e saltar o registo. ou seja aqui faz sempre o login automaticamente com a token.
@@ -39,7 +41,13 @@ export class LoginComponent implements OnInit{
       if(this.user.name && this.user.password) {
         this.signUp();
       } else {
-        alert("Por favor complete os campos.");
+        dialogs.alert({
+            title: "Aviso - Autenticação",
+            message: "Por favor complete os campos.",
+            okButtonText: "OK"
+        }).then(() => {
+            console.log("Dialog closed!");
+        });
       }
       
       //this.login();
@@ -58,13 +66,28 @@ export class LoginComponent implements OnInit{
 
     validRegister(user) {
       this.dataService.setUser(user);
-      this.router.navigate(["/patients"])
+      this.userService.createUser(user);
+
+      dialogs.alert({
+            title: "Autenticação Validada",
+            message: "Bem vindo(a) " + user.name,
+            okButtonText: "OK"
+        }).then(() => {
+            console.log("Dialog closed!");
+        });
+      
+      this.router.navigate(["/patients"]);
       return true;
     }
 
     invalidRegister(error) {
-      alert("Utilizador não identificado.");
-      console.log(error);
+     dialogs.alert({
+            title: "Aviso - Autenticação",
+            message: "Os dados introduzidos não são válidos.",
+            okButtonText: "OK"
+        }).then(() => {
+            console.log("Dialog closed!");
+        });
       return false;
     }
 }

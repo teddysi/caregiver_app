@@ -20,7 +20,8 @@ export class ConnectorService {
     
     constructor(private http: Http, private router: Router, private dataService: DataService) {
         this.connector = new Connector();
-        this.connector.serverURL = '35.184.17.4/caregivers/public';
+        //this.connector.serverURL = '35.184.17.4/caregivers/public';
+        this.connector.serverURL = '192.168.99.100/caregivers/public';
     }
 
     ngOnInit() {
@@ -30,7 +31,7 @@ export class ConnectorService {
     requestLogin(username, password): Observable<User> {
         let headers = this.createLoginHeader();
        //link server virtual box
-        let request = 'http://35.184.17.4/caregivers/public/caregiversAPI/login';
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/login';
 
         return this.http.post(
             request,

@@ -11,5 +11,10 @@ ListView {
 }
 
 .patient-photo {
- width: 50%;
+  margin-left: -50px;
+}
+
+label {
+    margin-top: 25px;
+    margin-left: -40px;
 }

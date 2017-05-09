@@ -1,26 +1,13 @@
-<!--
-  <StackLayout #container>
-  <Image src="res://logo_login" stretch="none" horizontalAlignment="center"></Image>
-
-  <TextField #email hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
-  autocorrect="false" autocapitalizationType="none"></TextField>
-  <TextField #password hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
-
-  <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" class="submit-button" (tap)="submit()"></Button>
-  <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
-</StackLayout>
--->
-
-<ActionBar title="Bem Vindo" class="action-bar">
-
+<ActionBar title="App dos Cuidadores" class="action-bar">
 </ActionBar>
 
+  <Label class = "subtitle" textWrap="true" 
+    text = "Insira os dados do seu cartão de acesso">
+  </Label>
 <StackLayout>
-  <TextField hint="Nome" [(ngModel)]="user.name" autocorrect="false"></TextField>
-  <TextField hint="Palavra passe" secure="true" [(ngModel)]="user.password"></TextField>
+  <TextField hint="Nome" class = "login-input" [(ngModel)]="user.name" autocorrect="false"></TextField>
+  <TextField hint="Palavra passe" class = "login-input" secure="true" [(ngModel)]="user.password"></TextField>
 
   <Button text="Registar" class="submit-button" (tap)="submit()"></Button>
-  <Label
-    text = "*Insira os dados do seu cartão de acesso">
-  </Label>
+
 </StackLayout>

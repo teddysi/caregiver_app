@@ -9,10 +9,14 @@ import { Patient } from "./patient";
 import { Router } from "@angular/router";
 import { CreateViewEventData } from "ui/placeholder";
 
+import { UserService } from "../shared/user/user.service";
+
+
 
 @Component({
     selector: "ns-items",
     moduleId: module.id,
+    providers: [UserService],
     styleUrls: ["./patient-common.css"],
     templateUrl: "./patients.component.html", 
 })
@@ -32,21 +36,21 @@ export class PatientsComponent implements OnInit {
     public file: fs.File;
     public folder: fs.Folder;
 
+    constructor(private patientService: PatientService, private router: Router, private userService: UserService) { 
 
-    constructor(private patientService: PatientService, private router: Router) { 
-        
     }
 
    
     ngOnInit(): void {
-      this.isLoading = true;
-        this.patientService.getPatients()
-            .subscribe(
-            (result) => this.onGetDataSuccess(result),
-            (error) => this.onGetDataError(error)
-            );
-            this.isLoading = false;
-            this.listLoaded = true;
+
+        this.isLoading = true;
+            this.patientService.getPatients()
+                .subscribe(
+                (result) => this.onGetDataSuccess(result),
+                (error) => this.onGetDataError(error)
+                );
+                this.isLoading = false;
+                this.listLoaded = true;
     }
     private onGetDataSuccess(res) {
         //tratar resposta 
@@ -72,7 +76,8 @@ export class PatientsComponent implements OnInit {
      * @memberOf ItemsComponent
      */
     private onGetDataError(error: Response | any) {
-        console.log('aqui10')
+        console.log('aqui10');
+        console.log(error);
         const body = error.json() || "";
         const err = body.error || JSON.stringify(body);
         console.log("onGetDataError: " + err);

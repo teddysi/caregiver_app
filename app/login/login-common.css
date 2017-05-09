@@ -18,3 +18,21 @@ Button, TextField {
   color: white;
   margin-top: 20;
 }
+
+.subtitle
+{
+  font-family: Courier New, Courier, monospace;
+  margin-top: 50px;
+  width: 73%;
+  font-size: 14px;
+}
+
+.login-input
+{
+  font-family: Courier New, Courier, monospace;
+  font-size: 18px;
+}
+
+stacklayout {
+  margin-top: 75px;
+}

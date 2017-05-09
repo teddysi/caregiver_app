@@ -11,43 +11,34 @@ import "rxjs/add/operator/map";
 export class UserService {
     private user: User;
 
-  constructor(private http: Http, private connectorService: ConnectorService) {}
-  
-  register(user: User) {
-    return this.connectorService.requestLogin(user.name, user.password);
-  }
-
-  handleErrors(error: Response) {
-    console.log(JSON.stringify(error.json()));
-    return Observable.throw(error);
-  }
-
-  /*
-    login(user: User) {
-        let headers = new Headers();
-        headers.append("Content-Type", "application/json");
-
-        return this.http.post(
-            Config.apiUrl + "oauth/token",
-            JSON.stringify({
-            username: user.email,
-            password: user.password,
-            grant_type: "password"
-            }),
-            { headers: headers }
-        )
-        .map(response => response.json())
-        .do(data => {
-            Config.token = data.Result.access_token;
-        })
-        .catch(this.handleErrors);
+    constructor(private http: Http, private connectorService: ConnectorService) {}
+    
+    register(user: User) {
+        return this.connectorService.requestLogin(user.name, user.password);
     }
-    */
+
+    handleErrors(error: Response) {
+        console.log(JSON.stringify(error.json()));
+        return Observable.throw(error);
+    }
     
     createUser($newUser)
     {
         this.user = new User();
-        console.log(JSON.stringify($newUser, null, 4));
+        this.user.id = $newUser.id;
+        this.user.username = $newUser.username;
+        this.user.name = $newUser.name;
+        this.user.email = $newUser.email;
+        this.user.location = $newUser.location;
+        this.user.token = $newUser.token;
+        this.user.created_at = $newUser.created_at;
+        this.user.updated_at = $newUser.updated_at;
+
+    }
+
+    getUser()
+    {
+        return this.user;
     }
     
 }
