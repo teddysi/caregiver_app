@@ -62,9 +62,7 @@ export class ConnectorService {
         return this.http.get(Config.apiUrl, { headers: headers })
             .map(res => res.json());
     }
-
-
-        private onGetDataSuccess(res) {
+    private onGetDataSuccess(res) {
         console.log(res);
         DataService.prototype.setData(res);
         
@@ -75,8 +73,7 @@ export class ConnectorService {
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         //if (this.patients.length == 1) {
         //    this.router.navigate(["/patient/1/needs"]);
-       // }   
-
+        // }   
     }
 
     /**

@@ -27,8 +27,9 @@ export class LoginComponent implements OnInit{
     ngOnInit() {
       var user_token = this.dataService.getToken();
      
-      if(user_token) { 
-        //this.userService.createUser(this.dataService.getLatestUserToRegister());
+      if(user_token) {
+        this.userService.createUser(this.dataService.getLatestUserToRegister());
+        
         this.login();
       }
       //se o utilizador tiver token guardada entrar no ecrã seguinte->os meus pacientes e saltar o registo. ou seja aqui faz sempre o login automaticamente com a token.
@@ -54,7 +55,9 @@ export class LoginComponent implements OnInit{
     }
 
     
-    login() {   
+    login() {
+      console.log('AQUI');
+      console.log(JSON.stringify(this.userService.getUser()));
       this.router.navigate(["/patients"])  
     }
     signUp() {
@@ -66,7 +69,7 @@ export class LoginComponent implements OnInit{
 
     validRegister(user) {
       this.dataService.setUser(user);
-      this.userService.createUser(user);
+      this.userService.createUser(this.dataService.getLatestUserToRegister());
 
       dialogs.alert({
             title: "Autenticação Validada",
@@ -89,5 +92,17 @@ export class LoginComponent implements OnInit{
             console.log("Dialog closed!");
         });
       return false;
+    }
+
+    saveUserSuccessfull(result)
+    {
+      console.log('User saved in BD and Object created');
+      return true;
+    }
+
+    saveUserError(error)
+    {
+      console.log('User wasnt saved');
+      console.log(error);
     }
 }

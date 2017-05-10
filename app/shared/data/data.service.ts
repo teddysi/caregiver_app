@@ -17,14 +17,14 @@ export class DataService {
     constructor(private database: Database, //private userService: UserService erro ao injetar
         ) {
         //this.data = database.getDatabase();
-        //this.deleteData('user');
+        this.deleteData('user');
         //this.showData('data');
         //this.showData('user');
     }
 
     ngOnInit() {
     }
-
+ 
     setUser(registeredUser) {
         this.database.getDatabase().createDocument({
             "type": "user",

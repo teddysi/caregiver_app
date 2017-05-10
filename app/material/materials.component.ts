@@ -34,9 +34,7 @@ export class MaterialsComponent implements OnInit {
 		
 		const id = +this.route.snapshot.params["id"];
 		const idx = +this.route.snapshot.params["id_need"];
-
 		
-
 		this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
 		this.need = this.patient.needs.filter(need => need.id === idx)[0];
 		this.materials = this.need.materials;
