@@ -14,9 +14,11 @@ export class Database {
             
             this.storage = new Couchbase("caregiver");
             this.storage.createView("data", "1", (document, emitter) => {
-                emitter.emit(document._id, document); 
+                if(document.type == "data") {
+                    emitter.emit(document._id, document);
+                } 
             });
-            this.storage.createView("user", "2", (document, emitter) => {
+            this.storage.createView("user", "1", (document, emitter) => {
                 if(document.type == "user") {
                     emitter.emit(document._id, document);
                 }

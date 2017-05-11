@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from "@angular/core";
-import 'rxjs/add/operator/map';
 import { Http, Headers, Response } from "@angular/http";
 import { Data } from "../data/data";
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +8,9 @@ import { Router } from "@angular/router";
 import { Connector } from "./connector";
 import { User } from "../user/user";
 import { Database } from "../data/database";
+import { Patient } from "../../patient/patient";
 
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ConnectorService {
@@ -20,17 +21,16 @@ export class ConnectorService {
     
     constructor(private http: Http, private router: Router, private dataService: DataService) {
         this.connector = new Connector();
-        //this.connector.serverURL = '35.184.17.4/caregivers/public';
-        this.connector.serverURL = '192.168.99.100/caregivers/public';
+        //this.connector.serverURL = '35.184.17.4/caregivers/public'; //LIVE
+        this.connector.serverURL = '192.168.99.100/caregivers/public'; //VM-DEV
     }
 
     ngOnInit() {
         
-    }
+    } 
 
     requestLogin(username, password): Observable<User> {
         let headers = this.createLoginHeader();
-       //link server virtual box
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/login';
 
         return this.http.post(
@@ -40,6 +40,19 @@ export class ConnectorService {
             ).map(res => res.json());
     }
 
+    getPatientsData(): Observable<Patient[]>
+    {
+        //se tem conetividade:
+        let headers = this.createRequestHeader();
+
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/patients'
+    
+        return this.http.get(request, { headers: headers }) //Tiago
+            .map(res => res.json());
+        //se não tem conetividade
+        //return this.dataService.getData();
+    }
+    /*
     getAllData(): Observable<Data[]> {
         let headers = this.createRequestHeader();
         let request = "http://" + this.connector.serverURL + "ir buscar todos os materiais";
@@ -75,7 +88,7 @@ export class ConnectorService {
         //    this.router.navigate(["/patient/1/needs"]);
         // }   
     }
-
+    */
     /**
      
      * @private
@@ -91,7 +104,7 @@ export class ConnectorService {
 
      private createRequestHeader() {
         let headers = new Headers();
-        headers.append("Authorization", this.connector.accessToken);
+        headers.append("Authorization", this.dataService.getToken());
         headers.append("Content-Type", "application/json");
         return headers;
     }

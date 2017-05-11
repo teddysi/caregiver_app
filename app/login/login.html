@@ -5,8 +5,8 @@
     text = "Insira os dados do seu cartão de acesso">
   </Label>
 <StackLayout>
-  <TextField hint="Nome" class = "login-input" [(ngModel)]="user.name" autocorrect="false"></TextField>
-  <TextField hint="Palavra passe" class = "login-input" secure="true" [(ngModel)]="user.password"></TextField>
+  <TextField hint="Nome" class = "login-input" [(ngModel)]="auth_user.name" autocorrect="false"></TextField>
+  <TextField hint="Palavra passe" class = "login-input" secure="true" [(ngModel)]="auth_user.password"></TextField>
 
   <Button text="Registar" class="submit-button" (tap)="submit()"></Button>
 

@@ -19,11 +19,13 @@ export class PatientService {
     public patients: Patient[]
     
 
-    constructor(private http: Http, private dataService: DataService,) {  
+    constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {  
          
     }
 
-    getPatients(): Observable<Patient[]> {
+    getPatients()
+    {
+        /*
         //se tem conetividade:
          //futuramente adicionar o token console.log("ZZZ -> "+this.dataService.getUserId)
         let headers = this.createRequestHeader();
@@ -35,6 +37,9 @@ export class PatientService {
             .map(res => res.json());
         //se não tem conetividade
         //return this.dataService.getData();
+        */
+        return this.connectorService.getPatientsData();
+
     } 
 
 

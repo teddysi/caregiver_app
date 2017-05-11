@@ -18,28 +18,25 @@ import dialogs = require("ui/dialogs");
 })
 
 export class LoginComponent implements OnInit{
-    user: User;
+    auth_user: User;
     isLoggingIn = true; 
+    
     constructor(private router: Router, private userService: UserService, private ConnectorService: ConnectorService, private page: Page, private dataService: DataService) {
-      this.user = new User();
+      this.auth_user = new User();
     }
 
     ngOnInit() {
       var user_token = this.dataService.getToken();
      
       if(user_token) {
-        this.userService.createUser(this.dataService.getLatestUserToRegister());
-        
+        this.userService.createUser(this.dataService.getLatestUserToRegister()); 
         this.login();
       }
-      //se o utilizador tiver token guardada entrar no ecrã seguinte->os meus pacientes e saltar o registo. ou seja aqui faz sempre o login automaticamente com a token.
-      //
-      //tb se pode ponderar a expiração da token. se já tiver mais que XX dias, apagar a token e mostrar janela de login
-      
+      //tb se pode ponderar a expiração da token. se já tiver mais que XX dias, apagar a token e mostrar janela de login   
     }
     
     submit() {      
-      if(this.user.name && this.user.password) {
+      if(this.auth_user.name && this.auth_user.password) {
         this.signUp();
       } else {
         dialogs.alert({
@@ -50,35 +47,29 @@ export class LoginComponent implements OnInit{
             console.log("Dialog closed!");
         });
       }
-      
-      //this.login();
-    }
-
-    
+    }  
     login() {
-      console.log('AQUI');
-      console.log(JSON.stringify(this.userService.getUser()));
       this.router.navigate(["/patients"])  
     }
     signUp() {
-      this.userService.register(this.user).subscribe(
+      this.userService.register(this.auth_user).subscribe(
         (result) => this.validRegister(result),
         (error) => this.invalidRegister(error)
       );
     }
+    validRegister(result) {
 
-    validRegister(user) {
-      this.dataService.setUser(user);
+      this.dataService.setUser(result);
       this.userService.createUser(this.dataService.getLatestUserToRegister());
-
+      /*
       dialogs.alert({
             title: "Autenticação Validada",
-            message: "Bem vindo(a) " + user.name,
+            message: "Bem vindo(a) " + this.auth_user.name,
             okButtonText: "OK"
         }).then(() => {
             console.log("Dialog closed!");
         });
-      
+      */
       this.router.navigate(["/patients"]);
       return true;
     }
@@ -92,17 +83,5 @@ export class LoginComponent implements OnInit{
             console.log("Dialog closed!");
         });
       return false;
-    }
-
-    saveUserSuccessfull(result)
-    {
-      console.log('User saved in BD and Object created');
-      return true;
-    }
-
-    saveUserError(error)
-    {
-      console.log('User wasnt saved');
-      console.log(error);
     }
 }

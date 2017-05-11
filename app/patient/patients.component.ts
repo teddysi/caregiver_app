@@ -11,8 +11,6 @@ import { CreateViewEventData } from "ui/placeholder";
 
 import { UserService } from "../shared/user/user.service";
 
-
-
 @Component({
     selector: "ns-items",
     moduleId: module.id,
@@ -39,30 +37,28 @@ export class PatientsComponent implements OnInit {
     constructor(private patientService: PatientService, private router: Router, private userService: UserService) { 
 
     }
-
    
     ngOnInit(): void {
-
         this.isLoading = true;
-            this.patientService.getPatients()
-                .subscribe(
-                (result) => this.onGetDataSuccess(result),
-                (error) => this.onGetDataError(error)
-                );
-                this.isLoading = false;
-                this.listLoaded = true;
+        this.patientService.getPatients()
+            .subscribe(
+            (result) => this.onGetDataSuccess(result),
+            (error) => this.onGetDataError(error)
+            );
+            this.isLoading = false;
+            this.listLoaded = true;
     }
     private onGetDataSuccess(res) {
         //tratar resposta 
-        console.log(JSON.stringify(res, null, 4));
+        //console.log(JSON.stringify(res, null, 4));
         this.patients = res;
         console.log("this.patients " + this.patients)
         //adicionar items à lista de pacientes do service
-        this.patientService.setPatients(this.patients)
+        //this.patientService.setPatients(this.patients)
         
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         if (this.patients.length == 1 && this.firstTime==true) {
-           this.firstTime=false;
+           this.firstTime = false;
             this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         }   
 

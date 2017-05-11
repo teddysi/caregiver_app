@@ -17,8 +17,9 @@ export class DataService {
     constructor(private database: Database, //private userService: UserService erro ao injetar
         ) {
         //this.data = database.getDatabase();
-        this.deleteData('user');
-        //this.showData('data');
+        //this.deleteData('user');
+        //this.deleteData('data');
+        //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
         //this.showData('user');
     }
 
@@ -55,7 +56,6 @@ export class DataService {
     setNeeds() {
 
     }
-
     getToken(): string {
         var user;
         if(user = this.getLatestUserToRegister()) {
@@ -64,16 +64,13 @@ export class DataService {
         }
         return null;
     }
-
     getUserID(): string {
         var user;
-        if(user = this.getLatestUserToRegister()) {
-            
+        if(user = this.getLatestUserToRegister()) {          
             return user.id;
         }
         return null;
     }
-
     getLatestUserToRegister() {
         var users = this.getAllUsers();
         
@@ -89,7 +86,6 @@ export class DataService {
         }
         return false;
     }
-
     public deleteData(view) {
         let documents = this.database.getDatabase().executeQuery(view);
         console.log('A apagar bd: ' + view);
@@ -100,16 +96,14 @@ export class DataService {
             this.database.getDatabase().deleteDocument(documents[i]._id);
         }
     }
-
     public getAllUsers(){
         if(this.database.getDatabase().executeQuery("user").length > 0) {
             return this.database.getDatabase().executeQuery("user");
         }         
         return false;
     }
-
     public showData(view) {
-        console.log('A mostrar bd: ' + view);
+        console.log('A mostrar bd: ' + view + ' com ' + this.database.getDatabase().executeQuery(view).length + ' elementos');
         if(this.database.getDatabase().executeQuery(view).length > 0) {     
             console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
         }
