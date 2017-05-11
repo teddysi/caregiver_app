@@ -23,7 +23,7 @@ import { openUrl } from "utils/utils";
 export class MaterialsComponent implements OnInit {
 	patient: Patient;
 	need: Need;
-	materials: Material [];
+	materials: Material[];
 
 	constructor(
 		private patientService: PatientService,
@@ -31,14 +31,24 @@ export class MaterialsComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		
+
 		const id = +this.route.snapshot.params["id"];
 		const idx = +this.route.snapshot.params["id_need"];
-		
+
 		this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
-		this.need = this.patient.needs.filter(need => need.id === idx)[0];
-		this.materials = this.need.materials;
-		console.log(JSON.stringify(this.materials, null, 4));
+
+		// criar lista de materiais com propriadade adicional need name and need description
+		this.addPropertyNeedOnMaterial();
+
+
+
+
+
+
+
+		//	this.need = this.patient.needs.filter(need => need.id === idx)[0];
+		//	this.materials = this.need.materials;
+		console.log("MATERIALS : " + JSON.stringify(this.materials, null, 4));
 
 		//openApp("com.facebook.katana");
 		//openUrl("http://192.168.99.100/caregivers/public/materialsAPI/21/showContent")
@@ -53,12 +63,25 @@ export class MaterialsComponent implements OnInit {
 			control = true;		
 		}
 		*/
-		
+
 	}
 
-	openOnBrowser(id) {
-		let material = this.materials.filter(material => material.id === id)[0];
 
-		openUrl(material.url);
+
+	addPropertyNeedOnMaterial() {
+		let materials_temp: Material[];
+		materials_temp = [];
+
+		this.patient.needs.forEach(need => {
+			need.materials.forEach(materialOfaNeed => {
+				materialOfaNeed["need_id"] = need.id;
+				materialOfaNeed["need_description"] = need.description;
+				//console.log("MATERIAL : " + JSON.stringify(materialOfaNeed, null, 4));
+				materials_temp.push(materialOfaNeed);
+			});
+		});
+
+		this.materials = materials_temp;
 	}
+
 }

@@ -30,8 +30,8 @@ export class PatientService {
          //futuramente adicionar o token console.log("ZZZ -> "+this.dataService.getUserId)
         let headers = this.createRequestHeader();
 
-        //let request = 'http://35.184.17.4/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
-        let request = 'http://192.168.99.100/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
+        let request = 'http://35.184.17.4/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
+        //let request = 'http://192.168.99.100/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
         // return this.http.get("http://192.168.0.102:8080/api/v1/patients", { headers: headers }) //Teddy
         return this.http.get(request, { headers: headers }) //Tiago
             .map(res => res.json());

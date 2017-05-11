@@ -13,14 +13,15 @@ import { TestComponent } from "./test/test.component";
 const routes: Routes = [
     { path: "", component: LoginComponent }, 
     //{ path: "", redirectTo: "/patients", pathMatch: "full" },
-    { path: "test", component: TestComponent },
-    { path: "needs", component: NeedComponent },
+    //{ path: "test", component: TestComponent },
+    //{ path: "needs", component: NeedComponent },
     { path: "patients", component: PatientsComponent },
     { path: "patient/:id", component: PatientDetailComponent },
-//    {path: "patient/:id/materials", component: MaterialsComponent },
-    {path: "patient/:id/needs", component: NeedComponent },
- //   {path: "patient/:id/material/:idx", component: MaterialDetailComponent }
-    { path: "patient/:id/need/:id_need", component: MaterialsComponent }
+
+    //{path: "patient/:id/needs", component: NeedComponent }, // teddy - Tota e vista pode vir a ser usada para fins de classificacao
+    //Materials
+    { path: "patient/:id/materials", component: MaterialsComponent },
+    { path: "patient/:id/material/:id_material", component: MaterialDetailComponent }
        
 ];
 
