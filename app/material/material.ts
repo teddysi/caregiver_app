@@ -9,6 +9,8 @@ export class Material {
     path: string;
     url: string;
     number:number; //number contact emergency
+
+    materials: Material[];
     
     created_by: number;
     created_at: string;

@@ -1,58 +1,25 @@
-<ActionBar [title]="need.description" class="action-bar">
-    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'needs']"></NavigationButton>
+<ActionBar [title]="'Materiais Disponíveis'" class="action-bar">
+    <!--<ActionBar [title]="'Materiais Disponiveis [' +patient.name +']'" class="action-bar">-->
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patients']"></NavigationButton>
+
+    <!--<NavigationButton text="Voltar" android.systemIcon="ic_menu_back" tap="onNavBtnTap"></NavigationButton> -->
 </ActionBar>
+
 <StackLayout class="page">
-    <ListView [items]="materials" class="list-group" [class.visible]="listLoaded">
+    <ListView [items]="materials" class="list-group">
         <ng-template let-item="item">
-            <StackLayout orientation="vertical" class="listViewPassosMaterial">
-                
-                <!-- type = image -->
-                <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400"></Image>
-                <label *ngIf="item.type == 'image'" [text]="item.description" textWrap="true" class="materialImageDescription"></label>
-                
-                <!-- type = text -->
-                <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
-                <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
-               
-                <!-- type = video -->
-                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
-                 <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
-                
-                <!-- type = emergencyContact-->
-                <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
-                <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
-
-                <!-- type = annex-->
-               <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
-                <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
-                
-                <label text=" "></label>
-            </StackLayout>
+            <FlexboxLayout class="m-15"[nsRouterLink]="['/patient',patient.id,'material',item.id]">
+                <StackLayout orientation="vertical">
+                    <Label class="h3" [text]="item.name"></Label>
+                    <Label class="h4" [text]="'Material Type: '+item.type"></Label>
+                    <Label class="h4" [text]="'Necessidade: '+ item.need_description" textWrap="true"></Label>
+                </StackLayout>
 
 
-
+            </FlexboxLayout>
+            <!--<Label [text]="item.description" textWrap="true" class="needList"></Label>-->
+            <!--<Label [nsRouterLink]="['/patient',patient.id,'need',item.id]" [text]="'['+item.id+ '] - '+item.description" class="needList"></Label>-->
 
         </ng-template>
     </ListView>
 </StackLayout>
-<!--
-<GridLayout [auto-grid-rows]="autoCreateRows" flexWrap="wrap" orientation="vertical" *ngFor="let material of materials"
-    class="list-items">
-    <FlexboxLayout *ngIf="material.type == 'jpg'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
-        <Label [text]="material.name" class="title"></Label>
-        <Image [src]="material.strLink"></Image>
-
-    </FlexboxLayout>
-
-    <FlexboxLayout *ngIf="material.type == 'mp4'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
-        <Label [text]="material.name" class="title"></Label>
-        <VideoPlayer *ngIf="isMp4" [src]="material.strLink" autoplay="true" height="300" controls="true"> </VideoPlayer>
-    </FlexboxLayout>
-    <FlexboxLayout *ngIf="material.type == 'txt'" flexWrap="wrap" justifyContent="space-between" flexDirection="column" class="page">
-        <Label [text]="material.name" class="title"></Label>
-        <label [text]="material.description" textWrap="true"></label>
-
-    </FlexboxLayout>
-
-</GridLayout>
--->

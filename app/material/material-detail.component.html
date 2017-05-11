@@ -1,15 +1,36 @@
-<ActionBar [title]="material.name" class="action-bar">
-    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" ></NavigationButton>
+<ActionBar [title]="materialParent.description" class="action-bar">
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
 </ActionBar>
+<StackLayout class="page">
+    <ListView [items]="materialsToDisplay" class="list-group" [class.visible]="listLoaded">
+        <ng-template let-item="item">
+            <StackLayout orientation="vertical" class="listViewPassosMaterial">
+                
+                <!-- type = image -->
+                <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400"></Image>
+                <label *ngIf="item.type == 'image'" [text]="item.description" textWrap="true" class="materialImageDescription"></label>
+                
+                <!-- type = text -->
+                <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
+                <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
+            <!-- type = video -->
+            <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
+            <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
 
-<!--
- <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
-</ActionBar>
+            <!-- type = emergencyContact-->
+            <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
+            <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
 
-<FlexboxLayout flexDirection="column" class="page">
-  
-<Image [src]="material.url" ></Image>
-<PDFView [src]="material.url" (load)="onLoad()"></PDFView>
+            <!-- type = annex-->
+            <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
+            <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
+
+            <label text=" "></label>
+            </StackLayout>
 
 
-</FlexboxLayout>-->
+
+
+            </ng-template>
+            </ListView>
+            </StackLayout>
