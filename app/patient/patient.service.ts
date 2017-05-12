@@ -50,25 +50,6 @@ export class PatientService {
     getPatient(id: number): Patient {
         return this.patients.filter(patient => patient.id === id)[0];
     }
-
-    /**
-     * 
-     * 
-     * @private
-     * @returns 
-     * 
-     * @memberOf ItemService
-     */
-    private createRequestHeader() {
-        let headers = new Headers();
-        // set headers here e.g.
-       // headers.append("AuthKey", "my-key");
-        //headers.append("AuthToken", "my-token");
-        //headers.append("Content-Type", "application/json");
-       // headers.append("Authorization","75fQ2nX1M2k2zey0WpIw34JJmqWhzegHfMhU2XN821DGq96Epz37unFZYH1H");
-        headers.append("Authorization", this.dataService.getToken());
-        return headers;
-    }
 }
 
 

@@ -52,9 +52,9 @@ export class PatientsComponent implements OnInit {
         //tratar resposta 
         //console.log(JSON.stringify(res, null, 4));
         this.patients = res;
-        console.log("this.patients " + this.patients)
+        //console.log("this.patients " + this.patients)
         //adicionar items à lista de pacientes do service
-        //this.patientService.setPatients(this.patients)
+        this.patientService.setPatients(this.patients)
         
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         if (this.patients.length == 1 && this.firstTime==true) {
