@@ -75,13 +75,26 @@ export class MaterialsComponent implements OnInit {
 		this.patient.needs.forEach(need => {
 			need.materials.forEach(materialOfaNeed => {
 				materialOfaNeed["need_id"] = need.id;
-				materialOfaNeed["need_description"] = need.description;
+				materialOfaNeed["need_description"] = "[ " +need.description +" ]";
 				//console.log("MATERIAL : " + JSON.stringify(materialOfaNeed, null, 4));
-				materials_temp.push(materialOfaNeed);
+				//testar se o material ja está na lista
+				if (materials_temp.filter(material => material.id === materialOfaNeed.id).length > 0) {
+					materials_temp.filter(material => material.id === materialOfaNeed.id)[0]["need_description"] += " [ " + need.description + " ]";
+				} else {
+					materials_temp.push(materialOfaNeed);
+				}
+
 			});
 		});
 
 		this.materials = materials_temp;
+	}
+
+	autoavaliarCuidador(id) {
+		//rota para o formulario - teddy
+		//let material = this.materialsToDisplay.filter(material => material.id === id)[0];
+
+		//openUrl(material.url);
 	}
 
 }
