@@ -23,6 +23,7 @@
     "nativescript-android-utils": "^1.0.2",
     "nativescript-angular": "1.5.1",
     "nativescript-couchbase": "^1.0.17",
+    "nativescript-materialdropdownlist": "^1.0.15",
     "nativescript-open-app": "^0.2.0",
     "nativescript-pdf-view": "^1.2.1",
     "nativescript-theme-core": "~1.0.2",

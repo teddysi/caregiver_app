@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Patient } from "../patient/patient";
 import { PatientService } from "../patient/patient.service";
 import { Material } from "./material";
+import { Rating } from "./rating";
 import { Need } from "../need/need";
 
 import app = require("application");
@@ -30,12 +31,20 @@ export class MaterialDetailComponent implements OnInit {
     materialParent: Material;
     materialsToDisplay: Material[];
 
+    ratings: Rating[];
+    //ratings.push(new Rating("1", "Mau"));
+   // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
+
     constructor(
         private patientService: PatientService,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
+        //rating test
+     
+     
+
 
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["id_material"];
@@ -95,5 +104,23 @@ export class MaterialDetailComponent implements OnInit {
         let material = this.materialsToDisplay.filter(material => material.id === id)[0];
 
         openUrl(material.url);
+    }
+
+    //rating
+    onGreen(){
+        console.log("GREEN")
+
+    }
+    onYellow(){
+        console.log("Yellow")
+
+    }
+    onRed(){
+        console.log("Red")
+
+    }
+    ononMaterialPicker(){
+        console.log("MAterial picado")
+
     }
 }

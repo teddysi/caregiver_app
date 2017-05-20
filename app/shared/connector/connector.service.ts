@@ -33,6 +33,7 @@ export class ConnectorService {
         //this.connector.serverURL = '35.184.17.4/caregivers/public'; //LIVE
         this.connector.serverURL = '192.168.99.100/caregivers/public'; //VM-DEV
         */
+
     }
     ngOnInit() {
         
