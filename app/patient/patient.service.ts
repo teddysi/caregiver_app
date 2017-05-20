@@ -16,34 +16,21 @@ import "rxjs/add/operator/do";
 @Injectable()
 export class PatientService {
 
-    public patients: Patient[]
+    public patients: Patient[];
     
-
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {  
-         
+         console.log('Instanciou - PatientService!');
     }
 
-    getPatients()
-    {
-        /*
-        //se tem conetividade:
-         //futuramente adicionar o token console.log("ZZZ -> "+this.dataService.getUserId)
-        let headers = this.createRequestHeader();
-
-        let request = 'http://35.184.17.4/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
-        //let request = 'http://192.168.99.100/caregivers/public/caregiversAPI/' + this.dataService.getUserID() + '/patients'
-        // return this.http.get("http://192.168.0.102:8080/api/v1/patients", { headers: headers }) //Teddy
-        return this.http.get(request, { headers: headers }) //Tiago
-            .map(res => res.json());
-        //se não tem conetividade
-        //return this.dataService.getData();
-        */
+    getPatients(){
         return this.connectorService.getPatientsData();
-
-    } 
-
+    }
+    getPatients_BD() {
+        return this.dataService.getPatientsData();
+    }
 
     public setPatients(patients) {
+        this.dataService.setPatientsData(patients);
         this.patients = patients;
     }
 

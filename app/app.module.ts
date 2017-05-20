@@ -1,3 +1,4 @@
+import { platformNativeScriptDynamic} from "nativescript-angular/platform";
 import { NativeScriptHttpModule } from 'nativescript-angular';
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
@@ -17,9 +18,9 @@ import { MaterialDetailComponent } from "./material/material-detail.component";
 
 import { NeedComponent } from "./need/need.component";
 
-import { DataService } from "./shared/data/data.service";
 import { UserService } from "./shared/user/user.service";
-import { platformNativeScriptDynamic} from "nativescript-angular/platform";
+
+import { DataService } from "./shared/data/data.service";
 import { Database } from "./shared/data/database";
 
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
@@ -48,13 +49,13 @@ import { Database } from "./shared/data/database";
        
     ],
     providers: [
+        /*
         UserService,
         PatientService,
         ConnectorService,
         DataService,
         Database,
-        
-       
+        */
     ],
     schemas: [
         NO_ERRORS_SCHEMA
