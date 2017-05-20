@@ -1,36 +1,70 @@
 <ActionBar [title]="materialParent.description" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
 </ActionBar>
+
 <StackLayout class="page">
+
     <ListView [items]="materialsToDisplay" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item">
             <StackLayout orientation="vertical" class="listViewPassosMaterial">
-                
+
                 <!-- type = image -->
                 <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400"></Image>
                 <label *ngIf="item.type == 'image'" [text]="item.description" textWrap="true" class="materialImageDescription"></label>
-                
+
                 <!-- type = text -->
                 <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
                 <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
-            <!-- type = video -->
-            <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
-            <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
+                <!-- type = video -->
+                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
+                <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
 
-            <!-- type = emergencyContact-->
-            <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
-            <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
+                <!-- type = emergencyContact-->
+                <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
+                <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
 
-            <!-- type = annex-->
-            <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
-            <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
+                <!-- type = annex-->
+                <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
+                <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
 
-            <label text=" "></label>
+               
+
+                <label *ngIf="lst" class="h3" text="Avaliar Material" style=" text-align: center"></label>
+                <StackLayout orientation="horizontal">
+                    <Button text="Button 1" backgroundColor="#0099CC" width="100" margin="2"></Button>
+                    <Button text="Button 2" backgroundColor="#CCFFFF" width="100" margin="2"></Button>
+                    <Button text="Button 3" backgroundColor="#8C489F" width="100" margin="2"></Button>
+                </StackLayout>
+
             </StackLayout>
 
 
 
 
-            </ng-template>
-            </ListView>
-            </StackLayout>
+        </ng-template>
+    </ListView>
+
+
+</StackLayout>
+
+
+<!--
+    <label class="h3" text="Marcar Tarefa efectuada" style=" text-align: center"></label>
+    <label class="h3" text=" v" style=" text-align: center" row="3"></label>
+    <Button text="Tarefa Efectuada" class="submit-button" style="background-color:#056C0A" (tap)="onMaterialPicker()">
+            </Button> >
+
+
+<StackLayout orientation="horizontal">
+    <GridLayout rows="45, *, *" columns="*, *, *">
+
+
+        <Button text="Difícil" class="submit-button" style="background-color:#E00000 " (tap)="onRed()" row="0" col="0"></Button>
+        <Button text="Acessível" class="submit-button" style="background-color:#FCFF10 " (tap)="onYellow()" row="0" col="1"></Button>
+        <Button text="Fácil" class="submit-button" style="background-color:#03A33B " (tap)="onGreen()" row="0" col="2"></Button>
+
+
+    </GridLayout>
+</StackLayout>
+</StackLayout>
+-->
