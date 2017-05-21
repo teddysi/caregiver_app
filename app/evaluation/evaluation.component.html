@@ -1,0 +1,37 @@
+<ActionBar [title]="'Avaliacao'" class="action-bar">
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'material',materialParent.id]">
+    </NavigationButton>
+</ActionBar>
+
+<StackLayout class="page">
+
+    <ListView [items]="evaluations" class="list-group" [class.visible]="listLoaded">
+        <ng-template let-item="item" let-i="index">
+            <!-- Items of the list -->
+            <StackLayout orientation="vertical">
+
+                <!--EVALUATION -->
+                <label [text]="item.id" class="h3"></label>
+                <label [text]="item.description" class="h3" textWrap="true"></label>
+
+                <StackLayout>
+                    <RadioGroup [(value)]="item.response">
+                        <RadioButton text="0"></RadioButton>
+                        <RadioButton text="1"></RadioButton>
+                        <RadioButton text="2"></RadioButton>
+                        <RadioButton text="3"></RadioButton>
+                        <RadioButton text="4"></RadioButton>
+                    </RadioGroup>
+                </StackLayout>
+                <---->
+
+                <!--Button submmit if is the last element-->
+                <StackLayout *ngIf="i == evaluations.length-1" orientation="horizontal">
+                    <Button text="Submeter Avaliação" class="submit-button" (tap)="submeterAvaliacao()"></Button>
+                </StackLayout>
+                <---->
+            </StackLayout>
+        </ng-template>
+    </ListView>
+
+</StackLayout>

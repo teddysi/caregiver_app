@@ -12,6 +12,8 @@ import platform = require("platform");
 
 import buttonModule = require("ui/button");
 
+import { Router } from "@angular/router";
+
 
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
@@ -37,7 +39,7 @@ export class MaterialDetailComponent implements OnInit {
 
     constructor(
         private patientService: PatientService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute, private router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -123,4 +125,12 @@ export class MaterialDetailComponent implements OnInit {
         console.log("MAterial picado")
 
     }
+    
+  	avaliarCuidador(id) {
+            //rota para o formulario - teddy
+            //let material = this.materialsToDisplay.filter(material => material.id === id)[0];
+
+            //openUrl(material.url);
+            this.router.navigate(['/patient', this.patient.id, 'material', id,"evaluation"]);
+        }
 }

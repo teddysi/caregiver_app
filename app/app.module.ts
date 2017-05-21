@@ -22,6 +22,11 @@ import { UserService } from "./shared/user/user.service";
 import { platformNativeScriptDynamic} from "nativescript-angular/platform";
 import { Database } from "./shared/data/database";
 
+import { RadioButtonModule } from 'nativescript-radiobutton/angular'
+
+//evaluation
+import { EvaluationComponent } from "./evaluation/evaluation.component";
+
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
 
 @NgModule({
@@ -33,7 +38,8 @@ import { Database } from "./shared/data/database";
         NativeScriptFormsModule,
         AppRoutingModule,
         HttpModule,
-        NativeScriptHttpModule
+        NativeScriptHttpModule,
+        RadioButtonModule
         
     ],
     declarations: [
@@ -43,6 +49,7 @@ import { Database } from "./shared/data/database";
         MaterialsComponent,
         NeedComponent,
         TestComponent,
+        EvaluationComponent,
         MaterialDetailComponent,
         ...navigatableComponents
        

@@ -9,6 +9,7 @@ import { MaterialsComponent } from "./material/materials.component";
 import { MaterialDetailComponent } from "./material/material-detail.component";
 import { NeedComponent } from "./need/need.component";
 import { TestComponent } from "./test/test.component";
+import { EvaluationComponent } from "./evaluation/evaluation.component";
  
 const routes: Routes = [
     { path: "", component: LoginComponent }, 
@@ -21,7 +22,10 @@ const routes: Routes = [
     //{path: "patient/:id/needs", component: NeedComponent }, // teddy - Tota e vista pode vir a ser usada para fins de classificacao
     //Materials
     { path: "patient/:id/materials", component: MaterialsComponent },
-    { path: "patient/:id/material/:id_material", component: MaterialDetailComponent }
+    { path: "patient/:id/material/:id_material", component: MaterialDetailComponent },
+
+    //Evaluation
+   { path: "patient/:id/material/:id_material/evaluation", component: EvaluationComponent }
        
 ];
 

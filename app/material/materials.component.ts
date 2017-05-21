@@ -90,11 +90,6 @@ export class MaterialsComponent implements OnInit {
 		this.materials = materials_temp;
 	}
 
-	autoavaliarCuidador(id) {
-		//rota para o formulario - teddy
-		//let material = this.materialsToDisplay.filter(material => material.id === id)[0];
 
-		//openUrl(material.url);
-	}
 
 }
