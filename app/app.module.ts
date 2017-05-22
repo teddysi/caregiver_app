@@ -49,13 +49,13 @@ import { Database } from "./shared/data/database";
        
     ],
     providers: [
-        /*
+        
         UserService,
         PatientService,
         ConnectorService,
         DataService,
         Database,
-        */
+        
     ],
     schemas: [
         NO_ERRORS_SCHEMA

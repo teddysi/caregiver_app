@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit{
     }  
     login() {
       this.dataService.sync();
-      //this.router.navigate(["/patients"])  
+      this.router.navigate(["/patients"])  
     }
     signUp() {
       this.userService.register(this.auth_user).subscribe(
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit{
         });
       
       this.dataService.sync();
-      //this.router.navigate(["/patients"]);
+      this.router.navigate(["/patients"]);
       return true;
     }
     invalidRegister(error) {

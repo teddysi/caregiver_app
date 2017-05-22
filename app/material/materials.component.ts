@@ -39,16 +39,10 @@ export class MaterialsComponent implements OnInit {
 
 		// criar lista de materiais com propriadade adicional need name and need description
 		this.addPropertyNeedOnMaterial();
-
-
-
-
-
-
-
+		
 		//	this.need = this.patient.needs.filter(need => need.id === idx)[0];
 		//	this.materials = this.need.materials;
-		console.log("MATERIALS : " + JSON.stringify(this.materials, null, 4));
+		//console.log("MATERIALS : " + JSON.stringify(this.materials, null, 4));
 
 		//openApp("com.facebook.katana");
 		//openUrl("http://192.168.99.100/caregivers/public/materialsAPI/21/showContent")
@@ -96,5 +90,7 @@ export class MaterialsComponent implements OnInit {
 
 		//openUrl(material.url);
 	}
+
+
 
 }

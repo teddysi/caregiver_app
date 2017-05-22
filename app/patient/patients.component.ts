@@ -34,7 +34,7 @@ export class PatientsComponent implements OnInit {
     }
     ngOnInit(): void {
         this.isLoading = true;
-        if(this.firstTime) {
+        //if(this.firstTime) {
             this.patientService.getPatients()
             .subscribe(
             (result) => this.onGetDataSuccess(result),
@@ -42,10 +42,10 @@ export class PatientsComponent implements OnInit {
             );
             this.isLoading = false;
             this.listLoaded = true;
-        } else {
+        //} else {
             //this.patients = this.patientService.getPatients_BD();
-        }
         
+        //}
     }
     private onGetDataSuccess(result) {
     

@@ -45,6 +45,11 @@ export class Database {
                 emitter.emit(document._id, document);
             }
         });
+        this.storage.createView("ratings", "1", (document, emitter) => {
+            if(document.type == "ratings") {
+                emitter.emit(document._id, document);
+            }
+        });
     }
     public getDatabase() {
         return this.storage;

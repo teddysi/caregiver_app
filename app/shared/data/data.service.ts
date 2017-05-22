@@ -1,5 +1,6 @@
 import * as fs from "file-system";
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 import { ConnectorService } from '../../shared/connector/connector.service';
 
 import { Injectable } from "@angular/core";
@@ -9,27 +10,34 @@ import { Needs } from "./needs";
 import { Patient } from "../../patient/patient";
 import { Couchbase } from "nativescript-couchbase";
 import { Database } from "./database";
-import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user/user.service';
+
 
 @Injectable()
 export class DataService {
 
     public patientsData_id: any;
     public userData_id: any;
+    public materials_id: any;
+    public ratings_id: any;
+
     public file: fs.File;
     public folder: fs.Folder;
     public folderName: string;
     public fileName: string;
  
-    constructor(public database: Database, public connectorService: ConnectorService) {
+    constructor(public database: Database, //public connectorService: ConnectorService)
+    ){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
             //this.deleteData('data');
             //this.deleteData('user');
+            //this.deleteData('materials');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');
-            //this.userData_id = this.getCurrentUserDocID();
+            this.showData('materials');
+            this.userData_id = this.getCurrentUserDocID();
+            
     }
 
     ngOnInit() {
@@ -61,11 +69,61 @@ export class DataService {
         return this.database.getDatabase().getDocument(this.patientsData_id).data;
     }
     setPatientsData(data) {
-        //console.log("AQUI"+JSON.stringify(data));
+        console.log('Gravar dados Pacientes');
+        //debug
+        this.deleteData('data');
+        this.deleteData('materials');
+        
+        //Todos os dados do paciente e ref _id
         this.patientsData_id = this.database.getDatabase().createDocument({
             "type": "data",
             "data": data
         });
+
+        //Guarda dados dos Pacientes
+        //Guarda dados das necessidades
+        
+        //Guarda dados dos materiais e adiciona ratings aos materiais
+        let materials = [];
+        for(let i = 0; i < data.length; i++) {
+            for(let j = 0; j < data[i].needs.length; j++) {
+                materials.push(data[i].needs[j].materials); 
+            }
+        }
+    
+        for(let i = 0; i < materials.length; i++) {
+            for(let j = 0; j < materials[i].length; j++) {
+               materials[i][j]['Ratings'] = '';
+            }
+        }
+
+        this.materials_id = this.database.getDatabase().createDocument({
+                "type": "materials",
+                "materials": materials,
+        });
+        
+
+
+        //console.log(JSON.stringify(data[0].needs[0].materials,null,4));
+
+        /*
+        console.log('antes do for');
+        console.log(JSON.stringify(data[0].needs.materials,null,4));
+        //Juntar todos os materiais para colocar rating
+        let materials = [];
+        for(let i = 0; i < data.length; i++) {
+            console.log('no for');
+            console.log(JSON.stringify(data[0].needs.materials,null,4));
+            materials.push(data[i].needs.materials);
+        }
+        console.log('MATERIALS');
+        console.log(JSON.stringify(materials,null,4));
+        this.materials_id = this.database.getDatabase().createDocument({
+                "type": "materials",
+                "data": materials,
+        });
+        this.showData('material');
+        */
         //console.log("AQUI10"+JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
     }
     setNeeds() {
@@ -159,5 +217,33 @@ export class DataService {
             return true;
         }
         return false; 
+    }
+    //Guarda avaliações dos materiais
+    public setRating(rating) {
+        //Recebo o rating, com id do material
+        //Vou à BD dos materiais
+        //Para cada material com aquele id, atualizar o seu rating.
+        let materials = this.database.getDatabase().getDocument(this.materials_id).materials;
+        //console.log(JSON.stringify(materials, null, 4));
+        
+        for(let i = 0; i < materials.length; i++) {
+            for(let j = 0; j < materials[i].length; j++) {
+                if(rating.id_material === materials[i][j].id) {
+                    materials[i][j].ratings.push(rating);
+                }
+            }
+        }
+
+        this.database.getDatabase().updateDocument(this.materials_id, {
+            "type": "materials",
+            "materials": materials,
+        })
+                
+
+        this.showData('materials');
+        
+    }
+    public getMaterialRating(material_id) {
+
     }
 }
