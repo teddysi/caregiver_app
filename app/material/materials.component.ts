@@ -4,10 +4,11 @@ import { ActivatedRoute } from "@angular/router";
 import { Patient } from "../patient/patient";
 import { Material } from "../material/material";
 import { Need } from "../need/need";
+import { DataService } from "../shared/data/data.service";
 import { PatientService } from "../patient/patient.service";
 
 import buttonModule = require("ui/button");
-
+import { Page } from "ui/page";
 
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
@@ -24,10 +25,13 @@ export class MaterialsComponent implements OnInit {
 	patient: Patient;
 	need: Need;
 	materials: Material[];
+	rating_colors: {};
 
 	constructor(
 		private patientService: PatientService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private page: Page,
+		private dataService: DataService
 	) { }
 
 	ngOnInit(): void {
@@ -57,15 +61,29 @@ export class MaterialsComponent implements OnInit {
 			control = true;		
 		}
 		*/
-
 	}
 
-
-
+	getBorderColor(rating) {
+		console.log('ENTROU!!!!!!!!!!!!!!!!!!!')
+		if(rating) {
+			console.log(JSON.stringify(rating[0], null, 4));
+		}
+		
+		switch (rating) {
+			case '0': 
+				return 'yellow';
+			case '-1': 
+				return 'red';
+			case '1': 
+				return 'green';	
+			default:
+				return 'black';
+		}	
+	}
 	addPropertyNeedOnMaterial() {
 		let materials_temp: Material[];
 		materials_temp = [];
-
+		
 		this.patient.needs.forEach(need => {
 			need.materials.forEach(materialOfaNeed => {
 				materialOfaNeed["need_id"] = need.id;
@@ -80,7 +98,12 @@ export class MaterialsComponent implements OnInit {
 
 			});
 		});
-
+		
+		//console.log(JSON.stringify(materials_temp, null, 4));
+		//this.materials = this.dataService.getNeedMaterials();
+		//console.log(JSON.stringify(this.dataService.getNeedMaterials()[0], null, 4));
+		
+		//console.log(JSON.stringify(materials_temp[0], null, 4));
 		this.materials = materials_temp;
 	}
 

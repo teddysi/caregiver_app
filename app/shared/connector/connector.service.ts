@@ -92,9 +92,9 @@ export class ConnectorService {
     getPatientsData(): Observable<Patient[]>
     {
         //se não tem conetividade
-        if(!this.isConnected() || !this.firstDataRequest) {
+        /*if(!this.isConnected() || !this.firstDataRequest) { //Com ERRO
             return this.dataService.getPatientsData();
-        }
+        }*/
         //se tem conetividade
         this.firstDataRequest = false;
         let headers = this.createRequestHeader();

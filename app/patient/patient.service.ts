@@ -17,13 +17,16 @@ import "rxjs/add/operator/do";
 export class PatientService {
 
     public patients: Patient[];
+    private firstTime: boolean;
     
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {  
          console.log('Instanciou - PatientService!');
+         this.firstTime = true;
     }
 
-    getPatients(){
+    getPatients(){  
         return this.connectorService.getPatientsData();
+   
     }
     getPatients_BD() {
         return this.dataService.getPatientsData();

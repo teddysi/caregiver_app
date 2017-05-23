@@ -28,13 +28,15 @@ export class PatientsComponent implements OnInit {
     public isItemVisible: boolean = false;
     public firstTime: boolean = true;
 
-
     constructor(private patientService: PatientService, private router: Router, private userService: UserService) { 
-
+       
     }
     ngOnInit(): void {
         this.isLoading = true;
-        //if(this.firstTime) {
+        console.log(this.firstTime);
+        if(this.firstTime) {
+            this.firstTime = false;
+            console.log('Pedido à Cloud');
             this.patientService.getPatients()
             .subscribe(
             (result) => this.onGetDataSuccess(result),
@@ -42,10 +44,11 @@ export class PatientsComponent implements OnInit {
             );
             this.isLoading = false;
             this.listLoaded = true;
-        //} else {
-            //this.patients = this.patientService.getPatients_BD();
-        
-        //}
+            
+        } else {
+            console.log('Pedido à BD');
+            this.patients = this.patientService.getPatients_BD();   
+        }
     }
     private onGetDataSuccess(result) {
     

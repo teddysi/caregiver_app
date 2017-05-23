@@ -93,7 +93,7 @@ export class DataService {
     
         for(let i = 0; i < materials.length; i++) {
             for(let j = 0; j < materials[i].length; j++) {
-               materials[i][j]['Ratings'] = '';
+               materials[i][j]['ratings'] = [''];
             }
         }
 
@@ -229,21 +229,26 @@ export class DataService {
         for(let i = 0; i < materials.length; i++) {
             for(let j = 0; j < materials[i].length; j++) {
                 if(rating.id_material === materials[i][j].id) {
+                    console.log('registou');
                     materials[i][j].ratings.push(rating);
                 }
             }
         }
-
+        //console.log(JSON.stringify(materials, null, 4));
+        
         this.database.getDatabase().updateDocument(this.materials_id, {
             "type": "materials",
             "materials": materials,
         })
-                
-
-        this.showData('materials');
+        
+        //this.showData('materials');
         
     }
     public getMaterialRating(material_id) {
 
+    }
+
+    public getNeedMaterials() {
+        return this.database.getDatabase().getDocument(this.materials_id).materials;
     }
 }
