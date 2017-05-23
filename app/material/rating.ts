@@ -1,7 +1,6 @@
 export class Rating {
-
-
     id: number;
-    description: string;
-    
+    evaluation: number;
+    id_material: number;
+
 }

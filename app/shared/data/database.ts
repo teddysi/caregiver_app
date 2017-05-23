@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Couchbase } from "nativescript-couchbase";
+import { ConnectorService } from "../connector/connector.service";
 
 Injectable()
 export class Database {
@@ -8,24 +9,47 @@ export class Database {
     /*
     private pull: any;
     private push: any;
-    */ 
-    public constructor() {
+    */
+    public constructor(//private connectorService: ConnectorService
+    ) {
         if(!this.isInstantiated) {
-            
             this.storage = new Couchbase("caregiver");
-            this.storage.createView("data", "1", (document, emitter) => {
-                if(document.type == "data") {
-                    emitter.emit(document._id, document);
-                } 
-            });
-            this.storage.createView("user", "1", (document, emitter) => {
-                if(document.type == "user") {
-                    emitter.emit(document._id, document);
-                }
-            });
-           
+            this.createViews();
+          
             this.isInstantiated = true;
         }
+    }
+    private createViews() {
+        this.storage.createView("data", "1", (document, emitter) => {
+            if(document.type == "data") {
+                emitter.emit(document._id, document);
+            } 
+        });
+        this.storage.createView("user", "1", (document, emitter) => {
+            if(document.type == "user") {
+                emitter.emit(document._id, document);
+            }
+        });
+        this.storage.createView("materials", "1", (document, emitter) => {
+            if(document.type == "materials") {
+                emitter.emit(document._id, document);
+            }
+        });
+        this.storage.createView("needs", "1", (document, emitter) => {
+            if(document.type == "needs") {
+                emitter.emit(document._id, document);
+            }
+        });
+        this.storage.createView("patients", "1", (document, emitter) => {
+            if(document.type == "patients") {
+                emitter.emit(document._id, document);
+            }
+        });
+        this.storage.createView("ratings", "1", (document, emitter) => {
+            if(document.type == "ratings") {
+                emitter.emit(document._id, document);
+            }
+        });
     }
     public getDatabase() {
         return this.storage;

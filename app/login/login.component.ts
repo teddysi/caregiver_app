@@ -12,7 +12,7 @@ import dialogs = require("ui/dialogs");
 
 @Component({
   selector: "my-app",
-  providers: [UserService, ConnectorService],
+  providers: [],
   templateUrl: "login/login.html",
   styleUrls: ["login/login-common.css", "login/login.css"],
 })
@@ -26,9 +26,7 @@ export class LoginComponent implements OnInit{
     }
 
     ngOnInit() {
-      var user_token = this.dataService.getToken();
-     
-      if(user_token) {
+      if(this.dataService.isUserAuth()) {
         this.userService.createUser(this.dataService.getLatestUserToRegister()); 
         this.login();
       }
@@ -49,6 +47,7 @@ export class LoginComponent implements OnInit{
       }
     }  
     login() {
+      this.dataService.sync();
       this.router.navigate(["/patients"])  
     }
     signUp() {
@@ -58,10 +57,10 @@ export class LoginComponent implements OnInit{
       );
     }
     validRegister(result) {
-
+      //console.log(JSON.stringify(result, null, 4));
       this.dataService.setUser(result);
-      this.userService.createUser(this.dataService.getLatestUserToRegister());
-      /*
+      this.userService.createUser(result);
+      
       dialogs.alert({
             title: "Autenticação Validada",
             message: "Bem vindo(a) " + this.auth_user.name,
@@ -69,15 +68,16 @@ export class LoginComponent implements OnInit{
         }).then(() => {
             console.log("Dialog closed!");
         });
-      */
+      
+      this.dataService.sync();
       this.router.navigate(["/patients"]);
       return true;
     }
-
     invalidRegister(error) {
+    
      dialogs.alert({
-            title: "Aviso - Autenticação",
-            message: "Os dados introduzidos não são válidos.",
+            title: "Falha na autenticação.",
+            message: "Verifique o seu acesso à Internet e confirme os seus dados de acesso",
             okButtonText: "OK"
         }).then(() => {
             console.log("Dialog closed!");

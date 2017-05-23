@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable, OnInit, NgZone } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { Data } from "../data/data";
 import { Observable } from 'rxjs/Observable';
@@ -10,6 +10,7 @@ import { User } from "../user/user";
 import { Database } from "../data/database";
 import { Patient } from "../../patient/patient";
 
+import * as connectivity from "connectivity";
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -18,18 +19,66 @@ export class ConnectorService {
     private connector: Connector;
     private user: User;
     private data: any;
+    public connectionType: string;
+    public firstDataRequest = true;
     
-    constructor(private http: Http, private router: Router, private dataService: DataService) {
+    constructor(private zone: NgZone, private http: Http, private router: Router, private dataService: DataService) {
+        console.log('Instanciou - ConnectorService!');
+
         this.connector = new Connector();
+        //Recebe e monotoriza o tipo de conexão
+        this.connectionType = this.getConnectionType();
+        this.startConnectionMonitor();
 
         this.connector.serverURL = '35.184.244.41/caregivers/public'; //LIVE
         //this.connector.serverURL = '192.168.99.100/caregivers/public'; //VM-DEV
+        
+
     }
     ngOnInit() {
         
-    } 
-
+    }
+    getConnectionType() {
+        let connectionType = connectivity.getConnectionType();
+        switch (connectionType) {
+            case connectivity.connectionType.none:
+                return "None";
+            case connectivity.connectionType.wifi:
+                return "Wi-Fi";
+            case connectivity.connectionType.mobile:
+                return "Mobile";
+            default:
+                return "Unknown";
+        }
+    }
+    startConnectionMonitor() {
+        connectivity.startMonitoring((newConnectionType: number) => {
+            this.zone.run(() => {
+                switch (newConnectionType) {
+                    case connectivity.connectionType.none:
+                        this.connectionType = "None";
+                        console.log("Connection type changed to none.");
+                        break;
+                    case connectivity.connectionType.wifi:
+                        this.connectionType = "Wi-Fi";
+                        console.log("Connection type changed to WiFi.");
+                        break;
+                    case connectivity.connectionType.mobile:
+                        this.connectionType = "Mobile";
+                        console.log("Connection type changed to mobile.");
+                        break;
+                    default:
+                        this.connectionType = "Unknown";
+                        console.log("Connection type changed to unknown.");
+                        break;
+                }
+            });
+        });
+    }
     requestLogin(username, password): Observable<User> {
+        if(!this.isConnected()) {
+            return null;
+        }
         let headers = this.createLoginHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/login';
 
@@ -42,15 +91,19 @@ export class ConnectorService {
 
     getPatientsData(): Observable<Patient[]>
     {
-        //se tem conetividade:
+        //se não tem conetividade
+        /*if(!this.isConnected() || !this.firstDataRequest) { //Com ERRO
+            return this.dataService.getPatientsData();
+        }*/
+        //se tem conetividade
+        this.firstDataRequest = false;
         let headers = this.createRequestHeader();
-
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/patients'
     
         return this.http.get(request, { headers: headers }) //Tiago
             .map(res => res.json());
-        //se não tem conetividade
-        //return this.dataService.getData();
+        
+        //return this.dataService.getPatientsData();
     }
     /*
     getAllData(): Observable<Data[]> {
@@ -101,14 +154,12 @@ export class ConnectorService {
         const err = body.error || JSON.stringify(body);
         console.log("onGetDataError: " + err);
     }
-
-     private createRequestHeader() {
+    private createRequestHeader() {
         let headers = new Headers();
         headers.append("Authorization", this.dataService.getToken());
         headers.append("Content-Type", "application/json");
         return headers;
     }
-
     private createLoginHeader() {
       let headers = new Headers();
         // set headers here e.g.
@@ -117,11 +168,16 @@ export class ConnectorService {
         headers.append("Content-Type", "application/json");
         return headers;
     }
-
     public getConnector() {
         return this.connector;
     }
     public setConnectorToken(user_token) {
         this.connector.accessToken = user_token;
+    }
+    public isConnected() {
+        if(this.connectionType == 'null') {
+            return false;
+        }
+        return true;
     }
 }

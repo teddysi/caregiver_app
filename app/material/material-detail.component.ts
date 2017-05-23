@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Patient } from "../patient/patient";
 import { PatientService } from "../patient/patient.service";
+import { DataService } from "../shared/data/data.service";
 import { Material } from "./material";
 import { Rating } from "./rating";
 import { Need } from "../need/need";
@@ -39,8 +40,14 @@ export class MaterialDetailComponent implements OnInit {
 
     constructor(
         private patientService: PatientService,
-        private route: ActivatedRoute, private router: Router,
-    ) { }
+
+        private route: ActivatedRoute, private router: Router, private dataService: DataService,
+  
+        
+    ) {
+        this.ratings = [];
+     }
+
 
     ngOnInit(): void {
         //rating test
@@ -109,22 +116,23 @@ export class MaterialDetailComponent implements OnInit {
     }
 
     //rating
-    onGreen(){
-        console.log("GREEN")
+    evaluateMaterial(level) {
+       
+        let rating = new Rating();
+        rating.id = Date.now();
+        rating.evaluation = level;
+        rating.id_material = this.materialParent.id;
 
-    }
-    onYellow(){
-        console.log("Yellow")
+        this.ratings.push(rating);
 
-    }
-    onRed(){
-        console.log("Red")
+        this.dataService.setRating(rating);
 
     }
     ononMaterialPicker(){
         console.log("MAterial picado")
 
     }
+
     
   	avaliarCuidador(id) {
             //rota para o formulario - teddy
@@ -133,4 +141,9 @@ export class MaterialDetailComponent implements OnInit {
             //openUrl(material.url);
             this.router.navigate(['/patient', this.patient.id, 'material', id,"evaluation"]);
         }
+
+    getRatings() {
+        return this.ratings;
+    }
+
 }

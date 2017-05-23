@@ -11,7 +11,9 @@ import "rxjs/add/operator/map";
 export class UserService {
     private user: User;
 
-    constructor(private http: Http, private connectorService: ConnectorService) {}
+    constructor(private http: Http, private connectorService: ConnectorService) {
+        console.log('Instanciou - UserService!');
+    }
     
     register(user: User) {
         return this.connectorService.requestLogin(user.name, user.password);
@@ -33,6 +35,8 @@ export class UserService {
         this.user.token = $newUser.token;
         this.user.created_at = $newUser.created_at;
         this.user.updated_at = $newUser.updated_at;
+
+        console.log('FEZ - 2');
     }
     getUser()
     {

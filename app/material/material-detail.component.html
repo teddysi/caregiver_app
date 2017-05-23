@@ -32,9 +32,12 @@
                 <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="Avaliar Material" style=" text-align: center"></label>
                 <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
                     <GridLayout rows="45, *, *" columns="*, *, *">
-                        <Button text="Difícil" class="submit-button" style="background-color:#E00000 " (tap)="onRed()" row="0" col="0"></Button>
-                        <Button text="Acessível" class="submit-button" style="background-color:#FCFF10 " (tap)="onYellow()" row="0" col="1"></Button>
-                        <Button text="Fácil" class="submit-button" style="background-color:#03A33B " (tap)="onGreen()" row="0" col="2"></Button>
+
+
+                        <Button text="Difícil" class="submit-button" style="background-color:#E00000 " (tap)="evaluateMaterial('-1')" row="0" col="0"></Button>
+                        <Button text="Acessível" class="submit-button" style="background-color:#FCFF10 " (tap)="evaluateMaterial('0')" row="0" col="1"></Button>
+                        <Button text="Fácil" class="submit-button" style="background-color:#03A33B " (tap)="evaluateMaterial('1')" row="0" col="2"></Button>
+
                     </GridLayout>
                 </StackLayout>
                 <---->
