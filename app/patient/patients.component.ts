@@ -9,6 +9,8 @@ import { CreateViewEventData } from "ui/placeholder";
 
 import { UserService } from "../shared/user/user.service";
 
+import dialogs = require("ui/dialogs");
+
 @Component({
     selector: "ns-items",
     moduleId: module.id,
@@ -20,6 +22,7 @@ export class PatientsComponent implements OnInit {
     patients: Patient[];
     listLoaded = false;
     isLoading = false;
+    hasEvaluationsToDo= true; //condition to enable action bar icon evaluations
    
     public fileTextContent: string;
 
@@ -49,6 +52,15 @@ export class PatientsComponent implements OnInit {
             console.log('Pedido à BD');
             this.patients = this.patientService.getPatients_BD();   
         }
+
+        //verify and notificate if has evaluations to do
+        if (this.hasEvaluationsToDo) {
+            dialogs.alert({
+                title: "Aviso - Avaliações ",
+                message: "Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.",
+                okButtonText: "OK"
+            })
+        }
     }
     private onGetDataSuccess(result) {
     
@@ -66,5 +78,9 @@ export class PatientsComponent implements OnInit {
     }
     private onGetDataError(error: Response | any) {
         console.log(error.json());
+    }
+
+    goToAvaliationsList(){
+        //TODO
     }
 }
