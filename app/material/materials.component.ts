@@ -65,8 +65,10 @@ export class MaterialsComponent implements OnInit {
 
 	getBorderColor(rating) {
 		console.log('ENTROU!!!!!!!!!!!!!!!!!!!')
+		
 		if(rating) {
-			console.log(JSON.stringify(rating[0], null, 4));
+			console.log('HA');
+			console.log(JSON.stringify(rating, null, 4));
 		}
 		
 		switch (rating) {

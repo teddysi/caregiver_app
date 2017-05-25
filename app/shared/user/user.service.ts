@@ -26,6 +26,7 @@ export class UserService {
     
     createUser($newUser)
     {
+        console.log('A instanciar o utilizador');
         this.user = new User();
         this.user.id = $newUser.id;
         this.user.username = $newUser.username;
@@ -36,7 +37,6 @@ export class UserService {
         this.user.created_at = $newUser.created_at;
         this.user.updated_at = $newUser.updated_at;
 
-        console.log('FEZ - 2');
     }
     getUser()
     {

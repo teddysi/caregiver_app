@@ -50,6 +50,11 @@ export class Database {
                 emitter.emit(document._id, document);
             }
         });
+        this.storage.createView("global", "1", (document, emitter) => {
+            if(document.type == "global") {
+                emitter.emit(document._id, document);
+            } 
+        });
     }
     public getDatabase() {
         return this.storage;

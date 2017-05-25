@@ -20,6 +20,9 @@ export class DataService {
     public userData_id: any;
     public materials_id: any;
     public ratings_id: any;
+    public globalData_id: any;
+
+    public RequestData_control: any;
 
     public file: fs.File;
     public folder: fs.Folder;
@@ -35,12 +38,25 @@ export class DataService {
             //this.deleteData('materials');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');
-            this.showData('materials');
+            //this.showData('materials');
+            this.showData('global');
+            this.init();
+            //this.showData('global');
             this.userData_id = this.getCurrentUserDocID();
             
     }
 
     ngOnInit() {
+        console.log("Correu o INIT do DATASERVICE");
+    }
+    init() {
+        console.log('A inicializar as variáveis globais');
+        //Adicionar numero de avaliações pendentes
+        //...
+        this.globalData_id = this.database.getDatabase().createDocument({
+            "type": "global",
+            "dataRequest": "false",
+        });
     }
     sync() {
         /*
@@ -53,6 +69,7 @@ export class DataService {
     }
  
     setUser(registeredUser) {
+        console.log('A gravar o utilizador');
         this.userData_id = this.database.getDatabase().createDocument({
             "type": "user",
             "user": registeredUser
@@ -65,14 +82,16 @@ export class DataService {
     setMaterials() {
 
     }
-    getPatientsData(){   
+    getPatientsData(){
+        console.log('A devolver todos os dados da BD');   
         return this.database.getDatabase().getDocument(this.patientsData_id).data;
     }
     setPatientsData(data) {
         console.log('Gravar dados Pacientes');
+
         //debug
-        this.deleteData('data');
-        this.deleteData('materials');
+        //this.deleteData('data');
+        //this.deleteData('materials');
         
         //Todos os dados do paciente e ref _id
         this.patientsData_id = this.database.getDatabase().createDocument({
@@ -83,25 +102,28 @@ export class DataService {
         //Guarda dados dos Pacientes
         //Guarda dados das necessidades
         
-        //Guarda dados dos materiais e adiciona ratings aos materiais
+        /*Guarda dados dos materiais e adiciona ratings aos materiais
         let materials = [];
         for(let i = 0; i < data.length; i++) {
             for(let j = 0; j < data[i].needs.length; j++) {
                 materials.push(data[i].needs[j].materials); 
             }
         }
-    
+        console.log('A criar os ratings nos dados');
         for(let i = 0; i < materials.length; i++) {
             for(let j = 0; j < materials[i].length; j++) {
                materials[i][j]['ratings'] = [''];
             }
         }
-
+        console.log("A guardar os materiais na BD");
         this.materials_id = this.database.getDatabase().createDocument({
                 "type": "materials",
                 "materials": materials,
         });
-        
+        */
+        this.database.getDatabase().updateDocument(this.globalData_id, {
+            "dataRequest": "true"
+        });
 
 
         //console.log(JSON.stringify(data[0].needs[0].materials,null,4));
@@ -130,12 +152,15 @@ export class DataService {
 
     }
     getToken(): string {
+        console.log('A devolver token');
         return this.database.getDatabase().getDocument(this.userData_id).user.caregiver_token;
     }
     getUserID(): string {
+        console.log('A devolver o ID do user');
         return this.database.getDatabase().getDocument(this.userData_id).user.id;
     }
     getLatestUserToRegister() {
+        console.log("A devolver ultimo utilizador registado")
         var users = this.getAllUsers();
         
         if(users) {
@@ -213,6 +238,7 @@ export class DataService {
         return null;
     }
     public isUserAuth() {
+        console.log('A verificar se existe utilizador na BD');
         if(this.userData_id) {
             return true;
         }
@@ -220,11 +246,12 @@ export class DataService {
     }
     //Guarda avaliações dos materiais
     public setRating(rating) {
+        console.log('A registar o rating');
         //Recebo o rating, com id do material
         //Vou à BD dos materiais
         //Para cada material com aquele id, atualizar o seu rating.
+        /*Isto altera a bd dos materiais.
         let materials = this.database.getDatabase().getDocument(this.materials_id).materials;
-        //console.log(JSON.stringify(materials, null, 4));
         
         for(let i = 0; i < materials.length; i++) {
             for(let j = 0; j < materials[i].length; j++) {
@@ -242,13 +269,55 @@ export class DataService {
         })
         
         //this.showData('materials');
+        FIM da alteração na BD dos materiais*/
+        /*Assim altera a BD dos pacientes*/
+        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
+        let patientsData = this.database.getDatabase().getDocument(this.patientsData_id).data;
+        //console.log("Entrou no for");
+        for(let i = 0; i < patientsData.length; i++) {
+            for(let j = 0; j < patientsData[i].needs.length; j++) {
+                for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
+                        patientsData[i].needs[j].materials[k]['ratings'] = [''];
+                    
+                }
+            }
+        }
         
+        for(let i = 0; i < patientsData.length; i++) {
+            for(let j = 0; j < patientsData[i].needs.length; j++) {
+                for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
+                    
+                    if(patientsData[i].needs[j].materials[k].id == rating.id_material) {
+                        console.log('registou');
+                        //console.log(JSON.stringify(patientsData[i][j][k],null,4));
+                        patientsData[i].needs[j].materials[k].ratings.push(rating);     
+                    }
+                }
+            }
+        }
+        //console.log(JSON.stringify(patientsData,null,4));
+        this.database.getDatabase().updateDocument(this.patientsData_id, {
+            "type": "data",
+            "materials": patientsData,
+        })
+
+        //this.showData("data");
     }
     public getMaterialRating(material_id) {
 
     }
 
     public getNeedMaterials() {
+        console.log('A devolver todos os materiais');
         return this.database.getDatabase().getDocument(this.materials_id).materials;
+    }
+
+    public isPatientsRequestDone() {
+        console.log("A verificar se o pedido à BD já foi feito");
+        console.log(this.database.getDatabase().getDocument(this.globalData_id).dataRequest);
+        if(this.database.getDatabase().getDocument(this.globalData_id).dataRequest == "false") {
+            return false;
+        }
+         return true;
     }
 }

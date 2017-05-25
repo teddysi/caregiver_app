@@ -20,7 +20,6 @@ export class ConnectorService {
     private user: User;
     private data: any;
     public connectionType: string;
-    public firstDataRequest = true;
     
     constructor(private zone: NgZone, private http: Http, private router: Router, private dataService: DataService) {
         console.log('Instanciou - ConnectorService!');
@@ -76,6 +75,7 @@ export class ConnectorService {
         });
     }
     requestLogin(username, password): Observable<User> {
+         console.log('A fazer login');
         if(!this.isConnected()) {
             return null;
         }
@@ -91,12 +91,12 @@ export class ConnectorService {
 
     getPatientsData(): Observable<Patient[]>
     {
+         console.log('A fazer o request dos dados ao server');
         //se não tem conetividade
         /*if(!this.isConnected() || !this.firstDataRequest) { //Com ERRO
             return this.dataService.getPatientsData();
         }*/
         //se tem conetividade
-        this.firstDataRequest = false;
         let headers = this.createRequestHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/patients'
     
@@ -155,12 +155,14 @@ export class ConnectorService {
         console.log("onGetDataError: " + err);
     }
     private createRequestHeader() {
+         console.log('A construir o Header para o request dos dados dos pacientes');
         let headers = new Headers();
         headers.append("Authorization", this.dataService.getToken());
         headers.append("Content-Type", "application/json");
         return headers;
     }
     private createLoginHeader() {
+         console.log('A criar o Header para o login');
       let headers = new Headers();
         // set headers here e.g.
         headers.append("AuthKey", "my-key");
