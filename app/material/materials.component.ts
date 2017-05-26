@@ -63,23 +63,24 @@ export class MaterialsComponent implements OnInit {
 		*/
 	}
 
-	getBorderColor(rating) {
-		console.log('ENTROU!!!!!!!!!!!!!!!!!!!')
-		
+	getBorderColor(rating) {	
 		if(rating) {
-			console.log('HA');
+			console.log('A verficar rating existente dos materiais');	
 			console.log(JSON.stringify(rating, null, 4));
-		}
-		
-		switch (rating) {
-			case '0': 
-				return 'yellow';
-			case '-1': 
-				return 'red';
-			case '1': 
-				return 'green';	
-			default:
-				return 'black';
+			
+			switch (rating.evaluation) {
+				case '0':
+					console.log('Amarelo');
+					 return { 'background-color': 'yellow' };
+				case '-1': 
+					console.log('Vermelho');
+					return { 'background-color': 'red' };
+				case '1':
+					console.log('Verde'); 
+					return { 'background-color': 'green' };
+				default:
+					 return { 'background-color': 'black' };
+			}
 		}	
 	}
 	addPropertyNeedOnMaterial() {

@@ -274,6 +274,7 @@ export class DataService {
         //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
         let patientsData = this.database.getDatabase().getDocument(this.patientsData_id).data;
         //console.log("Entrou no for");
+        /*
         for(let i = 0; i < patientsData.length; i++) {
             for(let j = 0; j < patientsData[i].needs.length; j++) {
                 for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
@@ -282,7 +283,7 @@ export class DataService {
                 }
             }
         }
-        
+        */
         for(let i = 0; i < patientsData.length; i++) {
             for(let j = 0; j < patientsData[i].needs.length; j++) {
                 for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
@@ -290,7 +291,7 @@ export class DataService {
                     if(patientsData[i].needs[j].materials[k].id == rating.id_material) {
                         console.log('registou');
                         //console.log(JSON.stringify(patientsData[i][j][k],null,4));
-                        patientsData[i].needs[j].materials[k].ratings.push(rating);     
+                        patientsData[i].needs[j].materials[k]['ratings'] = rating;    
                     }
                 }
             }
@@ -298,9 +299,9 @@ export class DataService {
         //console.log(JSON.stringify(patientsData,null,4));
         this.database.getDatabase().updateDocument(this.patientsData_id, {
             "type": "data",
-            "materials": patientsData,
+            "data": patientsData,
         })
-
+        
         //this.showData("data");
     }
     public getMaterialRating(material_id) {

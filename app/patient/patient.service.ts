@@ -29,6 +29,7 @@ export class PatientService {
     }
     getPatients_BD() {
         this.patients = this.dataService.getPatientsData();
+        console.log(this.patients);
         return this.patients;
     }
 
