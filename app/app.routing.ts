@@ -11,6 +11,8 @@ import { NeedComponent } from "./need/need.component";
 import { TestComponent } from "./test/test.component";
 import { EvaluationComponent } from "./evaluation/evaluation.component";
  
+import { EvaluationListComponent } from "./evaluation/evaluation-list.component";
+
 const routes: Routes = [
     { path: "", component: LoginComponent }, 
     //{ path: "", redirectTo: "/patients", pathMatch: "full" },
@@ -25,6 +27,7 @@ const routes: Routes = [
     { path: "patient/:id/material/:id_material", component: MaterialDetailComponent },
 
     //Evaluation
+   { path: "evaluations", component: EvaluationListComponent },
    { path: "patient/:id/material/:id_material/evaluation", component: EvaluationComponent }
        
 ];

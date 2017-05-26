@@ -27,6 +27,7 @@ import { RadioButtonModule } from 'nativescript-radiobutton/angular'
 
 //evaluation
 import { EvaluationComponent } from "./evaluation/evaluation.component";
+import { EvaluationListComponent } from "./evaluation/evaluation-list.component";
 
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
 
@@ -51,6 +52,7 @@ import { EvaluationComponent } from "./evaluation/evaluation.component";
         NeedComponent,
         TestComponent,
         EvaluationComponent,
+        EvaluationListComponent,
         MaterialDetailComponent,
         ...navigatableComponents
        

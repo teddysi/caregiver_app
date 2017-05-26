@@ -1,6 +1,6 @@
 <ActionBar  title="Utentes" class="action-bar">
 <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_dialog_info"
-    color="yellow" ios.position="right" tap="goToEvaliationsList()"></ActionItem>
+   ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
 
 </ActionBar>
 <StackLayout class="page">

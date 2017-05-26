@@ -1,0 +1,8 @@
+"use strict";
+var Questionnaire = (function () {
+    function Questionnaire() {
+    }
+    return Questionnaire;
+}());
+exports.Questionnaire = Questionnaire;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicXVlc3Rpb25uYWlyZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInF1ZXN0aW9ubmFpcmUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUVBO0lBQUE7SUFPQSxDQUFDO0lBQUQsb0JBQUM7QUFBRCxDQUFDLEFBUEQsSUFPQztBQVBZLHNDQUFhIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgUXVlc3Rpb24gfSBmcm9tIFwiLi9xdWVzdGlvblwiO1xyXG5cclxuZXhwb3J0IGNsYXNzIFF1ZXN0aW9ubmFpcmUge1xyXG4gICAgaWQ6IG51bWJlcjtcclxuICAgIG5hbWU6IHN0cmluZztcclxuICAgIHF1ZXN0aW9uczogUXVlc3Rpb25bXTtcclxuICAgIGRvbmU6IGJvb2xlYW47XHJcbiAgICBkYXRlX2RvbmU6IHN0cmluZztcclxuXHJcbn1cclxuIl19

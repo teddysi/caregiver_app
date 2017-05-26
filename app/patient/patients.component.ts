@@ -3,6 +3,7 @@ import app = require("application");
 import platform = require("platform");
 import { PatientService } from "./patient.service";
 import { Patient } from "./patient";
+import { Questionnaire } from "../evaluation/questionnaire";
 
 import { Router } from "@angular/router";
 import { CreateViewEventData } from "ui/placeholder";
@@ -20,6 +21,8 @@ import dialogs = require("ui/dialogs");
 })
 export class PatientsComponent implements OnInit {
     patients: Patient[];
+    caregiverQuestionnaires: Questionnaire[];
+    
     listLoaded = false;
     isLoading = false;
     hasEvaluationsToDo= true; //condition to enable action bar icon evaluations
@@ -64,9 +67,11 @@ export class PatientsComponent implements OnInit {
     }
     private onGetDataSuccess(result) {
     
-        this.patients = result;
+        this.patients = result.patients; //teddy
+      //  this.caregiverQuestionnaires = result.quizs; //teddy
         
         this.patientService.setPatients(this.patients);
+       // this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaire); TODO
        
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         if (this.patients.length == 1 && this.firstTime==true) {
@@ -80,7 +85,5 @@ export class PatientsComponent implements OnInit {
         console.log(error.json());
     }
 
-    goToAvaliationsList(){
-        //TODO
-    }
+
 }
