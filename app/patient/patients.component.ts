@@ -32,29 +32,25 @@ export class PatientsComponent implements OnInit {
     public successMessage: string;
     public writtenContent: string;
     public isItemVisible: boolean = false;
-    public firstTime: boolean = true;
 
     constructor(private patientService: PatientService, private router: Router, private userService: UserService) { 
        
     }
     ngOnInit(): void {
         this.isLoading = true;
-        console.log(this.firstTime);
-        if(this.firstTime) {
-            this.firstTime = false;
-            console.log('Pedido à Cloud');
-            this.patientService.getPatients()
-            .subscribe(
-            (result) => this.onGetDataSuccess(result),
-            (error) => this.onGetDataError(error)
-            );
+            if(!this.patientService.isFirstRequest()) {
+                this.patientService.getPatients().subscribe(
+                    (result) => this.onGetDataSuccess(result),
+                    (error) => this.onGetDataError(error)
+                );
+            } else {
+                console.log("A mostrar da BD");
+                this.patients = this.patientService.getPatients_BD();
+            }
+            
             this.isLoading = false;
             this.listLoaded = true;
             
-        } else {
-            console.log('Pedido à BD');
-            this.patients = this.patientService.getPatients_BD();   
-        }
 
         //verify and notificate if has evaluations to do
         if (this.hasEvaluationsToDo) {
@@ -74,11 +70,11 @@ export class PatientsComponent implements OnInit {
        // this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaire); TODO
        
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
-        if (this.patients.length == 1 && this.firstTime==true) {
-            this.firstTime = false;
+        /*if (this.patients.length == 1 && this.firstTime==true) {
+            this.firstTime = false;*/
             //console.log(JSON.stringify(this.patients[0], null, 4));
             //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
-        }   
+        //}   
 
     }
     private onGetDataError(error: Response | any) {

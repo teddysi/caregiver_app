@@ -8,9 +8,10 @@
 <StackLayout class="page">
     <ListView [items]="materials" class="list-group">
         <ng-template let-item="item">
-            <FlexboxLayout class="m-15 rating-border" [ngStyle]="{ 'border-bottom-color': getBorderColor(item.rating)}" [nsRouterLink]="['/patient',patient.id,'material',item.id]">
+            <FlexboxLayout class="m-15 rating-border" [ngStyle]="getBorderColor(item.ratings)" [nsRouterLink]="['/patient',patient.id,'material',item.id]">
                 <StackLayout orientation="vertical">
                     <Label class="h3" [text]="item.name"></Label>
+                    <!--<Label class="h3" [text]="item.ratings[item.ratings.length-1]"></Label>-->
                     <Label class="h4" [text]="'Material Type: '+item.type"></Label>
 
                     <Label class="h4" [text]="item.need_description" textWrap="true"></Label>
