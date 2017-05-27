@@ -11,13 +11,14 @@
             <StackLayout orientation="vertical">
 
                 <!--EVALUATION -->
-                <label [text]="item.id" class="h4"></label>
-                <label [text]="item.question" class="h3" textWrap="true"></label>
+                
 
 
 
                 <!-- TYPE RADIO-->
-                <StackLayout *ngIf="item.type==='radio'">
+                <StackLayout *ngIf="item.type == 'radio'">
+                    <label [text]="item.id" class="h4"></label>
+                    <label [text]="item.question" class="h3" textWrap="true"></label>
                     <RadioGroup [(value)]="item.response">
                         <RadioButton *ngFor="let itemt of item.valuesToRadio" [text]="itemt"></RadioButton>
                         <!--    <Label *ngFor="let item of itemsArray|limitTo:10" [text]="item.body"></Label>
@@ -31,8 +32,11 @@
 
 
                 <!-- TYPE TEXT-->
-                <TextField #item.response *ngIf="item.type == 'text'" hint="response"  autocorrect="false"></TextField>
-
+                <StackLayout *ngIf="item.type == 'text'">
+                <label [text]="item.id" class="h4"></label>
+                <label [text]="item.question" class="h3" textWrap="true"></label>
+                <TextField [text]='item.response' hint="response"  autocorrect="false"></TextField>
+</StackLayout>
 
                 <!--Button submmit if is the last element-->
                 <StackLayout *ngIf="i == questionnaire.questions.length-1" orientation="horizontal">

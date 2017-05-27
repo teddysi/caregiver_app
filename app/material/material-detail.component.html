@@ -1,5 +1,6 @@
 <ActionBar [title]="materialParent.description" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
+    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_dialog_info" ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
 </ActionBar>
 
 <StackLayout class="page">
@@ -42,12 +43,12 @@
                 </StackLayout>
                 <---->
 
-                <!-- EVALULUATION COMPLEX OF THE CAREGIVER CAPACITY-->
-                <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="Avaliar Material" style=" text-align: center"></label>
+                <!-- EVALULUATION COMPLEX OF THE CAREGIVER CAPACITY
+                <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="" style=" text-align: center"></label>
                 <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
                      <Button text="Avaliação requerida" class="submit-button" (tap)="avaliarCuidador(materialParent.id)"></Button>
                 </StackLayout>
-                <---->
+                -->
 
             </StackLayout>
         </ng-template>

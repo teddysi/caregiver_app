@@ -21,6 +21,7 @@ export class PatientService {
 
     public patients: Patient[];
     public caregiverQuestionaires: Questionnaire[];
+    public hasEvaluationsToDo: boolean;
 
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
         console.log('Instanciou - PatientService!');
@@ -48,8 +49,12 @@ export class PatientService {
 
     //temp
 
+    setCaregiverQuestionnaires(caregiverQuestionaires){
+this.caregiverQuestionaires=caregiverQuestionaires
+    }
+
     getCaregiverQuestionnaires(){ // temporario para futuramente alterar
-        this.caregiverQuestionaires=[];
+       /* this.caregiverQuestionaires=[];
         var quest_ = new Questionnaire();
 
         this.caregiverQuestionaires[0]=quest_;
@@ -115,7 +120,7 @@ export class PatientService {
         this.caregiverQuestionaires[1].questions.push(b);
         this.caregiverQuestionaires[1].questions.push(c);
         this.caregiverQuestionaires[1].questions.push(d);
-
+*/
         return this.caregiverQuestionaires;
     }
 }

@@ -34,6 +34,8 @@ export class MaterialDetailComponent implements OnInit {
     materialParent: Material;
     materialsToDisplay: Material[];
 
+    hasEvaluationsToDo: boolean;
+
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
    // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
@@ -90,6 +92,9 @@ export class MaterialDetailComponent implements OnInit {
 			control = true;		
 		}
 		*/
+        
+        //Evaluations
+        this.hasEvaluationsToDo=this.patientService.hasEvaluationsToDo;
 
     }
 

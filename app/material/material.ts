@@ -1,3 +1,4 @@
+import { Questionnaire } from "../evaluation/questionnaire";
 export class Material {
     
 
@@ -9,6 +10,7 @@ export class Material {
     path: string;
     url: string;
     number:number; //number contact emergency
+    quizs: Questionnaire[];
 
     materials: Material[];
     

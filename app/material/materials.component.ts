@@ -26,6 +26,7 @@ export class MaterialsComponent implements OnInit {
 	need: Need;
 	materials: Material[];
 	rating_colors: {};
+hasEvaluationsToDo: boolean;
 
 	constructor(
 		private patientService: PatientService,
@@ -63,6 +64,9 @@ export class MaterialsComponent implements OnInit {
 			control = true;		
 		}
 		*/
+
+		//evaluations
+		this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
 	}
 
 	getBorderColor(rating) {	

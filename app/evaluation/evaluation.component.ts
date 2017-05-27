@@ -66,9 +66,11 @@ export class EvaluationComponent implements OnInit {
                var a = element.values.split(";");
                console.log("# COMPOMENTE EVALUATION valuesToRadio :" +a);
                a.pop();
+            
                element["valuesToRadio"]=a;
+              
            } else{
-               element.response = " ";
+               element.response = "";
            }
         });
     }
