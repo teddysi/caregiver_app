@@ -37,6 +37,7 @@ export class PatientsComponent implements OnInit {
        
     }
     ngOnInit(): void {
+        
         this.isLoading = true;
             if(!this.patientService.isFirstRequest()) {
                 this.patientService.getPatients().subscribe(
@@ -45,6 +46,7 @@ export class PatientsComponent implements OnInit {
                 );
             } else {
                 console.log("A mostrar da BD");
+               
                 this.patients = this.patientService.getPatients_BD();
             }
             
@@ -60,10 +62,11 @@ export class PatientsComponent implements OnInit {
                 okButtonText: "OK"
             })
         }
-    }
+        
+    }  
     private onGetDataSuccess(result) {
-    
-        this.patients = result.patients; //teddy
+        
+        this.patients = result; //teddy
       //  this.caregiverQuestionnaires = result.quizs; //teddy
         
         this.patientService.setPatients(this.patients);
@@ -75,7 +78,7 @@ export class PatientsComponent implements OnInit {
             //console.log(JSON.stringify(this.patients[0], null, 4));
             //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         //}   
-
+        
     }
     private onGetDataError(error: Response | any) {
         console.log(error.json());

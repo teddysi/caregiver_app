@@ -35,9 +35,11 @@ export class MaterialsComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
+      console.log("# COMPONENTE MATERIALS")
 		const id = +this.route.snapshot.params["id"];
 		const idx = +this.route.snapshot.params["id_need"];
+
+		this.patientService.getPatients_BD();
 
 		this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
 

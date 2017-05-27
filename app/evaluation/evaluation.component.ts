@@ -9,6 +9,9 @@ import buttonModule = require("ui/button");
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
 
+import { Questionnaire } from "../evaluation/questionnaire";
+import { Question } from "../evaluation/question";
+
 
 @Component({
     selector: 'evaluation',
@@ -18,11 +21,8 @@ import { openUrl } from "utils/utils";
 })
 
 export class EvaluationComponent implements OnInit {
-    patient: Patient;
-    need: Need;
-    materialsOfAllNeeds: Material[];
-    materialParent: Material; //é o material
-    evaluations: Evaluation[];
+ 
+    questionnaire: Questionnaire;
 
     constructor(
         private patientService: PatientService,
@@ -34,7 +34,7 @@ export class EvaluationComponent implements OnInit {
 
         //************************************************************************* */
         //para teste -> depois substituir pelo formulario que vem do servidor
-        this.evaluations = [];
+        /*this.evaluations = [];
         this.evaluations.push(new Evaluation())
         this.evaluations[0].id = 0;
         this.evaluations[0].description = "Nivel de facilidade";
@@ -47,36 +47,30 @@ export class EvaluationComponent implements OnInit {
         //****************************************************************************** */
 
         //router params
-        const id = +this.route.snapshot.params["id"];
-        const idx = +this.route.snapshot.params["id_material"];
-        //Get Patient
-        this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
-        //criar lista de materiais com propriadade adicional need name and need description
-        this.addPropertyNeedOnMaterial();
-        //Select material
-        this.materialParent = this.materialsOfAllNeeds.filter(material => material.id === idx)[0];
+        const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
+        
+        //Get Questionnaire
+        this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire+"")[0];
+         
+        //transform radio buttons
+        this.transformRadioButtons();
+     
+     console.log("# COMPOMENTE EVALUATION [questionnaire] :"+ ref_questionnaire + " " +this.questionnaire);
     }
 
 
-    /**
-     * 
-     * 
-     * 
-     * @memberof EvaluationComponent
-     */
-    addPropertyNeedOnMaterial() {
-        let materials_temp: Material[];
-        materials_temp = [];
-
-        this.patient.needs.forEach(need => {
-            need.materials.forEach(materialOfaNeed => {
-                materialOfaNeed["need_id"] = need.id;
-                materialOfaNeed["need_description"] = need.description;
-                materials_temp.push(materialOfaNeed);
-            });
+    transformRadioButtons(){
+        this.questionnaire.questions.forEach(element => {
+            
+           if (element.type=="radio") {
+               var a = element.values.split(";");
+               console.log("# COMPOMENTE EVALUATION valuesToRadio :" +a);
+               a.pop();
+               element["valuesToRadio"]=a;
+           } else{
+               element.response = " ";
+           }
         });
-
-        this.materialsOfAllNeeds = materials_temp;
     }
 
 
@@ -87,8 +81,10 @@ export class EvaluationComponent implements OnInit {
      * @memberof EvaluationComponent
      */
     submeterAvaliacao() {
-        console.log("# Evaluation 0 -> " + this.evaluations[0].response)
-        console.log("# Evaluation 1 -> " + this.evaluations[1].response)
+      console.log("# Evaluation 0 -> " + this.questionnaire.questions[0].response)
+      console.log("# Evaluation 0 -> " + this.questionnaire.questions[1].response)
+      console.log("# Evaluation 0 -> " + this.questionnaire.questions[2].response)
+      //  console.log("# Evaluation 1 -> " + this.evaluations[].response)
     }
 
 }

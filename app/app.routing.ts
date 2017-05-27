@@ -28,6 +28,8 @@ const routes: Routes = [
 
     //Evaluation
    { path: "evaluations", component: EvaluationListComponent },
+   { path: "evaluation/:ref_questionnaire", component: EvaluationComponent },
+
    { path: "patient/:id/material/:id_material/evaluation", component: EvaluationComponent }
        
 ];

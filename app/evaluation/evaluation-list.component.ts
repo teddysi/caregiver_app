@@ -10,6 +10,10 @@ import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
 
 
+import { Questionnaire } from "../evaluation/questionnaire";
+import { Question } from "../evaluation/question";
+
+
 @Component({
     selector: 'evaluation-list',
     moduleId: module.id,
@@ -18,7 +22,8 @@ import { openUrl } from "utils/utils";
 })
 
 export class EvaluationListComponent implements OnInit {
-    patient: Patient;
+    patients: Patient[];
+    public caregiverQuestionaires: Questionnaire[];
     need: Need;
     materialsOfAllNeeds: Material[];
     materialParent: Material; //é o material
@@ -31,8 +36,8 @@ export class EvaluationListComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("# COMPONENT LIST EVALUATIONS ")
-
-       
+        this.caregiverQuestionaires=this.patientService.getCaregiverQuestionnaires();   
+        console.log("# QUESTIONNAIRES :" +this.caregiverQuestionaires.toString())    
     }
 
 
