@@ -50,7 +50,8 @@ export class PatientService {
     //temp
 
     setCaregiverQuestionnaires(caregiverQuestionaires){
-this.caregiverQuestionaires=caregiverQuestionaires
+        this.dataService.setQuizs(caregiverQuestionaires);
+        this.caregiverQuestionaires = caregiverQuestionaires;
     }
 
     getCaregiverQuestionnaires(){ // temporario para futuramente alterar
@@ -121,7 +122,7 @@ this.caregiverQuestionaires=caregiverQuestionaires
         this.caregiverQuestionaires[1].questions.push(c);
         this.caregiverQuestionaires[1].questions.push(d);
 */
-        return this.caregiverQuestionaires;
+        return this.dataService.getQuizs();
     }
 }
 

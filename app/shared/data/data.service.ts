@@ -21,6 +21,7 @@ export class DataService {
     public materials_id: any;
     public ratings_id: any;
     public globalData_id: any;
+    public quizs_id: any;
 
     public RequestData_control: any;
 
@@ -43,6 +44,7 @@ export class DataService {
             this.init();
             //this.showData('global');
             this.userData_id = this.getCurrentUserDocID();
+            //this.setQuizID();
             
     }
 
@@ -320,5 +322,22 @@ export class DataService {
             return false;
         }
          return true;
+    }
+    public setQuizs(caregiverQuestionaires) {
+        console.log("A guardar questionários na BD");
+        this.quizs_id = this.database.getDatabase().createDocument({
+            "type": "quiz",
+            "quiz": caregiverQuestionaires
+        });
+    }
+    public setQuizID() {
+        console.log(this.database.getDatabase().executeQuery('quiz'));
+         if(this.database.getDatabase().executeQuery('quiz')) {
+             this.quizs_id = this.database.getDatabase().executeQuery('quiz')._id;
+         }
+         return false;
+    }
+    public getQuizs() {
+        return this.database.getDatabase().getDocument(this.quizs_id).quiz;
     }
 }
