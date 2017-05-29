@@ -20,7 +20,10 @@
                     <label [text]="item.id" class="h4"></label>
                     <label [text]="item.question" class="h3" textWrap="true"></label>
                     <RadioGroup [(value)]="item.response">
-                        <RadioButton *ngFor="let itemt of item.valuesToRadio" [text]="itemt"></RadioButton>
+                        
+                            <RadioButton *ngFor="let itemt of item.valuesToRadio" [text]="itemt" textWrap="true" ></RadioButton>
+                        
+                        
                         <!--    <Label *ngFor="let item of itemsArray|limitTo:10" [text]="item.body"></Label>
                         <RadioButton text="1"></RadioButton>
                         <RadioButton text="2"></RadioButton>
@@ -35,10 +38,10 @@
                 <StackLayout *ngIf="item.type == 'text'">
                 <label [text]="item.id" class="h4"></label>
                 <label [text]="item.question" class="h3" textWrap="true"></label>
-                <TextField [text]='item.response' hint="response"  autocorrect="false"></TextField>
+                <TextField [text]="item.response"  hint="response"  autocorrect="false"></TextField>
 </StackLayout>
 
-                <!--Button submmit if is the last element-->
+                <!--Button evaluation if is the last element-->
                 <StackLayout *ngIf="i == questionnaire.questions.length-1" orientation="horizontal">
                     <Button text="Submeter Avaliação" class="submit-button" (tap)="submeterAvaliacao()"></Button>
                 </StackLayout>
