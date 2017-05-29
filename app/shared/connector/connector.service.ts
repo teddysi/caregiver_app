@@ -27,6 +27,7 @@ export class ConnectorService {
         this.connector = new Connector();
         //Recebe e monotoriza o tipo de conexão
         this.connectionType = this.getConnectionType();
+        console.log('Connection TYPE: ' + this.connectionType);
         this.startConnectionMonitor();
 
         this.connector.serverURL = '35.184.244.41/caregivers/public'; //LIVE
@@ -177,7 +178,7 @@ export class ConnectorService {
         this.connector.accessToken = user_token;
     }
     public isConnected() {
-        if(this.connectionType == 'null') {
+        if(this.connectionType == 'None') {
             return false;
         }
         return true;

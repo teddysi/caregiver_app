@@ -26,6 +26,11 @@ export class PatientService {
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
         console.log('Instanciou - PatientService!');
     }
+
+    isConnected() {
+        return this.connectorService.isConnected();
+    }
+
     isFirstRequest() {
         return this.dataService.isPatientsRequestDone();
     }
@@ -34,7 +39,6 @@ export class PatientService {
     }
     getPatients_BD() {
         this.patients = this.dataService.getPatientsData();
-        console.log(this.patients);
         return this.patients;
     }
 

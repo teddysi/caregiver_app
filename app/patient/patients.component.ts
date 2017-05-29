@@ -39,14 +39,14 @@ export class PatientsComponent implements OnInit {
     ngOnInit(): void {
 
         this.isLoading = true;
-        if (!this.patientService.isFirstRequest()) {
+        console.log(this.patientService.isConnected());
+        if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
             this.patientService.getPatients().subscribe(
                 (result) => this.onGetDataSuccess(result),
                 (error) => this.onGetDataError(error)
             );
         } else {
             console.log("A mostrar da BD");
-
             this.patients = this.patientService.getPatients_BD();
         }
 

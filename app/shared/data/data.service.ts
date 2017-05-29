@@ -30,21 +30,20 @@ export class DataService {
     public folderName: string;
     public fileName: string;
  
-    constructor(public database: Database, //public connectorService: ConnectorService)
-    ){
+    constructor(public database: Database){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            //this.deleteData('data');
+            //this.deleteData('global');
             //this.deleteData('user');
-            //this.deleteData('materials');
+            //this.deleteData('global');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
-            //this.showData('user');
+            //this.showData('user');2
             //this.showData('materials');
             this.showData('global');
             this.init();
             //this.showData('global');
-            this.userData_id = this.getCurrentUserDocID();
-            //this.setQuizID();
+            
+            //
             
     }
 
@@ -55,10 +54,26 @@ export class DataService {
         console.log('A inicializar as variáveis globais');
         //Adicionar numero de avaliações pendentes
         //...
-        this.globalData_id = this.database.getDatabase().createDocument({
-            "type": "global",
-            "dataRequest": "false",
-        });
+        if(this.isGlobalSet()) {
+            console.log('A atualizar global de conexao');
+            this.globalData_id = this.getGlobalsID();
+            this.database.getDatabase().updateDocument(this.globalData_id, {
+                "dataRequest": "false"
+            });
+            console.log('Atualizou');
+        } else {
+            console.log('A criar objeto para as variáveis globais');
+            this.globalData_id = this.database.getDatabase().createDocument({
+                "type": "global",
+                "dataRequest": "false",
+            });
+        }
+        
+        this.userData_id = this.getCurrentUserDocID();
+        this.patientsData_id = this.getLatestPatientData();
+        this.quizs_id = this.getQuizID();
+        
+        
     }
     sync() {
         /*
@@ -85,7 +100,8 @@ export class DataService {
 
     }
     getPatientsData(){
-        console.log('A devolver todos os dados da BD');   
+        console.log('A devolver todos os dados da BD');
+        console.log(this.patientsData_id);   
         return this.database.getDatabase().getDocument(this.patientsData_id).data;
     }
     setPatientsData(data) {
@@ -316,7 +332,7 @@ export class DataService {
     }
 
     public isPatientsRequestDone() {
-        console.log("A verificar se o pedido à BD já foi feito");
+        console.log("A verificar se o pedido ao servidor já foi feito");
         console.log(this.database.getDatabase().getDocument(this.globalData_id).dataRequest);
         if(this.database.getDatabase().getDocument(this.globalData_id).dataRequest == "false") {
             return false;
@@ -330,14 +346,49 @@ export class DataService {
             "quiz": caregiverQuestionaires
         });
     }
-    public setQuizID() {
-        console.log(this.database.getDatabase().executeQuery('quiz'));
-         if(this.database.getDatabase().executeQuery('quiz')) {
-             this.quizs_id = this.database.getDatabase().executeQuery('quiz')._id;
+    public getQuizID() {
+        console.log("A obter ID dos quizs")
+         if(this.database.getDatabase().executeQuery('quiz').length > 0) {
+             //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
+             return this.database.getDatabase().executeQuery('quiz')._id;
          }
-         return false;
+         return null;
     }
     public getQuizs() {
         return this.database.getDatabase().getDocument(this.quizs_id).quiz;
+    }
+    public getLatestPatientData() {
+        var patientsData = this.getAllPatientsData();
+
+        if(patientsData) {
+            var lastData;
+
+            lastData = patientsData[patientsData.length - 1];
+            return lastData._id;
+        }
+        return null;
+    }
+    public isGlobalSet() {
+        if(this.database.getDatabase().executeQuery('global').length > 0) {            
+            return true;
+        }
+        return false;
+    }
+    public getGlobalsID() {
+        if(this.database.getDatabase().executeQuery('global').length > 0) {
+            console.log(JSON.stringify(this.database.getDatabase().executeQuery("global"), null, 4));
+            
+            return this.database.getDatabase().executeQuery('global')[0]._id;
+        }
+        return null;
+    }
+    public getAllPatientsData() {
+        console.log('Entrou 1');
+        if(this.database.getDatabase().executeQuery("data").length > 0) {
+            
+           // console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
+            return this.database.getDatabase().executeQuery("data");
+        }         
+        return false;
     }
 }
