@@ -150,5 +150,8 @@ export class MaterialDetailComponent implements OnInit {
     getRatings() {
         return this.ratings;
     }
+    fillQuestionnaire(ref_questionnaire){
+        this.router.navigate(['/evaluation', ref_questionnaire]);
+    }
 
 }

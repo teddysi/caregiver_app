@@ -64,13 +64,14 @@ export class EvaluationComponent implements OnInit {
             
            if (element.type=="radio") {
                var a = element.values.split(";");
-               console.log("# COMPOMENTE EVALUATION valuesToRadio :" +a);
                a.pop();
+               console.log("# COMPOMENTE EVALUATION valuesToRadio :" +a + " TAMANHO:"+ a.length);
             
                element["valuesToRadio"]=a;
+
               
            } else{
-               element.response = "";
+               element.response = " ";
            }
         });
     }
@@ -82,10 +83,16 @@ export class EvaluationComponent implements OnInit {
      * 
      * @memberof EvaluationComponent
      */
-    submeterAvaliacao() {
+    submeterAvaliacao(ref_questionnaire) {
+
+    //set questionnaire done
+    this.questionnaire.done=true;
+
+    //TODO - gravar questinario na bd
+
       console.log("# Evaluation 0 -> " + this.questionnaire.questions[0].response)
       console.log("# Evaluation 0 -> " + this.questionnaire.questions[1].response)
-      console.log("# Evaluation 0 -> " + this.questionnaire.questions[2].response)
+
       //  console.log("# Evaluation 1 -> " + this.evaluations[].response)
     }
 

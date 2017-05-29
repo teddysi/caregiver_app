@@ -92,17 +92,23 @@ export class PatientsComponent implements OnInit {
     }
 
     loadAllQuestionnairesFromResponse() {
+        //size of inicial array
+        let sizeInitial = this.caregiverQuestionnaires.length;
         //set ref
         this.patients.forEach(element_p => {
             if (element_p.quizs) {
                 element_p.quizs.forEach(element_q => {
                     this.caregiverQuestionnaires.push(element_q)
+                    element_q["ref_questionnaire"] = (sizeInitial) +""
+                    sizeInitial++;
                 });
             }
             element_p.needs.forEach(element_need => {
                 element_need.materials.forEach(element_mat => {
                     element_mat.quizs.forEach(element_qu => {
                         this.caregiverQuestionnaires.push(element_qu)
+                        element_qu["ref_questionnaire"] = (sizeInitial) + ""
+                        sizeInitial++;
                     });
                 });
             });
@@ -112,6 +118,8 @@ export class PatientsComponent implements OnInit {
         this.caregiverQuestionnaires.forEach(element => {
             element.ref_questionnaire = index + "";
             index++;
+            //questionnaire not have response yet
+            element.done=false;
 
         });
 

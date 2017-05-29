@@ -24,10 +24,8 @@ import { Question } from "../evaluation/question";
 export class EvaluationListComponent implements OnInit {
     patients: Patient[];
     public caregiverQuestionaires: Questionnaire[];
-    need: Need;
-    materialsOfAllNeeds: Material[];
-    materialParent: Material; //é o material
-    evaluations: Evaluation[];
+    public caregiverQuestionairesTemp: Questionnaire[];
+
 
     constructor(
         private patientService: PatientService,
@@ -36,8 +34,17 @@ export class EvaluationListComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("# COMPONENT LIST EVALUATIONS ")
-        this.caregiverQuestionaires=this.patientService.getCaregiverQuestionnaires();   
-        console.log("# QUESTIONNAIRES :" +this.caregiverQuestionaires.toString())    
+
+        //Only questionnaires not done
+        this.caregiverQuestionaires=[];
+        this.caregiverQuestionairesTemp = this.patientService.getCaregiverQuestionnaires();
+        this.caregiverQuestionairesTemp.forEach(element => {
+            if (!element.done) {
+                this.caregiverQuestionaires.push(element)
+            }
+        });
+
+        console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
     }
 
 
