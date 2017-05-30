@@ -5,6 +5,7 @@ import { Material } from "../material/material";
 import { Evaluation } from "../evaluation/evaluation";
 import { Need } from "../need/need";
 import { PatientService } from "../patient/patient.service";
+import { DataService } from "../shared/data/data.service";
 import buttonModule = require("ui/button");
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
@@ -26,7 +27,8 @@ export class EvaluationComponent implements OnInit {
 
     constructor(
         private patientService: PatientService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private dataService: DataService
     ) { }
 
     ngOnInit(): void {
@@ -50,6 +52,7 @@ export class EvaluationComponent implements OnInit {
         const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
         
         //Get Questionnaire
+        console.log(JSON.stringify(this.patientService.caregiverQuestionaires, null, 4));
         this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire+"")[0];
          
         //transform radio buttons
@@ -83,12 +86,13 @@ export class EvaluationComponent implements OnInit {
      * 
      * @memberof EvaluationComponent
      */
-    submeterAvaliacao(ref_questionnaire) {
+    submeterAvaliacao() {
 
     //set questionnaire done
     this.questionnaire.done=true;
-
-    //TODO - gravar questinario na bd
+    
+    this.dataService.updateQuizStatus(this.questionnaire);
+    
 
       console.log("# Evaluation 0 -> " + this.questionnaire.questions[0].response)
       console.log("# Evaluation 0 -> " + this.questionnaire.questions[1].response)

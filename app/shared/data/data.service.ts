@@ -33,13 +33,13 @@ export class DataService {
     constructor(public database: Database){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            //this.deleteData('global');
+            this.deleteData('quiz');
             //this.deleteData('user');
             //this.deleteData('global');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');2
             //this.showData('materials');
-            this.showData('global');
+            this.showData('data');
             this.init();
             //this.showData('global');
             
@@ -71,7 +71,7 @@ export class DataService {
         
         this.userData_id = this.getCurrentUserDocID();
         this.patientsData_id = this.getLatestPatientData();
-        this.quizs_id = this.getQuizID();
+        this.quizs_id = this.getLatestQuizData();
         
         
     }
@@ -101,71 +101,47 @@ export class DataService {
     }
     getPatientsData(){
         console.log('A devolver todos os dados da BD');
-        console.log(this.patientsData_id);   
         return this.database.getDatabase().getDocument(this.patientsData_id).data;
     }
     setPatientsData(data) {
-        console.log('Gravar dados Pacientes');
-
         //debug
         //this.deleteData('data');
         //this.deleteData('materials');
         
         //Todos os dados do paciente e ref _id
-        this.patientsData_id = this.database.getDatabase().createDocument({
-            "type": "data",
-            "data": data
-        });
+        if(this.patientsData_id) {
+            console.log('A atualizar os dados dos pacientes na bd, com o id ' + this.patientsData_id);
+            this.database.getDatabase().updateDocument(this.patientsData_id, {
+                "data": data
+            });
+        } else {
+            console.log('Gravar dados Pacientes');
+            this.patientsData_id = this.database.getDatabase().createDocument({
+                "type": "data",
+                "data": data
+            });
+        }
+
+        this.mediaPersistence(data);
+        
 
         //Guarda dados dos Pacientes
         //Guarda dados das necessidades
-        
-        /*Guarda dados dos materiais e adiciona ratings aos materiais
-        let materials = [];
-        for(let i = 0; i < data.length; i++) {
-            for(let j = 0; j < data[i].needs.length; j++) {
-                materials.push(data[i].needs[j].materials); 
-            }
-        }
-        console.log('A criar os ratings nos dados');
-        for(let i = 0; i < materials.length; i++) {
-            for(let j = 0; j < materials[i].length; j++) {
-               materials[i][j]['ratings'] = [''];
-            }
-        }
-        console.log("A guardar os materiais na BD");
-        this.materials_id = this.database.getDatabase().createDocument({
-                "type": "materials",
-                "materials": materials,
-        });
-        */
+
         this.database.getDatabase().updateDocument(this.globalData_id, {
             "dataRequest": "true"
         });
-
-
-        //console.log(JSON.stringify(data[0].needs[0].materials,null,4));
-
-        /*
-        console.log('antes do for');
-        console.log(JSON.stringify(data[0].needs.materials,null,4));
-        //Juntar todos os materiais para colocar rating
-        let materials = [];
-        for(let i = 0; i < data.length; i++) {
-            console.log('no for');
-            console.log(JSON.stringify(data[0].needs.materials,null,4));
-            materials.push(data[i].needs.materials);
-        }
-        console.log('MATERIALS');
-        console.log(JSON.stringify(materials,null,4));
-        this.materials_id = this.database.getDatabase().createDocument({
-                "type": "materials",
-                "data": materials,
-        });
-        this.showData('material');
-        */
-        //console.log("AQUI10"+JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
     }
+    mediaPersistence(data) {
+          /**
+         * Abrir todo o conteúdo da pasta materials
+         */
+        var documents = fs.knownFolders.documents();
+        var path = fs.path.join(documents.path, "app/materials");
+
+        console.log(path);
+    }
+  
     setNeeds() {
 
     }
@@ -346,16 +322,25 @@ export class DataService {
             "quiz": caregiverQuestionaires
         });
     }
-    public getQuizID() {
-        console.log("A obter ID dos quizs")
+    public getAllQuizs() {
+        console.log("A obter ID dos quizs");
          if(this.database.getDatabase().executeQuery('quiz').length > 0) {
              //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
-             return this.database.getDatabase().executeQuery('quiz')._id;
+             return this.database.getDatabase().executeQuery('quiz');
          }
          return null;
     }
-    public getQuizs() {
-        return this.database.getDatabase().getDocument(this.quizs_id).quiz;
+    public getLatestQuizData() {
+        var quizs = this.getAllQuizs();
+
+        if(quizs) {
+            var lastQuiz;
+
+            lastQuiz = quizs[quizs.length - 1];
+            console.log(lastQuiz);
+            return lastQuiz._id;
+        }
+        return null;
     }
     public getLatestPatientData() {
         var patientsData = this.getAllPatientsData();
@@ -367,6 +352,10 @@ export class DataService {
             return lastData._id;
         }
         return null;
+    }
+    public getQuizs() {
+        console.log(this.quizs_id);
+        return this.database.getDatabase().getDocument(this.quizs_id).quiz;
     }
     public isGlobalSet() {
         if(this.database.getDatabase().executeQuery('global').length > 0) {            
@@ -390,5 +379,24 @@ export class DataService {
             return this.database.getDatabase().executeQuery("data");
         }         
         return false;
+    }
+    public updateQuizStatus(questionnaire) {
+        console.log(JSON.stringify(questionnaire, null, 4));
+
+        var quizs = this.getAllQuizs();
+
+        quizs.forEach(element_q => {
+            element_q.quiz.forEach(element_quest => {
+                if(element_quest.id == questionnaire.id) {
+                    element_quest.done = true;
+                    /*
+                    if((this.database.getDatabase().getDocument(this.quizs_id)).filter(quiz=>quiz.id === questionnaire.id)) {
+                        console.log(true);
+                    }
+                    */
+                }
+            });
+        });
+        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
 }

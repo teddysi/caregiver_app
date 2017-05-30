@@ -90,7 +90,7 @@ export class PatientsComponent implements OnInit {
     private onGetDataError(error: Response | any) {
         console.log(error.json());
     }
-
+  
     loadAllQuestionnairesFromResponse() {
         //size of inicial array
         let sizeInitial = this.caregiverQuestionnaires.length;
@@ -125,5 +125,4 @@ export class PatientsComponent implements OnInit {
 
 
     }
-
 }
