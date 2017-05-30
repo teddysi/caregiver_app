@@ -372,7 +372,6 @@ export class DataService {
         return null;
     }
     public getAllPatientsData() {
-        console.log('Entrou 1');
         if(this.database.getDatabase().executeQuery("data").length > 0) {
             
            // console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
@@ -381,7 +380,7 @@ export class DataService {
         return false;
     }
     public updateQuizStatus(questionnaire) {
-        console.log(JSON.stringify(questionnaire, null, 4));
+        //console.log(JSON.stringify(questionnaire, null, 4));
 
         var quizs = this.getAllQuizs();
 
@@ -397,6 +396,12 @@ export class DataService {
                 }
             });
         });
+        console.log('aqui');
+        /*
+        this.database.getDatabase().updateDocument(this.quizs_id).quiz[0], {
+            'done' : 'true',
+        };
+        */
         console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
 }
