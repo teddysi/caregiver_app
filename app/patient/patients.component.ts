@@ -117,6 +117,7 @@ export class PatientsComponent implements OnInit {
         let index = 0;
         this.caregiverQuestionnaires.forEach(element => {
             element.ref_questionnaire = index + "";
+            
             index++;
             //questionnaire not have response yet
             element.done=false;

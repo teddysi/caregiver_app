@@ -120,6 +120,7 @@ export class ConnectorService {
         }, function (e) {
             console.log(e);
         });
+        /*
         var documents = fs.knownFolders.documents();
         var path = fs.path.join(documents.path, "app/materials");
         var folder = fs.Folder.fromPath(path);
@@ -133,6 +134,7 @@ export class ConnectorService {
             console.log(JSON.stringify(documents, null, 4));
         }, function (error) {
         });
+        */
     }
     /*
     getAllData(): Observable<Data[]> {

@@ -43,8 +43,11 @@ export class EvaluationListComponent implements OnInit {
                 this.caregiverQuestionaires.push(element)
             }
         });
-
-        console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
+        
+        this.caregiverQuestionaires.forEach(element => {
+            console.log(element.name + " -> DONE: " + element.done)
+        });
+        //console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
     }
 
 

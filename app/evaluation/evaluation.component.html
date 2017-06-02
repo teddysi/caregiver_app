@@ -1,51 +1,37 @@
 <ActionBar [title]="'Avaliação'" class="action-bar">
- <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/evaluations']">
-</NavigationButton>
+    <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/evaluations']">
+    </NavigationButton>
 </ActionBar>
 
 <StackLayout class="page">
 
     <ListView [items]="questionnaire.questions" class="list-group" [class.visible]="listLoaded">
-        <ng-template let-item="item" let-i="index">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <!-- Items of the list -->
             <StackLayout orientation="vertical">
-
                 <!--EVALUATION -->
-                
-
-
 
                 <!-- TYPE RADIO-->
                 <StackLayout *ngIf="item.type == 'radio'">
-                    <label [text]="item.id" class="h4"></label>
+                    <!--<label [text]="item.id" class="h4"></label>-->
                     <label [text]="item.question" class="h3" textWrap="true"></label>
-                    <RadioGroup [(value)]="item.response">
-                        
-                            <RadioButton *ngFor="let itemt of item.valuesToRadio" [text]="itemt" textWrap="true" ></RadioButton>
-                        
-                        
-                        <!--    <Label *ngFor="let item of itemsArray|limitTo:10" [text]="item.body"></Label>
-                        <RadioButton text="1"></RadioButton>
-                        <RadioButton text="2"></RadioButton>
-                        <RadioButton text="3"></RadioButton>
-                        <RadioButton text="4"></RadioButton>-->
+                    <RadioGroup>
+                        <RadioButton *ngFor="let itemt of item.valuesToRadio" [text]="itemt" textWrap="true" (onTap)="setResponse(itemt,i)"></RadioButton>
                     </RadioGroup>
                 </StackLayout>
 
-
-
                 <!-- TYPE TEXT-->
                 <StackLayout *ngIf="item.type == 'text'">
-                <label [text]="item.id" class="h4"></label>
-                <label [text]="item.question" class="h3" textWrap="true"></label>
-                <TextField [text]="item.response"  hint="response"  autocorrect="false"></TextField>
-</StackLayout>
+                    <!--<label [text]="item.id" class="h4"></label>-->
+                    <label [text]="item.question" class="h3" textWrap="true"></label>
+                    <TextField [(ngModel)]="questionnaire.questions[i].response" hint="response" autocorrect="false"></TextField>
+                </StackLayout>
 
                 <!--Button evaluation if is the last element-->
                 <StackLayout *ngIf="i == questionnaire.questions.length-1" orientation="horizontal">
-                    <Button text="Submeter Avaliação" class="submit-button" (tap)="submeterAvaliacao()"></Button>
+                    <Button text="Submeter Avaliação" class="submit-button" (tap)="submmitEvaluation()"></Button>
                 </StackLayout>
-                <---->
+
             </StackLayout>
         </ng-template>
     </ListView>

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit{
         this.userService.createUser(this.dataService.getLatestUserToRegister()); 
         this.login();
       }
-      //this.ConnectorService.testingDownload();
+      this.ConnectorService.testingDownload();
       //tb se pode ponderar a expiração da token. se já tiver mais que XX dias, apagar a token e mostrar janela de login   
     }
     

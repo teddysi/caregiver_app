@@ -6,6 +6,6 @@ export class Question {
     question: string;
     type: string;
     values: string;
-    response: string;
+    response: string ;
 
 }

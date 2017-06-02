@@ -9,9 +9,11 @@ import { DataService } from "../shared/data/data.service";
 import buttonModule = require("ui/button");
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
+import { Router } from "@angular/router";
 
 import { Questionnaire } from "../evaluation/questionnaire";
 import { Question } from "../evaluation/question";
+
 
 
 @Component({
@@ -22,82 +24,84 @@ import { Question } from "../evaluation/question";
 })
 
 export class EvaluationComponent implements OnInit {
- 
+
     questionnaire: Questionnaire;
 
     constructor(
         private patientService: PatientService,
         private route: ActivatedRoute,
+        private router: Router,
         private dataService: DataService
-    ) { }
+    ) {
+        this.questionnaire = new Questionnaire();
+    }
 
     ngOnInit(): void {
         console.log("# COMPONENT EVALUATION ")
 
-        //************************************************************************* */
-        //para teste -> depois substituir pelo formulario que vem do servidor
-        /*this.evaluations = [];
-        this.evaluations.push(new Evaluation())
-        this.evaluations[0].id = 0;
-        this.evaluations[0].description = "Nivel de facilidade";
-        this.evaluations.push(new Evaluation())
-        this.evaluations[1].id = 1;
-        this.evaluations[1].description = "Esta apto para continuar?";
-        this.evaluations.push(new Evaluation())
-        this.evaluations[2].id = 2;
-        this.evaluations[2].description = "Tem experiencia na aplicacao deste material ?";
-        //****************************************************************************** */
-
         //router params
         const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
-        
+
         //Get Questionnaire
         console.log(JSON.stringify(this.patientService.caregiverQuestionaires, null, 4));
-        this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire+"")[0];
-         
+        this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
+
         //transform radio buttons
         this.transformRadioButtons();
-     
-     console.log("# COMPOMENTE EVALUATION [questionnaire] :"+ ref_questionnaire + " " +this.questionnaire);
+
+        console.log("# COMPOMENTE EVALUATION [questionnaire] :" + ref_questionnaire + " " + this.questionnaire);
     }
 
 
-    transformRadioButtons(){
-        this.questionnaire.questions.forEach(element => {
-            
-           if (element.type=="radio") {
-               var a = element.values.split(";");
-               a.pop();
-               console.log("# COMPOMENTE EVALUATION valuesToRadio :" +a + " TAMANHO:"+ a.length);
-            
-               element["valuesToRadio"]=a;
 
-              
-           } else{
-               element.response = " ";
-           }
+
+    /**
+     * Funtion to create array of values to put on radiobutton's questions
+     * 
+     * 
+     * @memberof EvaluationComponent
+     */
+    transformRadioButtons() {
+        this.questionnaire.questions.forEach(element => {
+            if (element.type == "radio") {
+                var a = element.values.split(";");
+                a.pop();
+               // console.log("# COMPOMENTE EVALUATION valuesToRadio :" + a + " TAMANHO:" + a.length);
+                element["valuesToRadio"] = a;
+            } 
         });
     }
+
+
 
 
     /**
      * 
      * 
+     * @param {any} response  response of the radiobutton question
+     * @param {any} indexQuestion index of the question of questionnaire
      * 
      * @memberof EvaluationComponent
      */
-    submeterAvaliacao() {
+    public setResponse(response, indexQuestion) {
+        this.questionnaire.questions[indexQuestion].response = response;
+    }
 
-    //set questionnaire done
-    this.questionnaire.done=true;
-    
-    this.dataService.updateQuizStatus(this.questionnaire);
-    
 
-      console.log("# Evaluation 0 -> " + this.questionnaire.questions[0].response)
-      console.log("# Evaluation 0 -> " + this.questionnaire.questions[1].response)
 
-      //  console.log("# Evaluation 1 -> " + this.evaluations[].response)
+    /**
+     * 
+     * Funtion to save evaluation
+     * 
+     * @memberof EvaluationComponent
+     */
+    submmitEvaluation() {
+        //set questionnaire done
+        this.questionnaire.done = true;
+        //update local data
+        this.dataService.updateQuizStatus(this.questionnaire);
+        //return to the list od of questionnaires
+        this.router.navigate(['/evaluations']);
     }
 
 }
