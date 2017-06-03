@@ -19,6 +19,7 @@ import { Router } from "@angular/router";
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
 
+import { ConnectorService } from "../shared/connector/connector.service";
 
 import 'nativescript-pdf-view';
 
@@ -38,46 +39,51 @@ export class MaterialDetailComponent implements OnInit {
 
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
-   // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
+    // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
 
     constructor(
         private patientService: PatientService,
-
-        private route: ActivatedRoute, private router: Router, private dataService: DataService,
-  
-        
+        private route: ActivatedRoute,
+        private router: Router,
+        private dataService: DataService,
+        private connectorService: ConnectorService
     ) {
         this.ratings = [];
-     }
+    }
 
 
     ngOnInit(): void {
+        console.log("# COMPONENTE MATERIAL-DETAIL")
         //rating test
-     
-     
-
 
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["id_material"];
-        console.log("ID PACIENTE " +id + " ID MATERIAL" +idx)
+
+        //return to patients List if do not have connection
+        if (!this.connectorService.isConnected) {
+            this.router.navigate(['/patients']);
+        }
+
+
+        console.log("ID PACIENTE " + id + " ID MATERIAL" + idx)
         this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
         // criar lista de materiais com propriadade adicional need name and need description
         this.addPropertyNeedOnMaterial();
         //console.log("MATERIALOFALLNEEDS : " + JSON.stringify(this.materialsOfAllNeeds, null, 4));
         this.materialParent = this.materialsOfAllNeeds.filter(material => material.id === idx)[0];
-        
+
         //console.log("---------------------------------------------------------------: ");
-       //console.log("MATERIALParent : " + JSON.stringify(this.materialParent, null, 4));
+        //console.log("MATERIALParent : " + JSON.stringify(this.materialParent, null, 4));
         //verificar se é um composite
         if (this.materialParent.type == "composite") {//material composto -> carregar o array 
-            this.materialsToDisplay= this.materialParent.materials;         
+            this.materialsToDisplay = this.materialParent.materials;
         } else {//material simples basta carregar para vista
-            this.materialsToDisplay=[];
+            this.materialsToDisplay = [];
             this.materialsToDisplay.push(this.materialParent);
 
         }
 
-       // console.log(JSON.stringify(this.materials, null, 4));
+        // console.log(JSON.stringify(this.materials, null, 4));
 
         //openApp("com.facebook.katana");
         //openUrl("http://192.168.99.100/caregivers/public/materialsAPI/21/showContent")
@@ -92,12 +98,19 @@ export class MaterialDetailComponent implements OnInit {
 			control = true;		
 		}
 		*/
-        
+
         //Evaluations
-        this.hasEvaluationsToDo=this.patientService.hasEvaluationsToDo;
+        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
 
     }
 
+
+    /**
+     * Function to add properties of the "parent" need to the "child" material
+     * 
+     * 
+     * @memberof MaterialDetailComponent
+     */
     addPropertyNeedOnMaterial() {
         let materials_temp: Material[];
         materials_temp = [];
@@ -114,15 +127,31 @@ export class MaterialDetailComponent implements OnInit {
         this.materialsOfAllNeeds = materials_temp;
     }
 
+
+
+    /**
+     * Function to open external materials [pdf ...]
+     * 
+     * @param {any} id 
+     * 
+     * @memberof MaterialDetailComponent
+     */
     openOnBrowser(id) {
         let material = this.materialsToDisplay.filter(material => material.id === id)[0];
-
         openUrl(material.url);
     }
 
-    //rating
+
+
+    /**
+     * Function to rate material [red,yellow,green]
+     * 
+     * @param {any} level 
+     * 
+     * @memberof MaterialDetailComponent
+     */
     evaluateMaterial(level) {
-       
+
         let rating = new Rating();
         rating.id = Date.now();
         rating.evaluation = level;
@@ -133,24 +162,38 @@ export class MaterialDetailComponent implements OnInit {
         this.dataService.setRating(rating);
 
     }
-    ononMaterialPicker(){
-        console.log("MAterial picado")
 
-    }
+    /*
+     ononMaterialPicker(){
+         console.log("MAterial picado")
+ 
+     }
+ 
+     
+         avaliarCuidador(id) {
+             //rota para o formulario - teddy
+             //let material = this.materialsToDisplay.filter(material => material.id === id)[0];
+ 
+             //openUrl(material.url);
+             this.router.navigate(['/patient', this.patient.id, 'material', id,"evaluation"]);
+         }*/
 
-    
-  	avaliarCuidador(id) {
-            //rota para o formulario - teddy
-            //let material = this.materialsToDisplay.filter(material => material.id === id)[0];
 
-            //openUrl(material.url);
-            this.router.navigate(['/patient', this.patient.id, 'material', id,"evaluation"]);
-        }
 
     getRatings() {
         return this.ratings;
     }
-    fillQuestionnaire(ref_questionnaire){
+
+
+
+    /**
+     * function to navigate to the material questionnaire
+     * 
+     * @param {any} ref_questionnaire 
+     * 
+     * @memberof MaterialDetailComponent
+     */
+    fillQuestionnaire(ref_questionnaire) {
         this.router.navigate(['/evaluation', ref_questionnaire]);
     }
 

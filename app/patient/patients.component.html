@@ -1,34 +1,30 @@
-<ActionBar  title="Utentes" class="action-bar">
-<ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_dialog_info"
-   ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
+<ActionBar title="Utentes" class="action-bar">
+    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_dialog_info" ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
 
 </ActionBar>
 <StackLayout class="page">
     <ListView [items]="patients" class="list-group" [class.visible]="listLoaded" separatorColor="white">
         <ng-template let-item="item">
 
+            <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
 
-
-
-         <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
-            <StackLayout [nsRouterLink]="['/patient',item.id,'materials']" orientation="vertical">
+            <StackLayout (tap)="goToMaterialsOfPatient(item.id)" orientation="vertical">
                 <!--Adicionar espaço para foto
                 //Adicionar idade
                 //Adicionar -->
                 <!--<Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>-->
                 <GridLayout rows="*, *" columns="1*,*">
-                    <Image src="~/localmaterials/image/Person-placeholder.jpg" stretch="aspectFit" width="65" height="70" class="patient-photo" row="1" col="0"></Image>
-                    
+                    <Image src="~/localmaterials/image/Person-placeholder.jpg" stretch="aspectFit" width="65" height="70" class="patient-photo"
+                        row="1" col="0"></Image>
+
                     <Label class="h2 utente" [text]="item.name" textWrap="true" row="1" col="1" class="names-label"></Label>
                     <!--<Label [text]="'Morada: '+ item.location" textWrap="true" class="patientLocation"></Label>-->
                     <Label [text]="item.location" class="location-label" textWrap="true" class="patientLocation" row="2" col="1"></Label>
                 </GridLayout>
-               <!-- <Label  [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
+                <!-- <Label  [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
 
 
-            </StackLayout> 
-
-
+            </StackLayout>
 
 
         </ng-template>

@@ -6,20 +6,15 @@
     <ListView [items]="caregiverQuestionaires" class="list-group">
         <ng-template let-item="item">
             <FlexboxLayout class="m-15 rating-border"  [nsRouterLink]="['/evaluation',item.ref_questionnaire]">
+              
                 <StackLayout orientation="vertical">
                     <Label class="h3" [text]="item.name"></Label>
                     <!--<Label class="h3" [text]="item.ratings[item.ratings.length-1]"></Label>-->
                     <Label class="h4" [text]="'[ '+item.reference+' ]-> '+item.reference_name"></Label>
                    <!-- <Label class="h4" [text]="' '+item.reference_name"></Label>-->
-
-                  
-                   
-
                 </StackLayout>
 
-
             </FlexboxLayout>
-          
         </ng-template>
     </ListView>
 </StackLayout>

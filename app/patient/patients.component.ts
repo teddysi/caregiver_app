@@ -10,6 +10,7 @@ import { CreateViewEventData } from "ui/placeholder";
 
 import { UserService } from "../shared/user/user.service";
 
+import { ConnectorService } from "../shared/connector/connector.service";
 import dialogs = require("ui/dialogs");
 
 @Component({
@@ -33,7 +34,12 @@ export class PatientsComponent implements OnInit {
     public writtenContent: string;
     public isItemVisible: boolean = false;
 
-    constructor(private patientService: PatientService, private router: Router, private userService: UserService) {
+    constructor(
+        private patientService: PatientService,
+        private router: Router,
+        private userService: UserService,
+        private connectorService: ConnectorService
+    ) {
 
     }
     ngOnInit(): void {
@@ -66,6 +72,16 @@ export class PatientsComponent implements OnInit {
         }
 
     }
+
+
+    /**
+     * Function to load data when http get data success
+     * 
+     * @private
+     * @param {any} result 
+     * 
+     * @memberof PatientsComponent
+     */
     private onGetDataSuccess(result) {
 
         this.patients = result.patients; //teddy
@@ -87,10 +103,28 @@ export class PatientsComponent implements OnInit {
         //}   
 
     }
+
+
+    /**
+     * Function to load data when http get data Error
+     * 
+     * @private
+     * @param {(Response | any)} error 
+     * 
+     * @memberof PatientsComponent
+     */
     private onGetDataError(error: Response | any) {
         console.log(error.json());
     }
-  
+
+
+
+    /**
+     * Function to load questionnaires from server response to var caregiverQuestionnaires
+     * 
+     * 
+     * @memberof PatientsComponent
+     */
     loadAllQuestionnairesFromResponse() {
         //size of inicial array
         let sizeInitial = this.caregiverQuestionnaires.length;
@@ -99,7 +133,7 @@ export class PatientsComponent implements OnInit {
             if (element_p.quizs) {
                 element_p.quizs.forEach(element_q => {
                     this.caregiverQuestionnaires.push(element_q)
-                    element_q["ref_questionnaire"] = (sizeInitial) +""
+                    element_q["ref_questionnaire"] = (sizeInitial) + ""
                     sizeInitial++;
                 });
             }
@@ -117,13 +151,29 @@ export class PatientsComponent implements OnInit {
         let index = 0;
         this.caregiverQuestionnaires.forEach(element => {
             element.ref_questionnaire = index + "";
-            
             index++;
             //questionnaire not have response yet
-            element.done=false;
-
+            element.done = false;
         });
+    }
 
 
+    /**
+     * Function to navigate to pacient/materials
+     * 
+     * @param {any} patient_id 
+     * 
+     * @memberof PatientsComponent
+     */
+    goToMaterialsOfPatient(patient_id) {
+        if (this.connectorService.isConnected) {
+            this.router.navigate(['/patient', patient_id, 'materials']);
+        }else{
+            dialogs.alert({
+                title: "Aviso - Pacientes ",
+                message: "Encontra-se sem acesso à internet. Não é possível visualizar os materiais disponíveis para este paciente.",
+                okButtonText: "OK"
+            })
+        }
     }
 }

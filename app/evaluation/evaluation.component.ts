@@ -14,6 +14,9 @@ import { Router } from "@angular/router";
 import { Questionnaire } from "../evaluation/questionnaire";
 import { Question } from "../evaluation/question";
 
+import { ConnectorService } from "../shared/connector/connector.service";
+import dialogs = require("ui/dialogs");
+
 
 
 @Component({
@@ -31,7 +34,8 @@ export class EvaluationComponent implements OnInit {
         private patientService: PatientService,
         private route: ActivatedRoute,
         private router: Router,
-        private dataService: DataService
+        private dataService: DataService,
+        private connectorService: ConnectorService
     ) {
         this.questionnaire = new Questionnaire();
     }
@@ -50,6 +54,8 @@ export class EvaluationComponent implements OnInit {
         this.transformRadioButtons();
 
         console.log("# COMPOMENTE EVALUATION [questionnaire] :" + ref_questionnaire + " " + this.questionnaire);
+
+        
     }
 
 
@@ -100,6 +106,16 @@ export class EvaluationComponent implements OnInit {
         this.questionnaire.done = true;
         //update local data
         this.dataService.updateQuizStatus(this.questionnaire);
+       
+        //test connection
+        if (this.connectorService.isConnected) {
+            dialogs.alert({
+                title: "Aviso - Avaliações ",
+                message: "Encontra-se sem acesso à internet. O seu questionário apena será submetido quando tiver novamente acesso.",
+                okButtonText: "OK"
+            })
+        }
+
         //return to the list od of questionnaires
         this.router.navigate(['/evaluations']);
     }

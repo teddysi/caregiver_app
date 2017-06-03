@@ -13,6 +13,9 @@ import { Page } from "ui/page";
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
 
+import { ConnectorService } from "../shared/connector/connector.service";
+import { Router } from "@angular/router";
+
 
 @Component({
 	selector: 'materials',
@@ -26,19 +29,27 @@ export class MaterialsComponent implements OnInit {
 	need: Need;
 	materials: Material[];
 	rating_colors: {};
-hasEvaluationsToDo: boolean;
+	hasEvaluationsToDo: boolean;
 
 	constructor(
 		private patientService: PatientService,
 		private route: ActivatedRoute,
+		private router: Router,
 		private page: Page,
-		private dataService: DataService
+		private dataService: DataService,
+		private connectorService: ConnectorService
 	) { }
 
 	ngOnInit(): void {
-      console.log("# COMPONENTE MATERIALS")
+		console.log("# COMPONENT MATERIALS")
 		const id = +this.route.snapshot.params["id"];
 		const idx = +this.route.snapshot.params["id_need"];
+
+		//return to patients List if do not have connection
+		if (!this.connectorService.isConnected) {
+			this.router.navigate(['/patients']);
+		}
+
 
 		this.patientService.getPatients_BD();
 
@@ -46,7 +57,7 @@ hasEvaluationsToDo: boolean;
 
 		// criar lista de materiais com propriadade adicional need name and need description
 		this.addPropertyNeedOnMaterial();
-		
+
 		//	this.need = this.patient.needs.filter(need => need.id === idx)[0];
 		//	this.materials = this.need.materials;
 		//console.log("MATERIALS : " + JSON.stringify(this.materials, null, 4));
@@ -69,35 +80,53 @@ hasEvaluationsToDo: boolean;
 		this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
 	}
 
-	getBorderColor(rating) {	
-		if(rating) {
-			console.log('A verficar rating existente dos materiais');	
+
+
+	/**
+	 * Function to set color of ratting on materials list
+	 * 
+	 * @param {any} rating 
+	 * @returns 
+	 * 
+	 * @memberof MaterialsComponent
+	 */
+	getBorderColor(rating) {
+		if (rating) {
+			console.log('A verficar rating existente dos materiais');
 			console.log(JSON.stringify(rating, null, 4));
-			
+
 			switch (rating.evaluation) {
 				case '0':
 					console.log('Amarelo');
-					 return { 'background-color': 'yellow' };
-				case '-1': 
+					return { 'background-color': 'yellow' };
+				case '-1':
 					console.log('Vermelho');
 					return { 'background-color': 'red' };
 				case '1':
-					console.log('Verde'); 
+					console.log('Verde');
 					return { 'background-color': 'green' };
 				default:
-					 return { 'background-color': 'black' };
+					return { 'background-color': 'black' };
 			}
-		}	
+		}
 	}
+
+
+
+	/**
+	 * Function to add properties of the "parent" need to the "child" material
+	 * 
+	 * 
+	 * @memberof MaterialsComponent
+	 */
 	addPropertyNeedOnMaterial() {
 		let materials_temp: Material[];
 		materials_temp = [];
-		
+
 		this.patient.needs.forEach(need => {
 			need.materials.forEach(materialOfaNeed => {
 				materialOfaNeed["need_id"] = need.id;
-				materialOfaNeed["need_description"] = "[ " +need.description +" ]";
-				//console.log("MATERIAL : " + JSON.stringify(materialOfaNeed, null, 4));
+				materialOfaNeed["need_description"] = "[ " + need.description + " ]";
 				//testar se o material ja está na lista
 				if (materials_temp.filter(material => material.id === materialOfaNeed.id).length > 0) {
 					materials_temp.filter(material => material.id === materialOfaNeed.id)[0]["need_description"] += " [ " + need.description + " ]";
@@ -107,17 +136,9 @@ hasEvaluationsToDo: boolean;
 
 			});
 		});
-		
-		//console.log(JSON.stringify(materials_temp, null, 4));
-		//this.materials = this.dataService.getNeedMaterials();
-		//console.log(JSON.stringify(this.dataService.getNeedMaterials()[0], null, 4));
-		
-		//console.log(JSON.stringify(materials_temp[0], null, 4));
+
 		this.materials = materials_temp;
 	}
-
-
-
 
 
 }

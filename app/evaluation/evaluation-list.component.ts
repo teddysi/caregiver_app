@@ -13,6 +13,9 @@ import { openUrl } from "utils/utils";
 import { Questionnaire } from "../evaluation/questionnaire";
 import { Question } from "../evaluation/question";
 
+import { ConnectorService } from "../shared/connector/connector.service";
+import dialogs = require("ui/dialogs");
+
 
 @Component({
     selector: 'evaluation-list',
@@ -29,7 +32,9 @@ export class EvaluationListComponent implements OnInit {
 
     constructor(
         private patientService: PatientService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private connectorService: ConnectorService
+        
     ) { }
 
     ngOnInit(): void {
@@ -48,7 +53,21 @@ export class EvaluationListComponent implements OnInit {
             console.log(element.name + " -> DONE: " + element.done)
         });
         //console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
+
+        //test connection
+        if (!this.connectorService.isConnected) {
+            console.log("# Sem conneccao ")
+            dialogs.alert({
+                title: "Aviso - Avaliações ",
+                message: "Encontra-se sem acesso à internet. Os seus questionários apenas serão submetidos quando tiver novamente acesso.",
+                okButtonText: "OK"
+            })
+        }
+
     }
+
+
+
 
 
 
