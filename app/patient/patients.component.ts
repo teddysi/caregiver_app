@@ -26,7 +26,7 @@ export class PatientsComponent implements OnInit {
 
     listLoaded = false;
     isLoading = false;
-    hasEvaluationsToDo = true; //condition to enable action bar icon evaluations
+    hasEvaluationsToDo = false; //condition to enable action bar icon evaluations
 
     public fileTextContent: string;
 
@@ -59,8 +59,10 @@ export class PatientsComponent implements OnInit {
         this.isLoading = false;
         this.listLoaded = true;
 
+        this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
 
         //verify and notificate if has evaluations to do
+        /*
         this.patientService.hasEvaluationsToDo = true;
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
         if (this.hasEvaluationsToDo) {
@@ -70,7 +72,7 @@ export class PatientsComponent implements OnInit {
                 okButtonText: "OK"
             })
         }
-
+        */
     }
 
 
@@ -88,8 +90,8 @@ export class PatientsComponent implements OnInit {
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();
 
-        console.log("# COMPONENTE PATIENTES [result.quizs]" + JSON.stringify(result.quizs, null, 4));
-        console.log("# COMPONENTE PATIENTES [caregiverQuestionnaires ]" + JSON.stringify(this.caregiverQuestionnaires, null, 4));
+        //console.log("# COMPONENTE PATIENTES [result.quizs]" + JSON.stringify(result.quizs, null, 4));
+        //console.log("# COMPONENTE PATIENTES [caregiverQuestionnaires ]" + JSON.stringify(this.caregiverQuestionnaires, null, 4));
 
         this.patientService.setPatients(this.patients);
         this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaires);
@@ -166,7 +168,7 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     goToMaterialsOfPatient(patient_id) {
-        if (this.connectorService.isConnected) {
+        if (this.connectorService.isConnected()) {
             this.router.navigate(['/patient', patient_id, 'materials']);
         }else{
             dialogs.alert({

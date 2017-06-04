@@ -55,7 +55,7 @@ export class EvaluationListComponent implements OnInit {
         //console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
 
         //test connection
-        if (!this.connectorService.isConnected) {
+        if (!this.connectorService.isConnected()) {
             console.log("# Sem conneccao ")
             dialogs.alert({
                 title: "Aviso - Avaliações ",

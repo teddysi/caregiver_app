@@ -21,7 +21,6 @@ export class PatientService {
 
     public patients: Patient[];
     public caregiverQuestionaires: Questionnaire[];
-    public hasEvaluationsToDo: boolean;
 
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
         console.log('Instanciou - PatientService!');
@@ -58,75 +57,27 @@ export class PatientService {
         this.caregiverQuestionaires = caregiverQuestionaires;
     }
 
-    getCaregiverQuestionnaires(){ // temporario para futuramente alterar
-       /* this.caregiverQuestionaires=[];
-        var quest_ = new Questionnaire();
-
-        this.caregiverQuestionaires[0]=quest_;
-        this.caregiverQuestionaires[0].id=0;
-        this.caregiverQuestionaires[0].name="questionario teste de caregiver";
-        this.caregiverQuestionaires[0].reference="caregiver";
-        this.caregiverQuestionaires[0].reference_id="1";
-        this.caregiverQuestionaires[0].ref_questionnaire="1"; //referencia interna
-        this.caregiverQuestionaires[0].questions=[];
-        var a=new Question();
-        a.id=0;
-        a.question="teste de questao tudo bem";
-        a.type="text";
-        
-        var b= new Question();
-        b.id = 1;
-        b.question = "teste de questao radio";
-        b.type = "radio";
-        b.values = "Sim;Não;Talvez;";
-        var c = new Question();
-      c.id = 0;
-      c.question = "teste de questao tudo bem2";
-      c.type = "text";
-        var d = new Question();
-        d.id = 1;
-        d.question = "teste de questao radio2";
-        d.type = "radio";
-        d.values = "Sim;Não;Talvez;";
-        this.caregiverQuestionaires[0].questions.push(a);
-        this.caregiverQuestionaires[0].questions.push(b);
-        this.caregiverQuestionaires[0].questions.push(c);
-        this.caregiverQuestionaires[0].questions.push(d);
-        var quest_1= new Questionnaire();
-        
-        quest_1.id = 0;
-        quest_1.name = "questionario teste de material";
-        quest_1.reference = "material";
-        quest_1.reference_id = "1";
-        quest_1.ref_questionnaire = "2"; //referencia interna
-        quest_1.questions = [];
-        var a = new Question();
-        a.id = 0;
-        a.question = "teste de questao tudo bem";
-        a.type = "text";
-
-        var b = new Question();
-        b.id = 1;
-        b.question = "teste de questao radio";
-        b.type = "radio";
-        b.values = "Sim;Não;Talvez;";
-        var c = new Question();
-        c.id = 0;
-        c.question = "teste de questao tudo bem2";
-        c.type = "text";
-        var d= new Question();
-        d.id = 1;
-        d.question = "teste de questao radio2";
-        d.type = "radio";
-        d.values = "Sim;Não;Talvez;";
-        
-        this.caregiverQuestionaires.push(quest_1);
-        this.caregiverQuestionaires[1].questions.push(a);
-        this.caregiverQuestionaires[1].questions.push(b);
-        this.caregiverQuestionaires[1].questions.push(c);
-        this.caregiverQuestionaires[1].questions.push(d);
-*/
+    getCaregiverQuestionnaires(){
         return this.dataService.getQuizs();
+    }
+    hasEvaluationsToDo() {
+        return this.dataService.hasEvaluationsToDo();
+    }
+    updateQuizStatus(questionnaire) {
+        this.dataService.updateQuizStatus(questionnaire);
+        
+        this.connectorService.updateQuizStatus(questionnaire).subscribe(
+            (result) => this.onSentSuccess(questionnaire, result),
+            (error) => this.onSentError(questionnaire, error)
+        );
+    }
+    onSentSuccess(questionnaire, result) {
+        this.dataService.deleteQuestionnaire(questionnaire);
+        console.log("enviou questionário com sucesso");
+    }
+    onSentError(questionnaire, error) {
+        this.dataService.addQuestionnaireToDB(questionnaire);
+        console.log("falhou envio do questionário");
     }
 }
 

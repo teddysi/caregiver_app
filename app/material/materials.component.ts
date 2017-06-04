@@ -46,7 +46,7 @@ export class MaterialsComponent implements OnInit {
 		const idx = +this.route.snapshot.params["id_need"];
 
 		//return to patients List if do not have connection
-		if (!this.connectorService.isConnected) {
+		if (!this.connectorService.isConnected()) {
 			this.router.navigate(['/patients']);
 		}
 
@@ -77,7 +77,7 @@ export class MaterialsComponent implements OnInit {
 		*/
 
 		//evaluations
-		this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
+		this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
 	}
 
 

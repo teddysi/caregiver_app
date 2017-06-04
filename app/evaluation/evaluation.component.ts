@@ -48,8 +48,8 @@ export class EvaluationComponent implements OnInit {
 
         //Get Questionnaire
         console.log(JSON.stringify(this.patientService.caregiverQuestionaires, null, 4));
-        this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
-
+        //this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
+        this.questionnaire = this.dataService.getQuizs().filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
         //transform radio buttons
         this.transformRadioButtons();
 
@@ -93,22 +93,22 @@ export class EvaluationComponent implements OnInit {
         this.questionnaire.questions[indexQuestion].response = response;
     }
 
-
-
     /**
-     * 
-     * Funtion to save evaluation
+     *
+     *   
+     * FÕ,Nuntion to save evaluation
      * 
      * @memberof EvaluationComponent
      */
     submmitEvaluation() {
         //set questionnaire done
-        this.questionnaire.done = true;
+        //this.questionnaire.done = true;
         //update local data
-        this.dataService.updateQuizStatus(this.questionnaire);
+        this.patientService.updateQuizStatus(this.questionnaire);
+        
        
         //test connection
-        if (this.connectorService.isConnected) {
+        if (!this.connectorService.isConnected()) {
             dialogs.alert({
                 title: "Aviso - Avaliações ",
                 message: "Encontra-se sem acesso à internet. O seu questionário apena será submetido quando tiver novamente acesso.",

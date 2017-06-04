@@ -213,4 +213,18 @@ export class ConnectorService {
         }
         return true;
     }
+    public updateQuizStatus(questionnaire): Observable<Http> {
+        console.log('A enviar questionário');
+        if(!this.isConnected()) {
+            return null;
+        }
+        let headers = this.createLoginHeader();
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/login';
+
+        return this.http.post(
+            request,
+            { headers: headers },
+             {body:{ id: questionnaire.id, reference: questionnaire.reference, questionnaire : questionnaire } }
+            ).map(res => res.json());
+    }
 }
