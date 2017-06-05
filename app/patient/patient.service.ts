@@ -76,8 +76,14 @@ export class PatientService {
         console.log("enviou questionário com sucesso");
     }
     onSentError(questionnaire, error) {
-        this.dataService.addQuestionnaireToDB(questionnaire);
+        var questionnaire_to_send = [];
+        questionnaire_to_send.push(questionnaire);
+        this.dataService.addQuestionnaireToDB(questionnaire_to_send);
+        console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
         console.log("falhou envio do questionário");
+    }
+    userOutdated() {
+        this.dataService.deleteData('user');
     }
 }
 

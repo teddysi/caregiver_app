@@ -34,7 +34,7 @@ export class DataService {
     constructor(public database: Database){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            //this.deleteData('quiz');
+            this.deleteData('quiz');
             //this.deleteData('user');
             //this.deleteData('global');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
@@ -60,9 +60,10 @@ export class DataService {
             console.log('A atualizar global de conexao'); 
             this.globalData_id = this.getGlobalsID();
             this.database.getDatabase().updateDocument(this.globalData_id, {
-                "dataRequest": "false"
+                "dataRequest": "false",
             });
-            console.log('Atualizou');
+            
+            console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id)));
             
         } else {
             console.log('A criar objeto para as variáveis globais');
@@ -80,7 +81,7 @@ export class DataService {
         this.quizs_done_id = this.getQuizsOnHold_ID();
 
         //verificar se há questionários para preencher
-        this.checkQuizStatus();
+        //this.checkQuizStatus();
         
     }
     sync() {
@@ -135,10 +136,16 @@ export class DataService {
 
         //Guarda dados dos Pacientes
         //Guarda dados das necessidades
+        var $global = this.database.getDatabase().getDocument(this.globalData_id);
 
         this.database.getDatabase().updateDocument(this.globalData_id, {
-            "dataRequest": "true"
+            "type" : "global",
+            "dataRequest": "true",
+            "evaluationsToDo" : global.evaluationsToDo
+            
         });
+        //ver o get document tb e comparar
+        this.showData('global');
     }
     mediaPersistence(data) {
           /**
@@ -390,11 +397,12 @@ export class DataService {
     }
     public getAllQuizs() {
         console.log("A obter ID dos quizs");
-         if(this.database.getDatabase().executeQuery('quiz').length > 0) {
-             //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
-             return this.database.getDatabase().executeQuery('quiz');
-         }
-         return null;
+        if(this.database.getDatabase().executeQuery('quiz').length > 0) {
+            //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
+            return this.database.getDatabase().executeQuery('quiz');
+        }
+        console.log('passou aqui');
+        return null;
     }
     public getLatestQuizData() {
         var quizs = this.getAllQuizs();
@@ -403,9 +411,9 @@ export class DataService {
             var lastQuiz;
 
             lastQuiz = quizs[quizs.length - 1];
-            console.log(lastQuiz);
             return lastQuiz._id;
         }
+        console.log('passou aqui-1');
         return null;
     }
     public getLatestPatientData() {
@@ -420,10 +428,10 @@ export class DataService {
         return null;
     }
     public getQuizs() {
-        console.log(this.quizs_id);
         return this.database.getDatabase().getDocument(this.quizs_id).quiz;
     }
     public isGlobalSet() {
+        console.log("GLOBALSIZE: " + this.database.getDatabase().executeQuery('global').length);
         if(this.database.getDatabase().executeQuery('global').length > 0) {            
             return true;
         }
@@ -447,37 +455,50 @@ export class DataService {
     }
     public updateQuizStatus(questionnaire) {        
         var quizs = this.getQuizs();
+        if(quizs) {
+            quizs.forEach(element_quiz => {
+                if(element_quiz.id == questionnaire.id) {
+                    //console.log('ENTROU');
+                    element_quiz.done = true;
+                }
+            });
        
-        quizs.forEach(element_quiz => {
-            if(element_quiz.id == questionnaire.id) {
-                //console.log('ENTROU');
-                element_quiz.done = true;
-            }
-        });
-       
-        this.database.getDatabase().updateDocument(this.quizs_id, {
-            'quiz' : quizs,
-            'type' : 'quiz'
-        });
-        //this.showData('quiz');
-        this.checkQuizStatus();
+            this.database.getDatabase().updateDocument(this.quizs_id, {
+                'quiz' : quizs,
+                'type' : 'quiz'
+            });
+            //this.showData('quiz');
+            this.checkQuizStatus();
+        }
+        return null;
     }
     checkQuizStatus() {
         var quizs = this.getQuizs();
-        var quiz_done = [];
+        if(quizs) {
+            console.log('passou aqui-2');
+            var quiz_done = [];
 
-        quiz_done.push(quizs.map(function(quizs){return quizs.done}));
-        quiz_done[0].forEach(quiz_result => {
-            if(quiz_result == 'false') {
-                this.database.getDatabase().updateDocument(this.globalData_id, {
-                    "evaluationsToDo" : "true"
-                });
-            }
-        });
+            quiz_done.push(quizs.map(function(quizs){return quizs.done}));
+            quiz_done[0].forEach(quiz_result => {
+                console.log("A verificar estado das avaliações");
+                console.log('1: ' + quiz_result);
+                
+                if(quiz_result == 'false') {
+                    console.log("A mudar estado das avaliações");
+                    this.database.getDatabase().updateDocument(this.globalData_id, {
+                        "evaluationsToDo" : "true"
+                    });
+                }
+            });
+        }
+        console.log('passou aqui - 3');
+        return null;   
     }
     hasEvaluationsToDo() {
-        /*
+        console.log('GLOBAL ID: ' + this.globalData_id);
+        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
         console.log('Evaluations to do:' + this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo)
+        /*
         if(this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo == "true") {
             return true;
         }

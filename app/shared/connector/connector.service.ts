@@ -218,13 +218,13 @@ export class ConnectorService {
         if(!this.isConnected()) {
             return null;
         }
-        let headers = this.createLoginHeader();
-        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/login';
-
+        let headers = this.createRequestHeader();
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        console.log(JSON.stringify(headers), null, 4);
         return this.http.post(
             request,
             { headers: headers },
-             {body:{ id: questionnaire.id, reference: questionnaire.reference, questionnaire : questionnaire } }
+            {body:{ id: questionnaire.id, reference: questionnaire.reference, questionnaire : questionnaire } }
             ).map(res => res.json());
     }
 }

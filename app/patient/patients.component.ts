@@ -85,7 +85,7 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataSuccess(result) {
-
+        console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(result, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();
@@ -116,7 +116,15 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataError(error: Response | any) {
-        console.log(error.json());
+        //console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
+        if(error.status == '401') {
+         dialogs.alert({
+                title: "Aviso",
+                message: "O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.",
+                okButtonText: "OK"
+            })
+            this.patientService.userOutdated();
+        }
     }
 
 
