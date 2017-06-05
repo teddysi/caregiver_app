@@ -64,9 +64,11 @@ export class PatientService {
         return this.dataService.hasEvaluationsToDo();
     }
     updateQuizStatus(questionnaire) {
+        var questionnaire_to_send = [];
+        questionnaire_to_send.push(questionnaire);
         this.dataService.updateQuizStatus(questionnaire);
         
-        this.connectorService.updateQuizStatus(questionnaire).subscribe(
+        this.connectorService.updateQuizStatus(questionnaire_to_send).subscribe(
             (result) => this.onSentSuccess(questionnaire, result),
             (error) => this.onSentError(questionnaire, error)
         );
@@ -76,9 +78,8 @@ export class PatientService {
         console.log("enviou questionário com sucesso");
     }
     onSentError(questionnaire, error) {
-        var questionnaire_to_send = [];
-        questionnaire_to_send.push(questionnaire);
-        this.dataService.addQuestionnaireToDB(questionnaire_to_send);
+        
+        this.dataService.addQuestionnaireToDB(questionnaire);
         console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
         console.log("falhou envio do questionário");
     }

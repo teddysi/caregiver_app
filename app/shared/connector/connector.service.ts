@@ -221,10 +221,11 @@ export class ConnectorService {
         let headers = this.createRequestHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
         console.log(JSON.stringify(headers), null, 4);
+        console.log(JSON.stringify(questionnaire), null, 4);
         return this.http.post(
             request,
             { headers: headers },
-            {body:{ id: questionnaire.id, reference: questionnaire.reference, questionnaire : questionnaire } }
+            {body:{ "" : JSON.stringify(questionnaire) } }
             ).map(res => res.json());
     }
 }
