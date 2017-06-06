@@ -165,7 +165,7 @@ export class DataService {
         return this.database.getDatabase().getDocument(this.userData_id).user.caregiver_token;
     }
     getUserID(): string {
-        console.log('A devolver o ID do user');
+        console.log('A o ID do user');
         return this.database.getDatabase().getDocument(this.userData_id).user.id;
     }
     getLatestUserToRegister() {
