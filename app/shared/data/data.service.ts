@@ -457,11 +457,9 @@ export class DataService {
         var quizs = this.getQuizs();
         if(quizs) {
             quizs.forEach(element_quiz => {
-                if(element_quiz.id == questionnaire.id) {
-                    if(element_quiz.reference == questionnaire.reference) {
-                        element_quiz.done = true;
-                    }
-                }
+               if(element_quiz.ref_questionnaire == questionnaire.ref_questionnaire) {
+                    element_quiz.done = true;
+               }
             });
        
             this.database.getDatabase().updateDocument(this.quizs_id, {
