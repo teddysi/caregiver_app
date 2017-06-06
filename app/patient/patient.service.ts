@@ -67,11 +67,12 @@ export class PatientService {
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
         this.dataService.updateQuizStatus(questionnaire);
-        
+        if(this.connectorService.isConnected()){
         this.connectorService.updateQuizStatus(questionnaire_to_send).subscribe(
             (result) => this.onSentSuccess(questionnaire, result),
             (error) => this.onSentError(questionnaire, error)
         );
+        }
     }
     onSentSuccess(questionnaire, result) {
         this.dataService.deleteQuestionnaire(questionnaire);
