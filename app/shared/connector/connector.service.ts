@@ -218,14 +218,16 @@ export class ConnectorService {
         if(!this.isConnected()) {
             return null;
         }
-        let headers = this.createRequestHeader();
-        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        let headers = this.createLoginHeader();
+        //let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        let request = 'http://35.184.244.41/caregivers/public/caregiversAPI/16/quizs/submit';
         console.log(JSON.stringify(headers), null, 4);
         console.log(JSON.stringify(questionnaire), null, 4);
+        
         return this.http.post(
             request,
             { headers: headers },
-            {body:{ "" : JSON.stringify(questionnaire) } }
+            {body: questionnaire}
             ).map(res => res.json());
     }
 }

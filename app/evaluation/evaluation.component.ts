@@ -90,7 +90,7 @@ export class EvaluationComponent implements OnInit {
      * @memberof EvaluationComponent
      */
     public setResponse(response, indexQuestion) {
-        this.questionnaire.questions[indexQuestion].response = response;
+        this.questionnaire.questions[indexQuestion].response = indexQuestion;
     }
 
     /**
@@ -104,6 +104,7 @@ export class EvaluationComponent implements OnInit {
         //set questionnaire done
         //this.questionnaire.done = true;
         //update local data
+        console.log(JSON.stringify(this.questionnaire), null, 4);
         this.patientService.updateQuizStatus(this.questionnaire);
         
        
