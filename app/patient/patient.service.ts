@@ -79,7 +79,10 @@ export class PatientService {
         console.log("enviou questionário com sucesso");
     }
     onSentError(questionnaire, error) {
-        
+        if(error.length == 0) {
+            this.dataService.deleteQuestionnaire(questionnaire);
+            console.log("enviou questionário com sucesso");
+        }
         this.dataService.addQuestionnaireToDB(questionnaire);
         console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
         console.log("falhou envio do questionário");

@@ -219,8 +219,8 @@ export class ConnectorService {
             return null;
         }
         let headers = this.createLoginHeader();
-        //let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
-        let request = 'http://35.184.244.41/caregivers/public/caregiversAPI/16/quizs/submit';
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        //let request = 'http://35.184.244.41/caregivers/public/caregiversAPI/15/quizs/submit';
         console.log(JSON.stringify(headers), null, 4);
         console.log(JSON.stringify(questionnaire), null, 4);
         
