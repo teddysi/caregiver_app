@@ -36,6 +36,7 @@ export class MaterialDetailComponent implements OnInit {
     materialsToDisplay: Material[];
 
     hasEvaluationsToDo: boolean;
+    loading: boolean;
 
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
@@ -54,6 +55,7 @@ export class MaterialDetailComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("# COMPONENTE MATERIAL-DETAIL")
+        this.loading=true;
         //rating test
 
         const id = +this.route.snapshot.params["id"];
@@ -102,6 +104,11 @@ export class MaterialDetailComponent implements OnInit {
         //Evaluations
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
 
+    }
+
+    stopLoading(){
+       this.loading=false;
+       console.log("PASSOU AKI")
     }
 
 

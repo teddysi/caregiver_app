@@ -17,7 +17,8 @@
                 <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
                 <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
                 <!-- type = video -->
-                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true"> </VideoPlayer>
+                <ActivityIndicator *ngIf="item.type == 'video'" [busy]="loading" width="50" height="50" [visibility]="loading ? 'visible' : 'collapse'" color="green" ></ActivityIndicator>
+                <VideoPlayer *ngIf="item.type == 'video'"  [src]="item.url" autoplay="true" height="300" controls="true" (playbackReady)="stopLoading()" > </VideoPlayer>
                 <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
 
                 <!-- type = emergencyContact-->
