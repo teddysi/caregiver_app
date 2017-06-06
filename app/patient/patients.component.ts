@@ -59,12 +59,12 @@ export class PatientsComponent implements OnInit {
         this.isLoading = false;
         this.listLoaded = true;
 
-        this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
+        //this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
 
         //verify and notificate if has evaluations to do
-        /*
-        this.patientService.hasEvaluationsToDo = true;
-        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo;
+        
+        //this.patientService.hasEvaluationsToDo = true;
+        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         if (this.hasEvaluationsToDo) {
             dialogs.alert({
                 title: "Aviso - Avaliações ",
@@ -72,7 +72,7 @@ export class PatientsComponent implements OnInit {
                 okButtonText: "OK"
             })
         }
-        */
+        
     }
 
 

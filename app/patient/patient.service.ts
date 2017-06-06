@@ -60,9 +60,19 @@ export class PatientService {
     getCaregiverQuestionnaires(){
         return this.dataService.getQuizs();
     }
+    
     hasEvaluationsToDo() {
-        return this.dataService.hasEvaluationsToDo();
+    //return this.dataService.hasEvaluationsToDo();
+        if(this.caregiverQuestionaires) {
+            if (this.caregiverQuestionaires.length>0) {
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
+    
+    
     updateQuizStatus(questionnaire) {
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
