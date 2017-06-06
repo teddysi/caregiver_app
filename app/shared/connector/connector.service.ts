@@ -220,7 +220,7 @@ export class ConnectorService {
         }
         let headers = this.createLoginHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
-        //let request = 'http://35.184.244.41/caregivers/public/caregiversAPI/15/quizs/submit';
+
         console.log(JSON.stringify(headers), null, 4);
         console.log(JSON.stringify(questionnaire), null, 4);
         

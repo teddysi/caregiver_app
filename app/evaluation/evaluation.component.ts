@@ -42,7 +42,7 @@ export class EvaluationComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("# COMPONENT EVALUATION ")
-
+       
         //router params
         const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
 
@@ -58,8 +58,8 @@ export class EvaluationComponent implements OnInit {
         
     }
 
-
-
+    
+   
 
     /**
      * Funtion to create array of values to put on radiobutton's questions
