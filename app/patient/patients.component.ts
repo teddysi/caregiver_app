@@ -4,7 +4,7 @@ import platform = require("platform");
 import { PatientService } from "./patient.service";
 import { Patient } from "./patient";
 import { Questionnaire } from "../evaluation/questionnaire";
-
+import { Notification } from "./notification";
 import { Router } from "@angular/router";
 import { CreateViewEventData } from "ui/placeholder";
 
@@ -23,7 +23,7 @@ import dialogs = require("ui/dialogs");
 export class PatientsComponent implements OnInit {
     patients: Patient[];
     caregiverQuestionnaires: Questionnaire[];
-
+    notification: Notification;
     listLoaded = false;
     isLoading = false;
     hasEvaluationsToDo = false; //condition to enable action bar icon evaluations
@@ -63,16 +63,11 @@ export class PatientsComponent implements OnInit {
 
         //verify and notificate if has evaluations to do
         
-        //this.patientService.hasEvaluationsToDo = true;
-        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
-        if (this.hasEvaluationsToDo) {
-            dialogs.alert({
-                title: "Aviso - Avaliações ",
-                message: "Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.",
-                okButtonText: "OK"
-            })
-        }
+        //this.hasEvaluationsToDo = true;
         
+        if(this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
+            this.patientService.displayNotification('pending evaluations');
+        }      
     }
 
 
@@ -85,7 +80,7 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataSuccess(result) {
-        console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(result, null, 4));
+        //console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(result, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();

@@ -1,0 +1,16 @@
+"use strict";
+var Notification = (function () {
+    function Notification(id, title, message, done) {
+        this.id = id;
+        this.title = title;
+        this.message = message;
+        this.done = done;
+        //this.initAppMessages();
+    }
+    Notification.prototype.initAppMessages = function () {
+        //this.notifications.push(new Notification('pending evaluations', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false));
+    };
+    return Notification;
+}());
+exports.Notification = Notification;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibm90aWZpY2F0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibm90aWZpY2F0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtJQUVJLHNCQUFtQixFQUFVLEVBQVMsS0FBYSxFQUFTLE9BQWUsRUFBUyxJQUFhO1FBQTlFLE9BQUUsR0FBRixFQUFFLENBQVE7UUFBUyxVQUFLLEdBQUwsS0FBSyxDQUFRO1FBQVMsWUFBTyxHQUFQLE9BQU8sQ0FBUTtRQUFTLFNBQUksR0FBSixJQUFJLENBQVM7UUFDN0YseUJBQXlCO0lBQzdCLENBQUM7SUFFRCxzQ0FBZSxHQUFmO1FBQ0ksb0tBQW9LO0lBQ3hLLENBQUM7SUFXTCxtQkFBQztBQUFELENBQUMsQUFuQkQsSUFtQkM7QUFuQlksb0NBQVkiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuZXhwb3J0IGNsYXNzIE5vdGlmaWNhdGlvbiB7XHJcblxyXG4gICAgY29uc3RydWN0b3IocHVibGljIGlkOiBzdHJpbmcsIHB1YmxpYyB0aXRsZTogc3RyaW5nLCBwdWJsaWMgbWVzc2FnZTogc3RyaW5nLCBwdWJsaWMgZG9uZTogYm9vbGVhbikge1xyXG4gICAgICAgIC8vdGhpcy5pbml0QXBwTWVzc2FnZXMoKTtcclxuICAgIH1cclxuXHJcbiAgICBpbml0QXBwTWVzc2FnZXMoKSB7XHJcbiAgICAgICAgLy90aGlzLm5vdGlmaWNhdGlvbnMucHVzaChuZXcgTm90aWZpY2F0aW9uKCdwZW5kaW5nIGV2YWx1YXRpb25zJywgJ0V4aXN0ZW0gYXZhbGlhw6fDtWVzIHBlbmRlbnRlcy4gUG9yIGZhdm9yIGFjZWRhIMOgcyBhdmFsaWHDp8O1ZXMgbm8gY2FudG8gc3VwZXJpb3IgZGlyZWl0by4nLCBmYWxzZSkpO1xyXG4gICAgfVxyXG4gICAgLypcclxuICAgIGdldE1lc3NhZ2UoaWQpIHtcclxuICAgICAgICBcclxuICAgICAgICAgICAgdGhpcy5ub3RpZmljYXRpb25zLmZpbHRlcihmdW5jdGlvbiggbm90aWZpY2F0aW9uICkge1xyXG4gICAgICAgICAgICBpZihub3RpZmljYXRpb24uaWQgPT09IGlkKVxyXG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIk5PVGlGSUNBVElPTiBNRVNTQUdFOiBcIiArIG5vdGlmaWNhdGlvbi5tZXNzYWdlKTtcclxuICAgICAgICAgICAgLy9yZXR1cm4gb2JqLmIgPT0gNjtcclxuICAgICAgICB9KTtcclxuICAgIH1cclxuICAgICovXHJcbn0iXX0=

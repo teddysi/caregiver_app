@@ -6,12 +6,15 @@ import platform = require("platform");
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Patient } from "./patient";
+import { Notification } from "./notification";
 import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { Observable as RxObservable } from "rxjs/Rx";
 import { DataService } from "../shared/data/data.service";
 import { ConnectorService } from "../shared/connector/connector.service";
 import { UserService } from "../shared/user/user.service";
+
+import dialogs = require("ui/dialogs");
 
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
@@ -21,9 +24,12 @@ export class PatientService {
 
     public patients: Patient[];
     public caregiverQuestionaires: Questionnaire[];
+    public notifications: Notification[];
 
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
         console.log('Instanciou - PatientService!');
+        this.notifications = [];
+        this.initMessages();
     }
 
     isConnected() {
@@ -62,7 +68,8 @@ export class PatientService {
     }
     
     hasEvaluationsToDo() {
-    //return this.dataService.hasEvaluationsToDo();
+        return this.dataService.hasEvaluationsToDo();
+    /*
         if(this.caregiverQuestionaires) {
             if (this.caregiverQuestionaires.length>0) {
                 return true;
@@ -70,8 +77,8 @@ export class PatientService {
                 return false;
             }
         }
+    */
     }
-    
     
     updateQuizStatus(questionnaire) {
         var questionnaire_to_send = [];
@@ -99,6 +106,31 @@ export class PatientService {
     }
     userOutdated() {
         this.dataService.deleteData('user');
+    }
+    initMessages() {
+        var pending_evaluations = new Notification('pending evaluations', 'Aviso - Avaliações', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false)
+        
+
+        this.notifications.push(pending_evaluations);
+    }
+
+    getNotification(id) {
+        var notification = this.notifications.filter(function( obj ) {
+            return obj.id === id;
+        });
+
+        return notification[0];
+    }
+    displayNotification(id) {
+        let notification = this.getNotification(id);
+        if(!notification.done) {
+            dialogs.alert({ 
+                title: notification.title,
+                message: notification.message,
+                okButtonText: "OK"
+            });
+        }
+        notification.done = true;
     }
 }
 
