@@ -23,7 +23,7 @@ import "rxjs/add/operator/do";
 export class PatientService {
 
     public patients: Patient[];
-    public caregiverQuestionaires: Questionnaire[];
+    //public caregiverQuestionaires: Questionnaire[];
     public notifications: Notification[];
 
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
@@ -58,9 +58,10 @@ export class PatientService {
 
     //temp
 
-    setCaregiverQuestionnaires(caregiverQuestionaires){
-        this.dataService.setQuizs(caregiverQuestionaires);
-        this.caregiverQuestionaires = caregiverQuestionaires;
+    setCaregiverQuestionnaires(caregiverQuestionaires) {
+        
+        this.dataService.setQuizs(caregiverQuestionaires); 
+        //this.caregiverQuestionaires = caregiverQuestionaires;
     }
 
     getCaregiverQuestionnaires(){
@@ -108,10 +109,10 @@ export class PatientService {
         this.dataService.deleteData('user');
     }
     initMessages() {
-        var pending_evaluations = new Notification('pending evaluations', 'Aviso - Avaliações', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false)
-        
-
-        this.notifications.push(pending_evaluations);
+        this.notifications = [
+            new Notification('pending evaluations', 'Aviso - Avaliações', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false),
+            new Notification('error-auth', 'Aviso - Autenticação', 'O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.', false)
+        ]
     }
 
     getNotification(id) {

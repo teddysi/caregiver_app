@@ -35,13 +35,13 @@ export class DataService {
     constructor(public database: Database){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            this.deleteData('quiz');
+            //this.deleteData('quiz');
             //this.deleteData('user');
             this.deleteData('global');
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');
             //this.showData('materials');
-            //this.showData('quiz');
+            this.showData('quiz');
             this.init();
             //this.showData('global');
             
@@ -84,7 +84,7 @@ export class DataService {
         this.quizs_done_id = this.getQuizsOnHold_ID();
 
         //verificar se há questionários para preencher
-        this.checkQuizStatus();
+        //this.checkQuizStatus();
         
     }
     sync() {
@@ -333,13 +333,63 @@ export class DataService {
          return true;
     }
     public setQuizs(caregiverQuestionaires) {
+
         if(!this.isQuizsSet()) {
-            console.log('entrou');
+            console.log('Novo doc de Quizs');
             this.quizs_id = this.database.getDatabase().createDocument({
                 "type": "quiz",
                 "quiz": caregiverQuestionaires
             });
         } else {
+            var quizs_to_add = [];
+            var found_control = false; //variavel de controle de novos quizs a adicionar
+            var same_quiz_found = false;
+
+            console.log('Já existem quizs na BD');
+            var quizs = this.getQuizs();
+            //console.log(JSON.stringify(quizs, null, 4));
+            caregiverQuestionaires.forEach(questionnaire_server => {
+                same_quiz_found = false;
+                quizs.forEach(questionnaire_BD => {
+                    if(questionnaire_BD.id == questionnaire_server.id && questionnaire_BD.reference == questionnaire_server.reference && questionnaire_BD.reference_name == questionnaire_server.reference_name) {
+                        console.log('Encontrou quiz igual: id-' + questionnaire_BD.id + ' reference-' + questionnaire_BD.reference);
+                        same_quiz_found = true;
+                    }
+                });
+                if(!same_quiz_found) {
+                    console.log('Encontrei quizs novos;');
+                    found_control = true;
+                    quizs_to_add.push(questionnaire_server);
+                }             
+            });
+            console.log(JSON.stringify(quizs_to_add));
+            if(found_control) {
+                quizs_to_add.forEach(quiz => {
+                    quizs.push(quiz);
+                });
+            }
+            console.log(JSON.stringify(quizs, null, 4));
+            
+            //index array
+            let index = 0;
+            quizs.forEach(element => {
+            element.ref_questionnaire = index + "";
+            index++;
+           
+        });
+            this.database.getDatabase().updateDocument(this.quizs_id, {
+                'quiz' : quizs,
+                'type' : 'quiz'
+            });
+            console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
+            console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');
+            /*
+            var quizs_final = this.getQuizs();
+            var caregiverQuestionaires_ids = new Array();
+            var quizs_ids = new Array();
+            var quizs_ids_to_add_to_BD = new Array();
+            var quizs_same_id = new Array();
+            /*
             console.log('AQUI!!!!!!!!!!!!!!')
             var quizs = this.getQuizs();
             //console.log(JSON.stringify(quizs, null, 4));
@@ -392,7 +442,8 @@ export class DataService {
                 'quiz' : quizs_final,
                 'type' : 'quiz'
             });
-        }
+            */
+            }
         //console.log('A mostrar BD-QUIZ!')
         //this.showData('quiz');
     }

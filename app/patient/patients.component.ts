@@ -80,7 +80,8 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataSuccess(result) {
-        //console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(result, null, 4));
+        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();
@@ -89,6 +90,7 @@ export class PatientsComponent implements OnInit {
         //console.log("# COMPONENTE PATIENTES [caregiverQuestionnaires ]" + JSON.stringify(this.caregiverQuestionnaires, null, 4));
 
         this.patientService.setPatients(this.patients);
+        
         this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaires);
         // this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaire); TODO
 
@@ -113,11 +115,7 @@ export class PatientsComponent implements OnInit {
     private onGetDataError(error: Response | any) {
         //console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
         if(error.status == '401') {
-         dialogs.alert({
-                title: "Aviso",
-                message: "O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.",
-                okButtonText: "OK"
-            })
+            this.patientService.displayNotification('error-auth');
             this.patientService.userOutdated();
         }
     }
@@ -139,6 +137,7 @@ export class PatientsComponent implements OnInit {
                 element_p.quizs.forEach(element_q => {
                     this.caregiverQuestionnaires.push(element_q)
                     element_q["ref_questionnaire"] = (sizeInitial) + ""
+                    
                     sizeInitial++;
                 });
             }
