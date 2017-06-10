@@ -180,4 +180,37 @@ export class PatientsComponent implements OnInit {
             })
         }
     }
+
+init(){
+    
+        this.patientService.getPatients().subscribe(
+                (result) => this.onGetDataSuccess(result),
+                (error) => this.onGetDataError(error)
+            );
+        
+
+        this.isLoading = false;
+        this.listLoaded = true;
+
+        //this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
+
+        //verify and notificate if has evaluations to do
+        
+        //this.hasEvaluationsToDo = true;
+        
+        if(this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
+            this.patientService.displayNotification('pending evaluations');
+        }      
+}
+
+    /**
+     * Funtion to refresh all data from the server
+     * 
+     * 
+     * @memberof PatientsComponent
+     */
+    public refreshData() {
+        this.init();
+        console.log("#REFRESH DATA -> Not implemented")
+    }
 }
