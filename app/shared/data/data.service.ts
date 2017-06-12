@@ -35,13 +35,15 @@ export class DataService {
     constructor(public database: Database){
             console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            //this.deleteData('quiz');
+            this.deleteData('quiz');
             //this.deleteData('user');
-            this.deleteData('global');
+            //this.deleteData('global');
+            //this.deleteData('data');
+
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');
             //this.showData('materials');
-            this.showData('quiz');
+            //this.showData('quiz');
             this.init();
             //this.showData('global');
             
@@ -49,23 +51,25 @@ export class DataService {
             
     }
 
-    ngOnInit() { 
-    }
     init() {
+        console.log("BD USADA");
+        this.showData("caregiver");
         console.log('A inicializar as variáveis globais');
         //Adicionar numero de avaliações pendentes
         //...
         
         if(this.isGlobalSet()) {
-            console.log('A atualizar global de conexao'); 
+            console.log('A atualizar global de conexao');
             this.globalData_id = this.getGlobalsID();
+            var global = this.database.getDatabase().getDocument(this.globalData_id);
+            
             this.database.getDatabase().updateDocument(this.globalData_id, {
                 "type": "global",
                 "dataRequest": "false",
-                "evaluationsToDo" : "false"
+                "evaluationsToDo" : global.evaluationsToDo
             });
             
-            console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id)));
+            console.log(JSON.stringify(this.globalData_id));
             
         } else {
             console.log('A criar objeto para as variáveis globais');
@@ -74,14 +78,17 @@ export class DataService {
                 "type": "global",
                 "dataRequest": "false",
                 "evaluationsToDo" : "false"
-            });             
+            });
+            //console.log('NOVO GLOBAL ID: ' + this.globalData_id);         
         }
 
         this.userData_id = this.getCurrentUserDocID();
+        console.log("QUIZS USER DOC ID: " + this.userData_id);
         this.patientsData_id = this.getLatestPatientData();
+        console.log("PATIENTS DOC ID: " + this.patientsData_id);
         this.quizs_id = this.getLatestQuizData();
-        console.log("QUIZS: " + this.quizs_id);
-        this.quizs_done_id = this.getQuizsOnHold_ID();
+        console.log("QUIZS DOC ID: " + this.quizs_id);
+        //this.quizs_done_id = this.getQuizsOnHold_ID();
 
         //verificar se há questionários para preencher
         //this.checkQuizStatus();
@@ -125,7 +132,8 @@ export class DataService {
         if(this.patientsData_id) {
             console.log('A atualizar os dados dos pacientes na bd, com o id ' + this.patientsData_id);
             this.database.getDatabase().updateDocument(this.patientsData_id, {
-                "data": data
+                "data": data,
+                "type" : "data"
             });
         } else {
             console.log('Gravar dados Pacientes');
@@ -135,12 +143,12 @@ export class DataService {
             });
         }
 
-        this.mediaPersistence(data);
+        //this.mediaPersistence(data);
         
 
         //Guarda dados dos Pacientes
         //Guarda dados das necessidades
-        var $global = this.database.getDatabase().getDocument(this.globalData_id);
+        var global = this.database.getDatabase().getDocument(this.globalData_id);
 
         this.database.getDatabase().updateDocument(this.globalData_id, {
             "type" : "global",
@@ -334,12 +342,22 @@ export class DataService {
     }
     public setQuizs(caregiverQuestionaires) {
 
+        if(caregiverQuestionaires.length > 0) {
+            console.log("ENTROU AQUI E SETOU O EVALUATIONS A TRUE. Comprimento do array de quizes: " + caregiverQuestionaires.length);
+            this.database.getDatabase().updateDocument(this.globalData_id, {
+                "evaluationsToDo" : "true",
+                "type" : "global",
+                "dataRequest" : "true"
+            });  
+        }
+
         if(!this.isQuizsSet()) {
             console.log('Novo doc de Quizs');
             this.quizs_id = this.database.getDatabase().createDocument({
                 "type": "quiz",
                 "quiz": caregiverQuestionaires
             });
+            this.showData('quiz');
         } else {
             var quizs_to_add = [];
             var found_control = false; //variavel de controle de novos quizs a adicionar
@@ -381,75 +399,11 @@ export class DataService {
                 'quiz' : quizs,
                 'type' : 'quiz'
             });
-            console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
-            console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');
-            /*
-            var quizs_final = this.getQuizs();
-            var caregiverQuestionaires_ids = new Array();
-            var quizs_ids = new Array();
-            var quizs_ids_to_add_to_BD = new Array();
-            var quizs_same_id = new Array();
-            /*
-            console.log('AQUI!!!!!!!!!!!!!!')
-            var quizs = this.getQuizs();
-            //console.log(JSON.stringify(quizs, null, 4));
-            var quizs_final = this.getQuizs();
-            var caregiverQuestionaires_ids = new Array();
-            var quizs_ids = new Array();
-            var quizs_ids_to_add_to_BD = new Array();
-            var quizs_same_id = new Array();
-            var found_control;
-            var index_control = -1;
-
-            caregiverQuestionaires_ids.push(caregiverQuestionaires.map(function(questionnaire){
-                var quest = {};
-                quest[questionnaire.id] = questionnaire.reference;
-                return quest;
-            }));
-            //console.log('aqui');
-            //console.log(JSON.stringify(caregiverQuestionaires_ids, null, 4));
-            quizs_ids.push(quizs.map(function(questionnaire){return questionnaire.id}));
-           //console.log(JSON.stringify(quizs_ids, null, 4));
-           
-           //para cada questão do questionário remoto
-           caregiverQuestionaires_ids[0].forEach(questionnaire_server_id => {
-                //Controlo se encontrou match a false e de index do questionário a 0
-               found_control = false;
-               index_control++;
-               //Para cada questionário da BD
-               quizs_ids[0].forEach(questionnaire_BD_id => {                    
-                    //se encontrar match
-                    if(questionnaire_server_id.id == questionnaire_BD_id.id && questionnaire_server_id.reference == questionnaire_BD_id.reference) {
-                        //encontrou
-                        found_control = true;
-                        //mete num array
-                        quizs_same_id.push(questionnaire_server_id);
-                        return;
-                    }
-               });
-               //se n encontrou match
-               // console.log('terminou for');
-               if(!found_control) {
-                   //console.log('ENTROU');
-                   //adiciona-o como quiz a acrescentar na BD
-                   quizs_ids_to_add_to_BD.push(questionnaire_server_id);
-                   quizs_final.push(caregiverQuestionaires[index_control]);
-               }
-           });
-           //console.log('A mostrar quizs a sobrepor')
-            //console.log(JSON.stringify(quizs_final, null, 4));
-            this.database.getDatabase().updateDocument(this.quizs_id, {
-                'quiz' : quizs_final,
-                'type' : 'quiz'
-            });
-            */
+                console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
+                console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');           
             }
-        //console.log('A mostrar BD-QUIZ!')
-        //this.showData('quiz');
     }
-    public checkQuestionnaire_reference(id) {
 
-    }
     public getAllQuizs() {
         console.log("A obter ID dos quizs");
         if(this.database.getDatabase().executeQuery('quiz').length > 0) {
@@ -468,7 +422,7 @@ export class DataService {
             lastQuiz = quizs[quizs.length - 1];
             return lastQuiz._id;
         }
-        console.log('passou aqui-1');
+        //console.log('passou aqui-1');
         return null;
     }
     public getLatestPatientData() {
@@ -483,8 +437,13 @@ export class DataService {
         return null;
     }
     public getQuizs() {
-        if(this.database.getDatabase().executeQuery('quiz').length > 0) {        
-            return this.database.getDatabase().getDocument(this.quizs_id).quiz;
+        //console.log(this.quizs_id);
+        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id)));
+        //console.log(this.database.getDatabase().executeQuery('quiz').length);
+        if(this.quizs_id) {
+            if(this.database.getDatabase().executeQuery('quiz').length > 0) {        
+                return this.database.getDatabase().getDocument(this.quizs_id).quiz;
+            }
         }
         return null;
     }
@@ -497,7 +456,7 @@ export class DataService {
     }
     public getGlobalsID() {
         if(this.database.getDatabase().executeQuery('global').length > 0) {
-            console.log(JSON.stringify(this.database.getDatabase().executeQuery("global"), null, 4));
+            //console.log(JSON.stringify(this.database.getDatabase().executeQuery("global"), null, 4));
             
             return this.database.getDatabase().executeQuery('global')[0]._id;
         }
@@ -530,55 +489,106 @@ export class DataService {
         return null;
     }
     checkQuizStatus() {
+        console.log('A VERIFICAR SE HA QUIZS POR FAZER');
         var quizs = this.getQuizs();
-        if(quizs) {
-            console.log('passou aqui-2');
-            var quiz_done = [];
+        var global = this.database.getDatabase().getDocument(this.globalData_id);
 
+        if(quizs) {
+            //console.log('passou aqui-2');
+            var quiz_done = [];
+            var found_quiz_todo = false;
             quiz_done.push(quizs.map(function(quizs){return quizs.done}));
             quiz_done[0].forEach(quiz_result => {
                 console.log("A verificar estado das avaliações");
                 console.log('1: ' + quiz_result);
                 
-                if(quiz_result == 'false') {
+                if(!quiz_result) {
+                    found_quiz_todo = true;
                     console.log("A mudar estado das avaliações");
                     this.database.getDatabase().updateDocument(this.globalData_id, {
                         "evaluationsToDo" : "true",
                         "type" : "global",
-                        "dataRequest" : "true"
-                    });
+                        "dataRequest" : global.dataRequest
+                    });   
                 }
+
             });
+            if(!found_quiz_todo) {
+                this.database.getDatabase().updateDocument(this.globalData_id, {
+                    "evaluationsToDo" : "false",
+                    "type" : "global",
+                    "dataRequest" : global.dataRequest
+                });
+            }
+
         } else {
             this.database.getDatabase().updateDocument(this.globalData_id, {
                 "evaluationsToDo" : "false",
                 "type" : "global",
-                "dataRequest" : "true"
+                "dataRequest" : global.dataRequest
             });
         }
-        console.log('passou aqui - 3');   
+        //console.log('passou aqui - 3');   
     }
     hasEvaluationsToDo() {
-        //console.log('GLOBAL ID: ' + this.globalData_id);
-        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
-        //console.log('Evaluations to do:' + this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo)
+        //this.checkQuizStatus();
         /*
+        console.log('GLOBAL ID: ' + this.globalData_id);
+        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
+        console.log('Evaluations to do:' + this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo)
+        */
         if(this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo == "true") {
             return true;
         }
         return false;
-        */
-        return true;
     }
     isQuizsSet() {
-        console.log('QUIZ-ID: ' + this.quizs_id);
+        //console.log('QUIZ-ID: ' + this.quizs_id);
         if(this.quizs_id) {
             return true;
         }
         return false;
     }
-    deleteQuestionnaire(questionnaire) {
-        //apagar o questionario que foi enviado da BD. Não é urgente pq depois de feito fica oculto
+    deleteQuestionnaire(questionnaires) {
+        console.log("A apagar quizs!");
+        var quizs = this.getQuizs();
+            //console.log(JSON.stringify(quizs, null, 4));
+            console.log("Quizs da BD: ");
+            console.log(JSON.stringify(quizs, null, 4));
+            console.log("Quizs ENVIADOS: ");
+            console.log(JSON.stringify(questionnaires, null, 4));
+            quizs.forEach(questionnaire_BD => {
+                console.log("REFERENCIA DO QUIZ BD: " + questionnaire_BD.ref_questionnaire);
+                questionnaires.forEach(questionnaire_sent => {
+                    console.log("REFERENCIA DO QUIZ ENVIADO: " + questionnaire_sent.ref_questionnaire);
+                    if(questionnaire_sent.ref_questionnaire == questionnaire_BD.ref_questionnaire) {
+                        console.log("REFERENCIA DO QUIZ A ELIMINAR: " + questionnaire_sent.ref_questionnaire);
+                        delete quizs[questionnaire_BD.ref_questionnaire];
+                    }
+                });         
+            });
+        console.log("Numero de quizes por fazer: " + quizs.length);
+        console.log(JSON.stringify(quizs, null, 4));
+
+        if(quizs.length - 1 == 0) {
+            console.log("A apagar doc corrente de quizs");
+            this.database.getDatabase().deleteDocument(this.quizs_id);
+            this.quizs_id = null;
+        } else {
+            let index = 0;
+            quizs.forEach(element => {
+                element.ref_questionnaire = index + "";
+                index++;
+            });
+    
+            this.database.getDatabase().updateDocument(this.quizs_id, {
+                'quiz' : quizs,
+                'type' : 'quiz'
+            });
+        }
+        
+        console.log("NOVO ARRAY DE QUIZS NA BD");
+        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
     addQuestionnaireToDB(questionnaire) {
         if(!this.isSetQuizsDone()) {

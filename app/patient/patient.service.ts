@@ -84,26 +84,33 @@ export class PatientService {
     updateQuizStatus(questionnaire) {
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
+       
         this.dataService.updateQuizStatus(questionnaire);
         if(this.connectorService.isConnected()){
         this.connectorService.updateQuizStatus(questionnaire_to_send).subscribe(
-            (result) => this.onSentSuccess(questionnaire, result),
-            (error) => this.onSentError(questionnaire, error)
+            (result) => this.onSentSuccess(questionnaire_to_send, result),
+            (error) => this.onSentError(questionnaire_to_send, error)
         );
         }
     }
-    onSentSuccess(questionnaire, result) {
-        this.dataService.deleteQuestionnaire(questionnaire);
+    onSentSuccess(questionnaire_to_send, result) {
+        this.dataService.deleteQuestionnaire(questionnaire_to_send);
         console.log("enviou questionário com sucesso");
     }
-    onSentError(questionnaire, error) {
-        if(error.length == 0) {
-            this.dataService.deleteQuestionnaire(questionnaire);
+    onSentError(questionnaire_to_send, error) {
+        console.log("ERROR: " + error);
+        console.log("ERROR LENGTH: " + error.length);
+        if(error.length == undefined) {
+             console.log("Questionário enviado:");
+            console.log(JSON.stringify(questionnaire_to_send, null, 4));
+            this.dataService.deleteQuestionnaire(questionnaire_to_send);
             console.log("enviou questionário com sucesso");
+        } else {
+            //this.dataService.addQuestionnaireToDB(questionnaire);
+            console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
+            console.log("falhou envio do questionário");
         }
-        this.dataService.addQuestionnaireToDB(questionnaire);
-        console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
-        console.log("falhou envio do questionário");
+        
     }
     userOutdated() {
         this.dataService.deleteData('user');
@@ -132,6 +139,30 @@ export class PatientService {
             });
         }
         notification.done = true;
+    }
+    checkQuizsToSubmit() {
+        if(this.connectorService.isConnected()) {
+            let quizs = this.dataService.getQuizs();
+            let quizs_to_send = [];
+
+            if(quizs) {
+                console.log("QUIZS GUARDADOS PARA ENVIO: ");
+                console.log(JSON.stringify(quizs, null, 4));
+                quizs.forEach(quiz => {
+                    if(quiz.done) {
+                        quizs_to_send.push(quiz);
+                    }
+                });
+
+                if(quizs_to_send) {
+                this.connectorService.updateQuizStatus(quizs_to_send).subscribe(
+                    (result) => this.onSentSuccess(quizs_to_send, result),
+                    (error) => this.onSentError(quizs_to_send, error)
+                );
+            }
+            }
+            
+        }
     }
 }
 

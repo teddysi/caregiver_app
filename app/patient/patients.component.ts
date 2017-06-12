@@ -3,6 +3,7 @@ import app = require("application");
 import platform = require("platform");
 import { PatientService } from "./patient.service";
 import { Patient } from "./patient";
+import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from "../evaluation/questionnaire";
 import { Notification } from "./notification";
 import { Router } from "@angular/router";
@@ -47,6 +48,7 @@ export class PatientsComponent implements OnInit {
         this.isLoading = true;
         console.log(this.patientService.isConnected());
         if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
+            //this.patientService.checkQuizsToSubmit();
             this.patientService.getPatients().subscribe(
                 (result) => this.onGetDataSuccess(result),
                 (error) => this.onGetDataError(error)
@@ -65,7 +67,9 @@ export class PatientsComponent implements OnInit {
         
         //this.hasEvaluationsToDo = true;
         
-        if(this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
+        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
+        console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
+        if(this.hasEvaluationsToDo) {
             this.patientService.displayNotification('pending evaluations');
         }      
     }
@@ -80,8 +84,9 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataSuccess(result) {
-        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
-        console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
+       console.log("A tratar dados dp do pedido!")
+         //console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        //console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();
@@ -99,10 +104,9 @@ export class PatientsComponent implements OnInit {
             this.firstTime = false;*/
         //console.log(JSON.stringify(this.patients[0], null, 4));
         //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
-        //}   
-
+        //}
+        console.log("Terminou de tratar dados dp do pedido!!!")  
     }
-
 
     /**
      * Function to load data when http get data Error
@@ -210,7 +214,8 @@ init(){
      * @memberof PatientsComponent
      */
     public refreshData() {
+        this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         this.init();
-        console.log("#REFRESH DATA -> Not implemented")
+        
     }
 }

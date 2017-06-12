@@ -20,6 +20,9 @@ export class Database {
         }
     }
     private createViews() {
+        this.storage.createView("caregiver", "1", (document, emitter) => {
+            emitter.emit(document._id, document);
+        });
         this.storage.createView("data", "1", (document, emitter) => {
             if(document.type == "data") {
                 emitter.emit(document._id, document);

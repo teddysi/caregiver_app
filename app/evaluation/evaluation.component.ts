@@ -45,10 +45,8 @@ export class EvaluationComponent implements OnInit {
        
         //router params
         const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
-
-        //Get Questionnaire
-        //console.log(JSON.stringify(this.patientService.caregiverQuestionaires, null, 4));
-        //this.questionnaire = this.patientService.caregiverQuestionaires.filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
+        console.log("REF_QUEST: " + ref_questionnaire);
+        //Dá erro depois de apagar um questionário, no caso de ficar com a mesma ref
         this.questionnaire = this.dataService.getQuizs().filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
         //transform radio buttons
         this.transformRadioButtons();
@@ -102,7 +100,7 @@ export class EvaluationComponent implements OnInit {
      */
     submmitEvaluation() {
         //set questionnaire done
-        //this.questionnaire.done = true;
+        this.questionnaire.done = true;
         //update local data
         //console.log(JSON.stringify(this.questionnaire), null, 4);
         this.patientService.updateQuizStatus(this.questionnaire);
