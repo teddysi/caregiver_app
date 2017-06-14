@@ -10,6 +10,7 @@ import { MaterialDetailComponent } from "./material/material-detail.component";
 import { NeedComponent } from "./need/need.component";
 import { TestComponent } from "./test/test.component";
 import { EvaluationComponent } from "./evaluation/evaluation.component";
+import { ProfileComponent } from "./profile/profile.component";
  
 import { EvaluationListComponent } from "./evaluation/evaluation-list.component";
 
@@ -30,7 +31,8 @@ const routes: Routes = [
    { path: "evaluations", component: EvaluationListComponent },
    { path: "evaluation/:ref_questionnaire", component: EvaluationComponent },
 
-   { path: "patient/:id/material/:id_material/evaluation", component: EvaluationComponent }
+   { path: "patient/:id/material/:id_material/evaluation", component: EvaluationComponent },
+   { path: "myInfo", component: ProfileComponent }
        
 ];
 

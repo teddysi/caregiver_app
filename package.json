@@ -26,6 +26,7 @@
     "nativescript-materialdropdownlist": "^1.0.15",
     "nativescript-open-app": "^0.2.0",
     "nativescript-pdf-view": "^1.2.1",
+    "nativescript-phone": "^1.3.0",
     "nativescript-radiobutton": "^0.1.0",
     "nativescript-ripple": "^1.1.0",
     "nativescript-theme-core": "~1.0.2",

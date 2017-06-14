@@ -27,7 +27,7 @@ export class PatientService {
     public notifications: Notification[];
 
     constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
-        console.log('Instanciou - PatientService!');
+        //console.log('Instanciou - PatientService!');
         this.notifications = [];
         this.initMessages();
     }
@@ -95,20 +95,20 @@ export class PatientService {
     }
     onSentSuccess(questionnaire_to_send, result) {
         this.dataService.deleteQuestionnaire(questionnaire_to_send);
-        console.log("enviou questionário com sucesso");
+        //console.log("enviou questionário com sucesso");
     }
     onSentError(questionnaire_to_send, error) {
-        console.log("ERROR: " + error);
-        console.log("ERROR LENGTH: " + error.length);
+        //console.log("ERROR: " + error);
+        //console.log("ERROR LENGTH: " + error.length);
         if(error.length == undefined) {
-             console.log("Questionário enviado:");
-            console.log(JSON.stringify(questionnaire_to_send, null, 4));
+             //console.log("Questionário enviado:");
+            //console.log(JSON.stringify(questionnaire_to_send, null, 4));
             this.dataService.deleteQuestionnaire(questionnaire_to_send);
-            console.log("enviou questionário com sucesso");
+            //console.log("enviou questionário com sucesso");
         } else {
             //this.dataService.addQuestionnaireToDB(questionnaire);
-            console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
-            console.log("falhou envio do questionário");
+            //console.log("ERRO NO ENVIO DO QUEST" + JSON.stringify(error, null, 4));
+            //console.log("falhou envio do questionário");
         }
         
     }
@@ -146,8 +146,8 @@ export class PatientService {
             let quizs_to_send = [];
 
             if(quizs) {
-                console.log("QUIZS GUARDADOS PARA ENVIO: ");
-                console.log(JSON.stringify(quizs, null, 4));
+                //console.log("QUIZS GUARDADOS PARA ENVIO: ");
+                //console.log(JSON.stringify(quizs, null, 4));
                 quizs.forEach(quiz => {
                     if(quiz.done) {
                         quizs_to_send.push(quiz);

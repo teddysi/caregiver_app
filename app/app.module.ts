@@ -28,6 +28,7 @@ import { RadioButtonModule } from 'nativescript-radiobutton/angular'
 //evaluation
 import { EvaluationComponent } from "./evaluation/evaluation.component";
 import { EvaluationListComponent } from "./evaluation/evaluation-list.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 //import { NS_HTTP_PROVIDERS } from 'nativescript-angular/http';
 
@@ -54,6 +55,7 @@ import { EvaluationListComponent } from "./evaluation/evaluation-list.component"
         EvaluationComponent,
         EvaluationListComponent,
         MaterialDetailComponent,
+        ProfileComponent,
         ...navigatableComponents
        
     ],

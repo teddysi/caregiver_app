@@ -3,59 +3,24 @@
         [nsRouterLink]="['/evaluations']"></ActionItem>
     <ActionItem *ngIf="patientService.isConnected()" android.systemIcon="2" android.systemIcon="ic_menu_refresh" ios.position="right" [nsRouterLink]="['/patients']"
         (tap)="refreshData()"></ActionItem>
+    <ActionItem android.systemIcon="ic_menu_friendslist" ios.position="right" [nsRouterLink]="['/myInfo']"></ActionItem>
 
 </ActionBar>
 <StackLayout class="page">
     <ListView [items]="patients" class="list-group" [class.visible]="listLoaded" separatorColor="white">
         <ng-template let-item="item">
-
-            <!--   <StackLayout [nsRouterLink]="['/patient',item.id,'needs']" orientation="vertical">-->
-
-            <StackLayout (tap)="goToMaterialsOfPatient(item.id)" orientation="vertical">
-                <!--Adicionar espaço para foto
-                //Adicionar idade
-                //Adicionar -->
-                <!--<Label class="h3" [text]="'ID: '+ item.caregiver_id "></Label>-->
-                <GridLayout rows="*, *" columns="1*,*">
-                    <Image src="~/localmaterials/image/Person-placeholder.jpg" stretch="aspectFit" width="65" height="70" class="patient-photo"
+                <GridLayout rows="*, 100" columns="100, *, auto" (tap)="goToMaterialsOfPatient(item.id)"(swipe)="goToMaterialsOfPatient(item.id)" >
+                    <Image src="~/localmaterials/image/Person-placeholder.jpg" width="65" height="70" class="patient-photo"
                         row="1" col="0"></Image>
-
-                    <Label class="h2 utente" [text]="item.name" textWrap="true" row="1" col="1" class="names-label"></Label>
-                    <Label [text]="item.email" textWrap="true" class="patientEmail" row="2" col="1"></Label>-->
-                    <Label [text]="item.location" class="location-label" textWrap="true" class="patientLocation" row="3" col="1"></Label>
+                   
+                    <Label class="names-label" [text]="item.name" textWrap="true" row="1" col="1"></Label>
+                    <Label [text]="item.email" textWrap="true" class="patientEmail" row="2" col="1"></Label>
+             
                 </GridLayout>
-                <!-- <Label  [text]="'Morada: '+ item.location" textWrap="true"></Label>-->
-
-
-            </StackLayout>
-
-
         </ng-template>
     </ListView>
 </StackLayout>
-<!--
-<ScrollView>
-    <StackLayout sdkExampleTitle sdkToggleNavButton class="form">
-        <StackLayout class="input-field">
-            <Label class="label" text="Folder Name" textWrap="true"></Label>
-            <TextField class="input input-border" hint="Enter Folder Name" [(ngModel)]="folderName" editable="true"></TextField>
-        </StackLayout>
-        <StackLayout class="input-field">
-            <Label class="label" text="File Name" textWrap="true"></Label>
-            <TextField class="input input-border" hint="Enter File Name" [(ngModel)]="fileName" editable="true"></TextField>
-        </StackLayout>
-        <StackLayout class="input-field">
-            <Label class="label" text="Text Content" textWrap="true"></Label>
-            <TextField class="input input-border" hint="Enter Text Content" [(ngModel)]="fileTextContent" editable="true"></TextField>
-        </StackLayout>
-        <Button class="btn btn-primary btn-active" text="Create" (tap)="onCreateFile()"></Button>
-        <GridLayout rows="*, *" columns="*" [visibility]="isItemVisible ? 'visible' : 'collapsed'">
-            <Label class="body p-15" row="0" [text]="successMessage" textWrap="true"></Label>
-            <Label class="body p-15" row="1" [text]="'File content: ' + writtenContent" textWrap="true"></Label>
-        </GridLayout>
-    </StackLayout>
-</ScrollView>
--->
+
 <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center"
     verticalAlignment="center">
 </ActivityIndicator>

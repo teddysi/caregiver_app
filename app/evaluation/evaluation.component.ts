@@ -41,17 +41,17 @@ export class EvaluationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log("# COMPONENT EVALUATION ")
+        //console.log("# COMPONENT EVALUATION ")
        
         //router params
         const ref_questionnaire = +this.route.snapshot.params["ref_questionnaire"];
-        console.log("REF_QUEST: " + ref_questionnaire);
+        //console.log("REF_QUEST: " + ref_questionnaire);
         //Dá erro depois de apagar um questionário, no caso de ficar com a mesma ref
         this.questionnaire = this.dataService.getQuizs().filter(questionnaire => questionnaire.ref_questionnaire === ref_questionnaire + "")[0];
         //transform radio buttons
         this.transformRadioButtons();
 
-        console.log("# COMPOMENTE EVALUATION [questionnaire] :" + ref_questionnaire + " " + this.questionnaire);
+        //console.log("# COMPOMENTE EVALUATION [questionnaire] :" + ref_questionnaire + " " + this.questionnaire);
 
         
     }
@@ -70,7 +70,7 @@ export class EvaluationComponent implements OnInit {
             if (element.type == "radio") {
                 var a = element.values.split(";");
                 a.pop();
-               // console.log("# COMPOMENTE EVALUATION valuesToRadio :" + a + " TAMANHO:" + a.length);
+               // //console.log("# COMPOMENTE EVALUATION valuesToRadio :" + a + " TAMANHO:" + a.length);
                 element["valuesToRadio"] = a;
             } 
         });
@@ -102,7 +102,7 @@ export class EvaluationComponent implements OnInit {
         //set questionnaire done
         this.questionnaire.done = true;
         //update local data
-        //console.log(JSON.stringify(this.questionnaire), null, 4);
+        ////console.log(JSON.stringify(this.questionnaire), null, 4);
         this.patientService.updateQuizStatus(this.questionnaire);
         
        

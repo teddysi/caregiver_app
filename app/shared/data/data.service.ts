@@ -33,7 +33,7 @@ export class DataService {
     public fileName: string;
  
     constructor(public database: Database){
-            console.log('Instanciou - DataService!');
+            //console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
             this.deleteData('quiz');
             //this.deleteData('user');
@@ -52,14 +52,14 @@ export class DataService {
     }
 
     init() {
-        console.log("BD USADA");
+        //console.log("BD USADA");
         this.showData("caregiver");
-        console.log('A inicializar as variáveis globais');
+        //console.log('A inicializar as variáveis globais');
         //Adicionar numero de avaliações pendentes
         //...
         
         if(this.isGlobalSet()) {
-            console.log('A atualizar global de conexao');
+            //console.log('A atualizar global de conexao');
             this.globalData_id = this.getGlobalsID();
             var global = this.database.getDatabase().getDocument(this.globalData_id);
             
@@ -69,25 +69,25 @@ export class DataService {
                 "evaluationsToDo" : global.evaluationsToDo
             });
             
-            console.log(JSON.stringify(this.globalData_id));
+            //console.log(JSON.stringify(this.globalData_id));
             
         } else {
-            console.log('A criar objeto para as variáveis globais');
+            //console.log('A criar objeto para as variáveis globais');
             //criar variável global boolean para dizer se há quizes para fazer update ou n
             this.globalData_id = this.database.getDatabase().createDocument({
                 "type": "global",
                 "dataRequest": "false",
                 "evaluationsToDo" : "false"
             });
-            //console.log('NOVO GLOBAL ID: ' + this.globalData_id);         
+            ////console.log('NOVO GLOBAL ID: ' + this.globalData_id);         
         }
 
         this.userData_id = this.getCurrentUserDocID();
-        console.log("QUIZS USER DOC ID: " + this.userData_id);
+        //console.log("QUIZS USER DOC ID: " + this.userData_id);
         this.patientsData_id = this.getLatestPatientData();
-        console.log("PATIENTS DOC ID: " + this.patientsData_id);
+        //console.log("PATIENTS DOC ID: " + this.patientsData_id);
         this.quizs_id = this.getLatestQuizData();
-        console.log("QUIZS DOC ID: " + this.quizs_id);
+        //console.log("QUIZS DOC ID: " + this.quizs_id);
         //this.quizs_done_id = this.getQuizsOnHold_ID();
 
         //verificar se há questionários para preencher
@@ -105,12 +105,12 @@ export class DataService {
     }
  
     setUser(registeredUser) {
-        console.log('A gravar o utilizador');
+        //console.log('A gravar o utilizador');
         this.userData_id = this.database.getDatabase().createDocument({
             "type": "user",
             "user": registeredUser
         });
-        //console.log("AQUI"+JSON.stringify(this.database.getDatabase().getDocument(this.userData_id, null, 4)));
+        ////console.log("AQUI"+JSON.stringify(this.database.getDatabase().getDocument(this.userData_id, null, 4)));
     }
     setPatients() {
 
@@ -119,8 +119,8 @@ export class DataService {
 
     }
     getPatientsData(){
-        console.log('A devolver todos os dados da BD');
-        console.log(this.patientsData_id);
+        //console.log('A devolver todos os dados da BD');
+        //console.log(this.patientsData_id);
         return this.database.getDatabase().getDocument(this.patientsData_id).data;
     }
     setPatientsData(data) {
@@ -130,13 +130,13 @@ export class DataService {
         
         //Todos os dados do paciente e ref _id
         if(this.patientsData_id) {
-            console.log('A atualizar os dados dos pacientes na bd, com o id ' + this.patientsData_id);
+            //console.log('A atualizar os dados dos pacientes na bd, com o id ' + this.patientsData_id);
             this.database.getDatabase().updateDocument(this.patientsData_id, {
                 "data": data,
                 "type" : "data"
             });
         } else {
-            console.log('Gravar dados Pacientes');
+            //console.log('Gravar dados Pacientes');
             this.patientsData_id = this.database.getDatabase().createDocument({
                 "type": "data",
                 "data": data
@@ -166,22 +166,22 @@ export class DataService {
         var documents = fs.knownFolders.documents();
         var path = fs.path.join(documents.path, "app/materials");
 
-        //console.log(path);
+        ////console.log(path);
     }
   
     setNeeds() {
 
     }
     getToken(): string {
-        console.log('A devolver token');
+        //console.log('A devolver token');
         return this.database.getDatabase().getDocument(this.userData_id).user.caregiver_token;
     }
     getUserID(): string {
-        console.log('A o ID do user');
+        //console.log('A o ID do user');
         return this.database.getDatabase().getDocument(this.userData_id).user.id;
     }
     getLatestUserToRegister() {
-        console.log("A devolver ultimo utilizador registado")
+        //console.log("A devolver ultimo utilizador registado")
         var users = this.getAllUsers();
         
         if(users) {
@@ -198,7 +198,7 @@ export class DataService {
     }
     public deleteData(view) {
         let documents = this.database.getDatabase().executeQuery(view);
-        console.log('A apagar bd: ' + view);
+        //console.log('A apagar bd: ' + view);
         // loop over all documents
         if(this.database.getDatabase().executeQuery(view).length > 0) {
             for (let i = 0; i < documents.length; i++) {
@@ -215,9 +215,9 @@ export class DataService {
         return false;
     }
     public showData(view) {
-        console.log('A mostrar bd: ' + view + ' com ' + this.database.getDatabase().executeQuery(view).length + ' elementos');
+        //console.log('A mostrar bd: ' + view + ' com ' + this.database.getDatabase().executeQuery(view).length + ' elementos');
         if(this.database.getDatabase().executeQuery(view).length > 0) {     
-            console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
+            //console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
         }
     }
      public onCreateFile() {
@@ -259,7 +259,7 @@ export class DataService {
         return null;
     }
     public isUserAuth() {
-        console.log('A verificar se existe utilizador na BD');
+        //console.log('A verificar se existe utilizador na BD');
         if(this.userData_id) {
             return true;
         }
@@ -267,7 +267,7 @@ export class DataService {
     }
     //Guarda avaliações dos materiais
     public setRating(rating) {
-        console.log('A registar o rating');
+        //console.log('A registar o rating');
         //Recebo o rating, com id do material
         //Vou à BD dos materiais
         //Para cada material com aquele id, atualizar o seu rating.
@@ -277,12 +277,12 @@ export class DataService {
         for(let i = 0; i < materials.length; i++) {
             for(let j = 0; j < materials[i].length; j++) {
                 if(rating.id_material === materials[i][j].id) {
-                    console.log('registou');
+                    //console.log('registou');
                     materials[i][j].ratings.push(rating);
                 }
             }
         }
-        //console.log(JSON.stringify(materials, null, 4));
+        ////console.log(JSON.stringify(materials, null, 4));
         
         this.database.getDatabase().updateDocument(this.materials_id, {
             "type": "materials",
@@ -292,9 +292,9 @@ export class DataService {
         //this.showData('materials');
         FIM da alteração na BD dos materiais*/
         /*Assim altera a BD dos pacientes*/
-        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
+        ////console.log(JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
         let patientsData = this.database.getDatabase().getDocument(this.patientsData_id).data;
-        //console.log("Entrou no for");
+        ////console.log("Entrou no for");
         /*
         for(let i = 0; i < patientsData.length; i++) {
             for(let j = 0; j < patientsData[i].needs.length; j++) {
@@ -310,13 +310,13 @@ export class DataService {
                 for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
                     
                     if(patientsData[i].needs[j].materials[k].id == rating.id_material) {
-                        //console.log(JSON.stringify(patientsData[i][j][k],null,4));
+                        ////console.log(JSON.stringify(patientsData[i][j][k],null,4));
                         patientsData[i].needs[j].materials[k]['ratings'] = rating;    
                     }
                 }
             }
         }
-        //console.log(JSON.stringify(patientsData,null,4));
+        ////console.log(JSON.stringify(patientsData,null,4));
         this.database.getDatabase().updateDocument(this.patientsData_id, {
             "type": "data",
             "data": patientsData,
@@ -329,12 +329,12 @@ export class DataService {
     }
 
     public getNeedMaterials() {
-        console.log('A devolver todos os materiais');
+        //console.log('A devolver todos os materiais');
         return this.database.getDatabase().getDocument(this.materials_id).materials;
     }
 
     public isPatientsRequestDone() {
-        console.log("A verificar se o pedido ao servidor já foi feito");
+        //console.log("A verificar se o pedido ao servidor já foi feito");
         if(this.database.getDatabase().getDocument(this.globalData_id).dataRequest == "false") {
             return false;
         }
@@ -343,7 +343,7 @@ export class DataService {
     public setQuizs(caregiverQuestionaires) {
 
         if(caregiverQuestionaires.length > 0) {
-            console.log("ENTROU AQUI E SETOU O EVALUATIONS A TRUE. Comprimento do array de quizes: " + caregiverQuestionaires.length);
+            //console.log("ENTROU AQUI E SETOU O EVALUATIONS A TRUE. Comprimento do array de quizes: " + caregiverQuestionaires.length);
             this.database.getDatabase().updateDocument(this.globalData_id, {
                 "evaluationsToDo" : "true",
                 "type" : "global",
@@ -352,7 +352,7 @@ export class DataService {
         }
 
         if(!this.isQuizsSet()) {
-            console.log('Novo doc de Quizs');
+            //console.log('Novo doc de Quizs');
             this.quizs_id = this.database.getDatabase().createDocument({
                 "type": "quiz",
                 "quiz": caregiverQuestionaires
@@ -363,30 +363,30 @@ export class DataService {
             var found_control = false; //variavel de controle de novos quizs a adicionar
             var same_quiz_found = false;
 
-            console.log('Já existem quizs na BD');
+            //console.log('Já existem quizs na BD');
             var quizs = this.getQuizs();
-            //console.log(JSON.stringify(quizs, null, 4));
+            ////console.log(JSON.stringify(quizs, null, 4));
             caregiverQuestionaires.forEach(questionnaire_server => {
                 same_quiz_found = false;
                 quizs.forEach(questionnaire_BD => {
                     if(questionnaire_BD.id == questionnaire_server.id && questionnaire_BD.reference == questionnaire_server.reference && questionnaire_BD.reference_name == questionnaire_server.reference_name) {
-                        console.log('Encontrou quiz igual: id-' + questionnaire_BD.id + ' reference-' + questionnaire_BD.reference);
+                        //console.log('Encontrou quiz igual: id-' + questionnaire_BD.id + ' reference-' + questionnaire_BD.reference);
                         same_quiz_found = true;
                     }
                 });
                 if(!same_quiz_found) {
-                    console.log('Encontrei quizs novos;');
+                    //console.log('Encontrei quizs novos;');
                     found_control = true;
                     quizs_to_add.push(questionnaire_server);
                 }             
             });
-            console.log(JSON.stringify(quizs_to_add));
+            //console.log(JSON.stringify(quizs_to_add));
             if(found_control) {
                 quizs_to_add.forEach(quiz => {
                     quizs.push(quiz);
                 });
             }
-            console.log(JSON.stringify(quizs, null, 4));
+            //console.log(JSON.stringify(quizs, null, 4));
             
             //index array
             let index = 0;
@@ -399,18 +399,18 @@ export class DataService {
                 'quiz' : quizs,
                 'type' : 'quiz'
             });
-                console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
-                console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');           
+                //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
+                //console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');           
             }
     }
 
     public getAllQuizs() {
-        console.log("A obter ID dos quizs");
+        //console.log("A obter ID dos quizs");
         if(this.database.getDatabase().executeQuery('quiz').length > 0) {
-            //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
+            ////console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz'), null, 4));
             return this.database.getDatabase().executeQuery('quiz');
         }
-        console.log('passou aqui');
+        //console.log('passou aqui');
         return null;
     }
     public getLatestQuizData() {
@@ -422,7 +422,7 @@ export class DataService {
             lastQuiz = quizs[quizs.length - 1];
             return lastQuiz._id;
         }
-        //console.log('passou aqui-1');
+        ////console.log('passou aqui-1');
         return null;
     }
     public getLatestPatientData() {
@@ -437,9 +437,9 @@ export class DataService {
         return null;
     }
     public getQuizs() {
-        //console.log(this.quizs_id);
-        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id)));
-        //console.log(this.database.getDatabase().executeQuery('quiz').length);
+        ////console.log(this.quizs_id);
+        ////console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id)));
+        ////console.log(this.database.getDatabase().executeQuery('quiz').length);
         if(this.quizs_id) {
             if(this.database.getDatabase().executeQuery('quiz').length > 0) {        
                 return this.database.getDatabase().getDocument(this.quizs_id).quiz;
@@ -448,7 +448,7 @@ export class DataService {
         return null;
     }
     public isGlobalSet() {
-        console.log("GLOBALSIZE: " + this.database.getDatabase().executeQuery('global').length);
+        //console.log("GLOBALSIZE: " + this.database.getDatabase().executeQuery('global').length);
         if(this.database.getDatabase().executeQuery('global').length > 0) {            
             return true;
         }
@@ -456,7 +456,7 @@ export class DataService {
     }
     public getGlobalsID() {
         if(this.database.getDatabase().executeQuery('global').length > 0) {
-            //console.log(JSON.stringify(this.database.getDatabase().executeQuery("global"), null, 4));
+            ////console.log(JSON.stringify(this.database.getDatabase().executeQuery("global"), null, 4));
             
             return this.database.getDatabase().executeQuery('global')[0]._id;
         }
@@ -465,7 +465,7 @@ export class DataService {
     public getAllPatientsData() {
         if(this.database.getDatabase().executeQuery("data").length > 0) {
             
-           // console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
+           // //console.log(JSON.stringify(this.database.getDatabase().executeQuery("data"), null, 4));
             return this.database.getDatabase().executeQuery("data");
         }         
         return false;
@@ -489,22 +489,22 @@ export class DataService {
         return null;
     }
     checkQuizStatus() {
-        console.log('A VERIFICAR SE HA QUIZS POR FAZER');
+        //console.log('A VERIFICAR SE HA QUIZS POR FAZER');
         var quizs = this.getQuizs();
         var global = this.database.getDatabase().getDocument(this.globalData_id);
 
         if(quizs) {
-            //console.log('passou aqui-2');
+            ////console.log('passou aqui-2');
             var quiz_done = [];
             var found_quiz_todo = false;
             quiz_done.push(quizs.map(function(quizs){return quizs.done}));
             quiz_done[0].forEach(quiz_result => {
-                console.log("A verificar estado das avaliações");
-                console.log('1: ' + quiz_result);
+                //console.log("A verificar estado das avaliações");
+                //console.log('1: ' + quiz_result);
                 
                 if(!quiz_result) {
                     found_quiz_todo = true;
-                    console.log("A mudar estado das avaliações");
+                    //console.log("A mudar estado das avaliações");
                     this.database.getDatabase().updateDocument(this.globalData_id, {
                         "evaluationsToDo" : "true",
                         "type" : "global",
@@ -528,14 +528,14 @@ export class DataService {
                 "dataRequest" : global.dataRequest
             });
         }
-        //console.log('passou aqui - 3');   
+        ////console.log('passou aqui - 3');   
     }
     hasEvaluationsToDo() {
         //this.checkQuizStatus();
         /*
-        console.log('GLOBAL ID: ' + this.globalData_id);
-        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
-        console.log('Evaluations to do:' + this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo)
+        //console.log('GLOBAL ID: ' + this.globalData_id);
+        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
+        //console.log('Evaluations to do:' + this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo)
         */
         if(this.database.getDatabase().getDocument(this.globalData_id).evaluationsToDo == "true") {
             return true;
@@ -543,35 +543,35 @@ export class DataService {
         return false;
     }
     isQuizsSet() {
-        //console.log('QUIZ-ID: ' + this.quizs_id);
+        ////console.log('QUIZ-ID: ' + this.quizs_id);
         if(this.quizs_id) {
             return true;
         }
         return false;
     }
     deleteQuestionnaire(questionnaires) {
-        console.log("A apagar quizs!");
+        //console.log("A apagar quizs!");
         var quizs = this.getQuizs();
+            ////console.log(JSON.stringify(quizs, null, 4));
+            //console.log("Quizs da BD: ");
             //console.log(JSON.stringify(quizs, null, 4));
-            console.log("Quizs da BD: ");
-            console.log(JSON.stringify(quizs, null, 4));
-            console.log("Quizs ENVIADOS: ");
-            console.log(JSON.stringify(questionnaires, null, 4));
+            //console.log("Quizs ENVIADOS: ");
+            //console.log(JSON.stringify(questionnaires, null, 4));
             quizs.forEach(questionnaire_BD => {
-                console.log("REFERENCIA DO QUIZ BD: " + questionnaire_BD.ref_questionnaire);
+                //console.log("REFERENCIA DO QUIZ BD: " + questionnaire_BD.ref_questionnaire);
                 questionnaires.forEach(questionnaire_sent => {
-                    console.log("REFERENCIA DO QUIZ ENVIADO: " + questionnaire_sent.ref_questionnaire);
+                    //console.log("REFERENCIA DO QUIZ ENVIADO: " + questionnaire_sent.ref_questionnaire);
                     if(questionnaire_sent.ref_questionnaire == questionnaire_BD.ref_questionnaire) {
-                        console.log("REFERENCIA DO QUIZ A ELIMINAR: " + questionnaire_sent.ref_questionnaire);
+                        //console.log("REFERENCIA DO QUIZ A ELIMINAR: " + questionnaire_sent.ref_questionnaire);
                         delete quizs[questionnaire_BD.ref_questionnaire];
                     }
                 });         
             });
-        console.log("Numero de quizes por fazer: " + quizs.length);
-        console.log(JSON.stringify(quizs, null, 4));
+        //console.log("Numero de quizes por fazer: " + quizs.length);
+        //console.log(JSON.stringify(quizs, null, 4));
 
         if(quizs.length - 1 == 0) {
-            console.log("A apagar doc corrente de quizs");
+            //console.log("A apagar doc corrente de quizs");
             this.database.getDatabase().deleteDocument(this.quizs_id);
             this.quizs_id = null;
         } else {
@@ -587,8 +587,8 @@ export class DataService {
             });
         }
         
-        console.log("NOVO ARRAY DE QUIZS NA BD");
-        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
+        //console.log("NOVO ARRAY DE QUIZS NA BD");
+        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
     addQuestionnaireToDB(questionnaire) {
         if(!this.isSetQuizsDone()) {
@@ -614,14 +614,14 @@ export class DataService {
     }
     getQuizsOnHold_ID() {
         if(this.database.getDatabase().executeQuery('quizOnHold').length > 0) {
-            //console.log(JSON.stringify(this.database.getDatabase().executeQuery("quizOnHold"), null, 4));
+            ////console.log(JSON.stringify(this.database.getDatabase().executeQuery("quizOnHold"), null, 4));
             return this.database.getDatabase().executeQuery('quizOnHold')[0]._id;
         }
         return null;
     }
     getAllQuizsOnHold() {
         if(this.database.getDatabase().executeQuery('quizOnHold').length > 0) {
-            //console.log(JSON.stringify(this.database.getDatabase().executeQuery("quizOnHold"), null, 4));
+            ////console.log(JSON.stringify(this.database.getDatabase().executeQuery("quizOnHold"), null, 4));
             return this.database.getDatabase().executeQuery('quizOnHold').questionnaires;
         }
         return null;

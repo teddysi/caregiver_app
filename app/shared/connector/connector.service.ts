@@ -24,12 +24,12 @@ export class ConnectorService {
     public connectionType: string;
     
     constructor(private zone: NgZone, private http: Http, private router: Router, private dataService: DataService) {
-        console.log('Instanciou - ConnectorService!');
+        //console.log('Instanciou - ConnectorService!');
 
         this.connector = new Connector();
         //Recebe e monotoriza o tipo de conexão
         this.connectionType = this.getConnectionType();
-        console.log('Connection TYPE: ' + this.connectionType);
+        //console.log('Connection TYPE: ' + this.connectionType);
         this.startConnectionMonitor();
 
         this.connector.serverURL = '35.184.244.41/caregivers/public'; //LIVE
@@ -59,26 +59,26 @@ export class ConnectorService {
                 switch (newConnectionType) {
                     case connectivity.connectionType.none:
                         this.connectionType = "None";
-                        console.log("Connection type changed to none.");
+                        //console.log("Connection type changed to none.");
                         break;
                     case connectivity.connectionType.wifi:
                         this.connectionType = "Wi-Fi";
-                        console.log("Connection type changed to WiFi.");
+                        //console.log("Connection type changed to WiFi.");
                         break;
                     case connectivity.connectionType.mobile:
                         this.connectionType = "Mobile";
-                        console.log("Connection type changed to mobile.");
+                        //console.log("Connection type changed to mobile.");
                         break;
                     default:
                         this.connectionType = "Unknown";
-                        console.log("Connection type changed to unknown.");
+                        //console.log("Connection type changed to unknown.");
                         break;
                 }
             });
         });
     }
     requestLogin(username, password): Observable<User> {
-         console.log('A fazer login');
+         //console.log('A fazer login');
         if(!this.isConnected()) {
             return null;
         }
@@ -94,7 +94,7 @@ export class ConnectorService {
 
     getPatientsData(): Observable<Patient[]>
     {
-         console.log('A fazer o request dos dados ao server');
+         //console.log('A fazer o request dos dados ao server');
         //se não tem conetividade
         /*if(!this.isConnected() || !this.firstDataRequest) { //Com ERRO
             return this.dataService.getPatientsData();
@@ -110,15 +110,15 @@ export class ConnectorService {
     }
 
     testingDownload() {
-        console.log('Download Started');
+        //console.log('Download Started');
         var documents = fs.knownFolders.documents();
         var path = fs.path.join(documents.path, "app/test.png");
-        console.log(documents.path);
+        //console.log(documents.path);
         //var filePath = fs.path.join(path, "test.png");
         http.getFile("https://httpbin.org/image/png", path).then(function (r) {
-            console.log(JSON.stringify(r, null, 4));
+            //console.log(JSON.stringify(r, null, 4));
         }, function (e) {
-            console.log(e);
+            //console.log(e);
         });
         /*
         var documents = fs.knownFolders.documents();
@@ -129,9 +129,9 @@ export class ConnectorService {
         .then(function (entities) {
             // entities is array with the document's files and folders.
             entities.forEach(function (entity) {
-                console.log(JSON.stringify(entity, null, 4));
+                //console.log(JSON.stringify(entity, null, 4));
             });
-            console.log(JSON.stringify(documents, null, 4));
+            //console.log(JSON.stringify(documents, null, 4));
         }, function (error) {
         });
         */
@@ -145,7 +145,7 @@ export class ConnectorService {
     }
 
     sync() {
-        console.log('syncing');
+        //console.log('syncing');
         this.syncData()
             .subscribe(
             (result) => this.onGetDataSuccess(result),
@@ -155,12 +155,12 @@ export class ConnectorService {
 
     syncData(): Observable<Data[]> {
         let headers = this.createRequestHeader();
-        console.log('Request to server');
+        //console.log('Request to server');
         return this.http.get(Config.apiUrl, { headers: headers })
             .map(res => res.json());
     }
     private onGetDataSuccess(res) {
-        console.log(res);
+        //console.log(res);
         DataService.prototype.setData(res);
         
         this.router.navigate(["/patients"]);
@@ -183,17 +183,17 @@ export class ConnectorService {
     private onGetDataError(error: Response | any) {
         const body = error.json() || "";
         const err = body.error || JSON.stringify(body);
-        console.log("onGetDataError: " + err);
+        //console.log("onGetDataError: " + err);
     }
     private createRequestHeader() {
-         console.log('A construir o Header para o request dos dados dos pacientes');
+         //console.log('A construir o Header para o request dos dados dos pacientes');
         let headers = new Headers();
         headers.append("Authorization", this.dataService.getToken());
         headers.append("Content-Type", "application/json");
         return headers;
     }
     private createLoginHeader() {
-         console.log('A criar o Header para o login');
+         //console.log('A criar o Header para o login');
       let headers = new Headers();
         // set headers here e.g.
         headers.append("AuthKey", "my-key");
@@ -214,15 +214,15 @@ export class ConnectorService {
         return true;
     }
     public updateQuizStatus(questionnaire): Observable<Http> {
-        console.log('A enviar questionário');
+        //console.log('A enviar questionário');
         if(!this.isConnected()) {
             return null;
         }
         let headers = this.createLoginHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
 
-        console.log(JSON.stringify(headers), null, 4);
-        console.log(JSON.stringify(questionnaire), null, 4);
+        //console.log(JSON.stringify(headers), null, 4);
+        //console.log(JSON.stringify(questionnaire), null, 4);
         
         return this.http.post(
             request,

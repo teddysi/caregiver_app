@@ -13,6 +13,7 @@ import { UserService } from "../shared/user/user.service";
 
 import { ConnectorService } from "../shared/connector/connector.service";
 import dialogs = require("ui/dialogs");
+import { SwipeGestureEventData } from "ui/gestures";
 
 @Component({
     selector: "ns-items",
@@ -28,6 +29,7 @@ export class PatientsComponent implements OnInit {
     listLoaded = false;
     isLoading = false;
     hasEvaluationsToDo = false; //condition to enable action bar icon evaluations
+    public direction: number;
 
     public fileTextContent: string;
 
@@ -44,9 +46,9 @@ export class PatientsComponent implements OnInit {
 
     }
     ngOnInit(): void {
-
+        
         this.isLoading = true;
-        console.log(this.patientService.isConnected());
+        ////console.log(this.patientService.isConnected());
         if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
             //this.patientService.checkQuizsToSubmit();
             this.patientService.getPatients().subscribe(
@@ -54,7 +56,7 @@ export class PatientsComponent implements OnInit {
                 (error) => this.onGetDataError(error)
             );
         } else {
-            console.log("A mostrar da BD");
+            ////console.log("A mostrar da BD");
             this.patients = this.patientService.getPatients_BD();
         }
 
@@ -68,7 +70,7 @@ export class PatientsComponent implements OnInit {
         //this.hasEvaluationsToDo = true;
         
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
-        console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
+        ////console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
         if(this.hasEvaluationsToDo) {
             this.patientService.displayNotification('pending evaluations');
         }      
@@ -84,28 +86,28 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataSuccess(result) {
-       console.log("A tratar dados dp do pedido!")
-         //console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
-        //console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
+        ////console.log("A tratar dados dp do pedido!")
+        //////console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        //////console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
         this.loadAllQuestionnairesFromResponse();
 
-        //console.log("# COMPONENTE PATIENTES [result.quizs]" + JSON.stringify(result.quizs, null, 4));
-        //console.log("# COMPONENTE PATIENTES [caregiverQuestionnaires ]" + JSON.stringify(this.caregiverQuestionnaires, null, 4));
+        //////console.log("# COMPONENTE PATIENTES [result.quizs]" + JSON.stringify(result.quizs, null, 4));
+        //////console.log("# COMPONENTE PATIENTES [caregiverQuestionnaires ]" + JSON.stringify(this.caregiverQuestionnaires, null, 4));
 
         this.patientService.setPatients(this.patients);
-        
+
         this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaires);
         // this.patientService.setCaregiverQuestionnaires(this.caregiverQuestionnaire); TODO
 
         // verificar se a lista tem so um paciente para poder ir logo para a  lista de necessidades  
         /*if (this.patients.length == 1 && this.firstTime==true) {
-            this.firstTime = false;*/
-        //console.log(JSON.stringify(this.patients[0], null, 4));
+        this.firstTime = false;*/
+        //////console.log(JSON.stringify(this.patients[0], null, 4));
         //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         //}
-        console.log("Terminou de tratar dados dp do pedido!!!")  
+        ////console.log("Terminou de tratar dados dp do pedido!!!")  
     }
 
     /**
@@ -117,7 +119,7 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataError(error: Response | any) {
-        //console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
+        //////console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
         if(error.status == '401') {
             this.patientService.displayNotification('error-auth');
             this.patientService.userOutdated();
@@ -217,5 +219,14 @@ init(){
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         this.init();
         
+    }
+    onSwipe(args: SwipeGestureEventData) {
+        console.log("Swipe!");
+        console.log("Object that triggered the event: " + args.object);
+        console.log("View that triggered the event: " + args.view);
+        console.log("Event name: " + args.eventName);
+        console.log("Swipe Direction: " + args.direction);
+
+        this.direction = args.direction;
     }
 }

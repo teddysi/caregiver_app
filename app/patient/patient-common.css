@@ -11,22 +11,24 @@ ListView {
 }
 
 .patient-photo {
-  margin-left: -50px;
   border-width: 1px 1px 1px 1px;
   border-color: black;
+  
 
 }
 .names-label {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
+  font-family: 'helvetica';
+  margin-top: 15px;
 
 }
 .patientEmail {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 label {
-    margin-top: 25px;
-    margin-left: -40px;
+  
+   
 }
 
 
