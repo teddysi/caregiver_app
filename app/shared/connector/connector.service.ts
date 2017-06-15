@@ -117,9 +117,9 @@ export class ConnectorService {
         //console.log(documents.path);
         //var filePath = fs.path.join(path, "test.png");
         http.getFile("https://httpbin.org/image/png", path).then(function (r) {
-            //console.log(JSON.stringify(r, null, 4));
+            console.log(JSON.stringify(r, null, 4));
         }, function (e) {
-            //console.log(e);
+            console.log(e);
         });
         /*
         var documents = fs.knownFolders.documents();
@@ -232,16 +232,17 @@ export class ConnectorService {
             ).map(res => res.json());
     }
 
-    sendAcessedMaterial(user, material): Observable<Http> {
+    sendAcessedMaterial(patient, user, material): Observable<Http> {
 
         let headers = this.createLoginHeader();
-        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
-        
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/accesses/create';
+        console.log(JSON.stringify(patient, null, 4));
         return this.http.post(
             request,
             { headers: headers },
             {body: {
                 "id": user.id,
+                "patient_id": "",
                 "material": material.id
             }}
             ).map(res => res.json());
@@ -250,7 +251,7 @@ export class ConnectorService {
     sendMaterialRating(user,rating): Observable<Http> {
         
         let headers = this.createLoginHeader();
-        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/evaluations/create';
         
         return this.http.post(
             request,

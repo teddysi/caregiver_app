@@ -98,7 +98,7 @@ export class MaterialDetailComponent implements OnInit {
  
         }
 
-        this.patientService.registerAcessedMaterial(this.materialParent);
+        this.patientService.registerAcessedMaterial(this.patient, this.materialParent);
 
         //verify is email avaliable
         email.available().then(function (avail) {

@@ -57,7 +57,6 @@ export class DataService {
         //console.log('A inicializar as variáveis globais');
         //Adicionar numero de avaliações pendentes
         //...
-        
         if(this.isGlobalSet()) {
             //console.log('A atualizar global de conexao');
             this.globalData_id = this.getGlobalsID();
@@ -340,6 +339,13 @@ export class DataService {
         }
          return true;
     }
+    /**
+     * 
+     * 
+     * @param {any} caregiverQuestionaires 
+     * 
+     * @memberof DataService
+     */
     public setQuizs(caregiverQuestionaires) {
 
         if(caregiverQuestionaires.length > 0) {

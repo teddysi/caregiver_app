@@ -164,10 +164,10 @@ export class PatientService {
             
         }
     }
-    registerAcessedMaterial(material) {
+    registerAcessedMaterial(patient, material) {
         var user = this.userService.getUser();
 
-        this.connectorService.sendAcessedMaterial(user,material).subscribe(
+        this.connectorService.sendAcessedMaterial(patient, user,material).subscribe(
             (result) => this.registeredSuccessfully(result, material),
             (error) => this.registeredFailed(error)
         );
