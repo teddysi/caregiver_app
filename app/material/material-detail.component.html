@@ -1,6 +1,7 @@
 <ActionBar [title]="materialParent.description" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
-    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_menu_notifications" ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
+    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_menu_notifications" ios.position="right"
+        [nsRouterLink]="['/evaluations']"></ActionItem>
 </ActionBar>
 
 <StackLayout class="page">
@@ -16,9 +17,12 @@
                 <!-- type = text -->
                 <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
                 <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
+
                 <!-- type = video -->
-                <ActivityIndicator *ngIf="item.type == 'video'" [busy]="loading" width="50" height="50" [visibility]="loading ? 'visible' : 'collapse'" color="green" ></ActivityIndicator>
-                <VideoPlayer *ngIf="item.type == 'video'"  [src]="item.url" autoplay="true" height="300" controls="true" (playbackReady)="stopLoading()" > </VideoPlayer>
+                <ActivityIndicator *ngIf="item.type == 'video'" [busy]="loading" width="50" height="50" [visibility]="loading ? 'visible' : 'collapse'"
+                    color="green"></ActivityIndicator>
+                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true" (playbackReady)="stopLoading()">
+                </VideoPlayer>
                 <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
 
                 <!-- type = emergencyContact-->
@@ -44,19 +48,23 @@
                         </GridLayout>
                     </StackLayout>
                 </StackLayout>
-                <!-- SEND EMAIL TO PROFISSIONAL DE SAUDE-->
-                <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
-                <StackLayout *ngIf="i == materialsToDisplay.length-1 && emailAvaliable " orientation="horizontal">
-                    <StackLayout orientation="vertical">
-                        <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'"
-                        class="submit-button" (tap)="sendMailTo()"></Button>
+                <!---->
 
-                    </StackLayout>
-                </StackLayout>
-               
             </StackLayout>
-        </ng-template>
-    </ListView>
+
+            <!-- SEND EMAIL TO PROFISSIONAL DE SAUDE-->
+            <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
+            <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
+                <StackLayout orientation="vertical">
+
+                    <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'" class="submit-button" (tap)="sendMailTo()"></Button>
+
+                </StackLayout>
+            </StackLayout>
+
+</StackLayout>
+</ng-template>
+</ListView>
 
 </StackLayout>
 

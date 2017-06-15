@@ -22,12 +22,12 @@ import { openUrl } from "utils/utils";
 import { ConnectorService } from "../shared/connector/connector.service";
  
 import 'nativescript-pdf-view';
- 
+
 import * as email from "nativescript-email";
- 
+
 import { User } from "../shared/user/user";
 import { UserService } from "../shared/user/user.service";
- 
+
 @Component({
     selector: "material-details",
     moduleId: module.id,
@@ -42,11 +42,11 @@ export class MaterialDetailComponent implements OnInit {
  
     hasEvaluationsToDo: boolean;
     loading: boolean;
- 
+
     emailAvaliable: boolean;
     app_user: User;
     emailProfissionalSaude:string;
- 
+
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
     // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
@@ -97,9 +97,9 @@ export class MaterialDetailComponent implements OnInit {
             this.materialsToDisplay.push(this.materialParent);
  
         }
- 
-       
- 
+
+        
+
         //verify is email avaliable
         email.available().then(function (avail) {
             console.log("# COMPONENTE MATERIAL-DETAIL # Email available? " + avail);
@@ -107,12 +107,10 @@ export class MaterialDetailComponent implements OnInit {
         }).then((avail)=>{
             this.emailAvaliable=avail;
         })
- 
         //Evaluations
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
  
     }
- 
     stopLoading() {
         this.loading = false;
         console.log("PASSOU AKI")
@@ -174,10 +172,10 @@ export class MaterialDetailComponent implements OnInit {
         this.ratings.push(rating);
  
         this.dataService.setRating(rating);
- 
+
     }
- 
-   
+
+    
     getRatings() {
         return this.ratings;
     }
@@ -194,25 +192,24 @@ export class MaterialDetailComponent implements OnInit {
     fillQuestionnaire(ref_questionnaire) {
         this.router.navigate(['/evaluation', ref_questionnaire]);
     }
- 
- 
+
+
     /**
      * Function to send email to profissional saude
-     *
-     *
+     * 
+     * 
      * @memberof MaterialDetailComponent
      */
     sendMailTo() {
         email.compose({
             subject: "Pedido de esclarecimento do cuidador " + this.app_user.name + " com o id: " + this.app_user.id,
             body: "Bom dia,<p>"
-            +"Necessito esclarecimento sobre o seguinte material:"
+            +"Necessito esclarecimento sobre o seguinte material:" 
             + "<p>Id Material: " + this.materialParent.id
             + "<p>Nome Material: " + this.materialParent.name
             + "<p>Descrição Material: " + this.materialParent.description
             + "<p>Id Cuidador: " + this.app_user.id
             + "<p>Nome Cuidador: " + this.app_user.name
- 
             ,            
             to: [this.emailProfissionalSaude],
             cc: [''],
@@ -227,5 +224,5 @@ export class MaterialDetailComponent implements OnInit {
                 console.log("Error: " + err);
             });
     }
- 
+
 }
