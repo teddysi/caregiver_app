@@ -24,7 +24,7 @@
                 <StackLayout *ngIf="item.type == 'text'">
                     <!--<label [text]="item.id" class="h4"></label>-->
                     <label [text]="item.question" class="h3" textWrap="true"></label>
-                    <TextField [(ngModel)]="questionnaire.questions[i].response" hint="response" autocorrect="false"></TextField>
+                    <TextField [(ngModel)]="questionnaire.questions[i].response" hint="Insira aqui sua resposta.." autocorrect="false"></TextField>
                 </StackLayout>
 
                 <!--Button evaluation if is the last element-->

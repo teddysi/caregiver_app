@@ -177,23 +177,7 @@ export class MaterialDetailComponent implements OnInit {
 
     }
 
-    /*
-     ononMaterialPicker(){
-         console.log("MAterial picado")
- 
-     }
- 
-     
-         avaliarCuidador(id) {
-             //rota para o formulario - teddy
-             //let material = this.materialsToDisplay.filter(material => material.id === id)[0];
- 
-             //openUrl(material.url);
-             this.router.navigate(['/patient', this.patient.id, 'material', id,"evaluation"]);
-         }*/
-
-
-
+    
     getRatings() {
         return this.ratings;
     }
