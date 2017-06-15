@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import app = require("application");
 
 import { Patient } from "../patient/patient";
 import { Material } from "../material/material";
@@ -140,5 +141,31 @@ export class MaterialsComponent implements OnInit {
 		this.materials = materials_temp;
 	}
 
+	ngAfterViewInit() {
+		if (app.android) {
+			app.android.on(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+		}
+	}
+
+	ngOnDestroy() {
+		// cleaning up references/listeners.
+		if (app.android) {
+			app.android.off(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+		}
+	}
+
+	/**
+	 * Function to disable back button on android
+	 * 
+	 * @param {any} args 
+	 * @returns 
+	 * 
+	 * @memberof PatientsComponent
+	 */
+	backEvent(args) {
+		args.cancel = true;
+		return;
+
+	}
 
 }

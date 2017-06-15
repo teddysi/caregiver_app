@@ -46,7 +46,6 @@ export class PatientsComponent implements OnInit {
 
     }
     ngOnInit(): void {
-        
         this.isLoading = true;
         ////console.log(this.patientService.isConnected());
         if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
@@ -66,14 +65,14 @@ export class PatientsComponent implements OnInit {
         //this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
 
         //verify and notificate if has evaluations to do
-        
+
         //this.hasEvaluationsToDo = true;
-        
+
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         ////console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
-        if(this.hasEvaluationsToDo) {
+        if (this.hasEvaluationsToDo) {
             this.patientService.displayNotification('pending evaluations');
-        }      
+        }
     }
 
 
@@ -120,7 +119,7 @@ export class PatientsComponent implements OnInit {
      */
     private onGetDataError(error: Response | any) {
         //////console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
-        if(error.status == '401') {
+        if (error.status == '401') {
             this.patientService.displayNotification('error-auth');
             this.patientService.userOutdated();
         }
@@ -143,7 +142,7 @@ export class PatientsComponent implements OnInit {
                 element_p.quizs.forEach(element_q => {
                     this.caregiverQuestionnaires.push(element_q)
                     element_q["ref_questionnaire"] = (sizeInitial) + ""
-                    
+
                     sizeInitial++;
                 });
             }
@@ -178,7 +177,7 @@ export class PatientsComponent implements OnInit {
     goToMaterialsOfPatient(patient_id) {
         if (this.connectorService.isConnected()) {
             this.router.navigate(['/patient', patient_id, 'materials']);
-        }else{
+        } else {
             dialogs.alert({
                 title: "Aviso - Pacientes ",
                 message: "Encontra-se sem acesso à internet. Não é possível visualizar os materiais disponíveis para este paciente.",
@@ -187,13 +186,13 @@ export class PatientsComponent implements OnInit {
         }
     }
 
-init(){
-    
+    init() {
+
         this.patientService.getPatients().subscribe(
-                (result) => this.onGetDataSuccess(result),
-                (error) => this.onGetDataError(error)
-            );
-        
+            (result) => this.onGetDataSuccess(result),
+            (error) => this.onGetDataError(error)
+        );
+
 
         this.isLoading = false;
         this.listLoaded = true;
@@ -201,13 +200,13 @@ init(){
         //this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
 
         //verify and notificate if has evaluations to do
-        
+
         //this.hasEvaluationsToDo = true;
-        
-        if(this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
+
+        if (this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
             this.patientService.displayNotification('pending evaluations');
-        }      
-}
+        }
+    }
 
     /**
      * Funtion to refresh all data from the server
@@ -218,7 +217,7 @@ init(){
     public refreshData() {
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         this.init();
-        
+
     }
     onSwipe(args: SwipeGestureEventData) {
         console.log("Swipe!");
@@ -228,5 +227,32 @@ init(){
         console.log("Swipe Direction: " + args.direction);
 
         this.direction = args.direction;
+    }
+
+    ngAfterViewInit() {
+        if (app.android) {
+            app.android.on(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    ngOnDestroy() {
+        // cleaning up references/listeners.
+        if (app.android) {
+            app.android.off(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    /**
+     * Function to disable back button on android
+     * 
+     * @param {any} args 
+     * @returns 
+     * 
+     * @memberof PatientsComponent
+     */
+    backEvent(args) {
+        args.cancel = true;
+        return;
+
     }
 }
