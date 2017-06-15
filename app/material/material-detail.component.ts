@@ -1,26 +1,26 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
- 
+
 import { Patient } from "../patient/patient";
 import { PatientService } from "../patient/patient.service";
 import { DataService } from "../shared/data/data.service";
 import { Material } from "./material";
 import { Rating } from "./rating";
 import { Need } from "../need/need";
- 
+
 import app = require("application");
 import platform = require("platform");
- 
+
 import buttonModule = require("ui/button");
- 
+
 import { Router } from "@angular/router";
- 
- 
+
+
 import { openApp } from "nativescript-open-app";
 import { openUrl } from "utils/utils";
- 
+
 import { ConnectorService } from "../shared/connector/connector.service";
- 
+
 import 'nativescript-pdf-view';
 
 import * as email from "nativescript-email";
@@ -39,18 +39,18 @@ export class MaterialDetailComponent implements OnInit {
     materialsOfAllNeeds: Material[];
     materialParent: Material;
     materialsToDisplay: Material[];
- 
+
     hasEvaluationsToDo: boolean;
     loading: boolean;
 
     emailAvaliable: boolean;
     app_user: User;
-    emailProfissionalSaude:string;
+    emailProfissionalSaude: string;
 
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
     // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
- 
+
     constructor(
         private patientService: PatientService,
         private route: ActivatedRoute,
@@ -61,8 +61,8 @@ export class MaterialDetailComponent implements OnInit {
     ) {
         this.ratings = [];
     }
- 
- 
+
+
     ngOnInit(): void {
         console.log("# COMPONENTE MATERIAL-DETAIL")
         this.loading = true;
@@ -70,23 +70,23 @@ export class MaterialDetailComponent implements OnInit {
         this.app_user = this.userService.getUser();
         //Set email profissional saude
         this.emailProfissionalSaude = 'support.caregivers@emailaregistar.com';
-     
+
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["id_material"];
- 
+
         //return to patients List if do not have connection
         if (!this.connectorService.isConnected()) {
             this.router.navigate(['/patients']);
         }
- 
- 
+
+
         console.log("ID PACIENTE " + id + " ID MATERIAL" + idx)
         this.patient = this.patientService.patients.filter(patient => patient.id === id)[0];
         // criar lista de materiais com propriadade adicional need name and need description
         this.addPropertyNeedOnMaterial();
         //console.log("MATERIALOFALLNEEDS : " + JSON.stringify(this.materialsOfAllNeeds, null, 4));
         this.materialParent = this.materialsOfAllNeeds.filter(material => material.id === idx)[0];
- 
+
         //console.log("---------------------------------------------------------------: ");
         //console.log("MATERIALParent : " + JSON.stringify(this.materialParent, null, 4));
         //verificar se é um composite
@@ -95,7 +95,7 @@ export class MaterialDetailComponent implements OnInit {
         } else {//material simples basta carregar para vista
             this.materialsToDisplay = [];
             this.materialsToDisplay.push(this.materialParent);
- 
+
         }
 
         this.patientService.registerAcessedMaterial(this.materialParent);
@@ -103,20 +103,20 @@ export class MaterialDetailComponent implements OnInit {
         //verify is email avaliable
         email.available().then(function (avail) {
             console.log("# COMPONENTE MATERIAL-DETAIL # Email available? " + avail);
-                       return avail;
-        }).then((avail)=>{
-            this.emailAvaliable=avail;
+            return avail;
+        }).then((avail) => {
+            this.emailAvaliable = avail;
         })
         //Evaluations
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
- 
+
     }
     stopLoading() {
         this.loading = false;
         console.log("PASSOU AKI")
     }
- 
- 
+
+
     /**
      * Function to add properties of the "parent" need to the "child" material
      *
@@ -126,7 +126,7 @@ export class MaterialDetailComponent implements OnInit {
     addPropertyNeedOnMaterial() {
         let materials_temp: Material[];
         materials_temp = [];
- 
+
         this.patient.needs.forEach(need => {
             need.materials.forEach(materialOfaNeed => {
                 materialOfaNeed["need_id"] = need.id;
@@ -135,12 +135,12 @@ export class MaterialDetailComponent implements OnInit {
                 materials_temp.push(materialOfaNeed);
             });
         });
- 
+
         this.materialsOfAllNeeds = materials_temp;
     }
- 
- 
- 
+
+
+
     /**
      * Function to open external materials [pdf ...]
      *
@@ -152,9 +152,9 @@ export class MaterialDetailComponent implements OnInit {
         let material = this.materialsToDisplay.filter(material => material.id === id)[0];
         openUrl(material.url);
     }
- 
- 
- 
+
+
+
     /**
      * Function to rate material [red,yellow,green]
      *
@@ -163,26 +163,26 @@ export class MaterialDetailComponent implements OnInit {
      * @memberof MaterialDetailComponent
      */
     evaluateMaterial(level) {
- 
+
         let rating = new Rating();
 
         rating.evaluation = level;
         rating.id_material = this.materialParent.id;
- 
+
         this.ratings.push(rating);
- 
+
         this.dataService.setRating(rating);
         this.patientService.sendRating(rating);
 
     }
 
-    
+
     getRatings() {
         return this.ratings;
     }
- 
- 
- 
+
+
+
     /**
      * function to navigate to the material questionnaire
      *
@@ -205,18 +205,18 @@ export class MaterialDetailComponent implements OnInit {
         email.compose({
             subject: "Pedido de esclarecimento do cuidador " + this.app_user.name + " com o id: " + this.app_user.id,
             body: "Bom dia,<p>"
-            +"Necessito esclarecimento sobre o seguinte material:" 
+            + "Necessito esclarecimento sobre o seguinte material:"
             + "<p>Id Material: " + this.materialParent.id
             + "<p>Nome Material: " + this.materialParent.name
             + "<p>Descrição Material: " + this.materialParent.description
             + "<p>Id Cuidador: " + this.app_user.id
             + "<p>Nome Cuidador: " + this.app_user.name
-            ,            
+            ,
             to: [this.emailProfissionalSaude],
             cc: [''],
             bcc: ['', ''],
             attachments: [
-                ],
+            ],
             appPickerTitle: 'Compose with app caregiver' // for Android, default: 'Open with..'
         }).then(
             function () {
@@ -224,6 +224,33 @@ export class MaterialDetailComponent implements OnInit {
             }, function (err) {
                 console.log("Error: " + err);
             });
+    }
+
+    ngAfterViewInit() {
+        if (app.android) {
+            app.android.on(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    ngOnDestroy() {
+        // cleaning up references/listeners.
+        if (app.android) {
+            app.android.off(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    /**
+     * Function to disable back button on android
+     * 
+     * @param {any} args 
+     * @returns 
+     * 
+     * @memberof PatientsComponent
+     */
+    backEvent(args) {
+        args.cancel = true;
+        return;
+
     }
 
 }

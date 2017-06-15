@@ -32,4 +32,31 @@ export class ProfileComponent{
         phone.dial("999999999", true);
         //phone.dial(app_user.healthContact, true);
     }
+
+    ngAfterViewInit() {
+        if (app.android) {
+            app.android.on(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    ngOnDestroy() {
+        // cleaning up references/listeners.
+        if (app.android) {
+            app.android.off(app.AndroidApplication.activityBackPressedEvent, this.backEvent);
+        }
+    }
+
+    /**
+     * Function to disable back button on android
+     * 
+     * @param {any} args 
+     * @returns 
+     * 
+     * @memberof PatientsComponent
+     */
+    backEvent(args) {
+        args.cancel = true;
+        return;
+
+    }
 }
