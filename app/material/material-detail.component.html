@@ -44,19 +44,16 @@
                         </GridLayout>
                     </StackLayout>
                 </StackLayout>
-                <---->
+                <!-- SEND EMAIL TO PROFISSIONAL DE SAUDE-->
+                <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
+                <StackLayout *ngIf="i == materialsToDisplay.length-1 && emailAvaliable " orientation="horizontal">
+                    <StackLayout orientation="vertical">
+                        <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'"
+                        class="submit-button" (tap)="sendMailTo()"></Button>
 
-                    <!-- EVALULUATION COMPLEX OF THE CAREGIVER CAPACITY-->
-                    <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="" style=" text-align: center"></label>
-                    <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
-                        <StackLayout *ngIf="item.quizs" orientation="vertical">
-                            <label *ngIf=" materialParent.quizs.length > 0" class="h3" text="Questionários disponíveis :" style=" text-align: center"></label>
-                            <Button *ngFor="let itemt of materialParent.quizs" class="h4" [text]="'Preencher questionário : ['+itemt.ref_questionnaire +'-'+itemt.reference_name +']'"
-                                class="submit-button" (tap)="fillQuestionnaire(itemt.ref_questionnaire)"></Button>
-
-                        </StackLayout>
                     </StackLayout>
-
+                </StackLayout>
+               
             </StackLayout>
         </ng-template>
     </ListView>

@@ -9,6 +9,7 @@ import { Connector } from "./connector";
 import { User } from "../user/user";
 import { Database } from "../data/database";
 import { Patient } from "../../patient/patient";
+import { UserService } from "../user/user.service";
 
 import * as fs from "file-system";
 import * as connectivity from "connectivity";
@@ -228,6 +229,21 @@ export class ConnectorService {
             request,
             { headers: headers },
             {body: questionnaire}
+            ).map(res => res.json());
+    }
+
+    sendAcessedMaterial(user, material): Observable<Http> {
+
+        let headers = this.createLoginHeader();
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        
+        return this.http.post(
+            request,
+            { headers: headers },
+            {body: {
+                "id": user.id,
+                "material": material.id
+            }}
             ).map(res => res.json());
     }
 }

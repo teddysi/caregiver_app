@@ -26,7 +26,7 @@ export class PatientService {
     //public caregiverQuestionaires: Questionnaire[];
     public notifications: Notification[];
 
-    constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService) {
+    constructor(private http: Http, private dataService: DataService, private connectorService: ConnectorService, private userService: UserService) {
         //console.log('Instanciou - PatientService!');
         this.notifications = [];
         this.initMessages();
@@ -163,6 +163,21 @@ export class PatientService {
             }
             
         }
+    }
+    registerAcessedMaterial(material) {
+        var user = this.userService.getUser();
+
+        this.connectorService.sendAcessedMaterial(user,material).subscribe(
+            (result) => this.registeredSuccessfully(result, material),
+            (error) => this.registeredFailed(error)
+        );
+    }
+    registeredSuccessfully(result, material) {
+        console.log("Registou acesso ao material: ID - " + material.id + '-' + material.name);
+    }
+
+    registeredFailed(error) {
+        console.log("Falhou registo de acesso ao material");
     }
 }
 

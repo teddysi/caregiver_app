@@ -552,26 +552,36 @@ export class DataService {
     deleteQuestionnaire(questionnaires) {
         //console.log("A apagar quizs!");
         var quizs = this.getQuizs();
+        var found_equal;
+        var quizs_temp = [];
             ////console.log(JSON.stringify(quizs, null, 4));
             //console.log("Quizs da BD: ");
             //console.log(JSON.stringify(quizs, null, 4));
             //console.log("Quizs ENVIADOS: ");
             //console.log(JSON.stringify(questionnaires, null, 4));
             quizs.forEach(questionnaire_BD => {
+                found_equal = false;
                 //console.log("REFERENCIA DO QUIZ BD: " + questionnaire_BD.ref_questionnaire);
                 questionnaires.forEach(questionnaire_sent => {
                     //console.log("REFERENCIA DO QUIZ ENVIADO: " + questionnaire_sent.ref_questionnaire);
                     if(questionnaire_sent.ref_questionnaire == questionnaire_BD.ref_questionnaire) {
                         //console.log("REFERENCIA DO QUIZ A ELIMINAR: " + questionnaire_sent.ref_questionnaire);
-                        delete quizs[questionnaire_BD.ref_questionnaire];
+                       // quizs.splice(questionnaire_BD.ref_questionnaire, 1);
+                       found_equal = true;
                     }
-                });         
+
+                });
+                if(!found_equal) {
+                    quizs_temp.push(questionnaire_BD);
+                }
+
             });
         //console.log("Numero de quizes por fazer: " + quizs.length);
         //console.log(JSON.stringify(quizs, null, 4));
+        quizs = quizs_temp;
 
-        if(quizs.length - 1 == 0) {
-            //console.log("A apagar doc corrente de quizs");
+        if(quizs.length  == 0) {
+            console.log("A apagar doc corrente de quizs");
             this.database.getDatabase().deleteDocument(this.quizs_id);
             this.quizs_id = null;
         } else {
@@ -580,15 +590,15 @@ export class DataService {
                 element.ref_questionnaire = index + "";
                 index++;
             });
-    
+            console.log('Após reindexação!');
+            console.log(JSON.stringify(quizs, null, 4));
             this.database.getDatabase().updateDocument(this.quizs_id, {
                 'quiz' : quizs,
                 'type' : 'quiz'
             });
         }
-        
-        //console.log("NOVO ARRAY DE QUIZS NA BD");
-        //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
+        console.log("NOVO ARRAY DE QUIZS NA BD");
+        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
     addQuestionnaireToDB(questionnaire) {
         if(!this.isSetQuizsDone()) {

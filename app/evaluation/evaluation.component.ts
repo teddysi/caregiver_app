@@ -116,7 +116,7 @@ export class EvaluationComponent implements OnInit {
         }
 
         //return to the list od of questionnaires
-        this.router.navigate(['/evaluations']);
+        this.router.navigate(['/patients']);
     }
 
 }
