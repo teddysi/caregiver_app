@@ -23,6 +23,11 @@ import { ConnectorService } from "../shared/connector/connector.service";
 
 import 'nativescript-pdf-view';
 
+import * as email from "nativescript-email";
+
+import { User } from "../shared/user/user";
+import { UserService } from "../shared/user/user.service";
+
 @Component({
     selector: "material-details",
     moduleId: module.id,
@@ -38,6 +43,10 @@ export class MaterialDetailComponent implements OnInit {
     hasEvaluationsToDo: boolean;
     loading: boolean;
 
+    emailAvaliable: boolean;
+    app_user: User;
+    emailProfissionalSaude:string;
+
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
     // ratings = [Rating("1", "Mau"), Rating("2", "Medio")]
@@ -47,7 +56,8 @@ export class MaterialDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private dataService: DataService,
-        private connectorService: ConnectorService
+        private connectorService: ConnectorService,
+        private userService: UserService
     ) {
         this.ratings = [];
     }
@@ -55,9 +65,12 @@ export class MaterialDetailComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("# COMPONENTE MATERIAL-DETAIL")
-        this.loading=true;
-        //rating test
-
+        this.loading = true;
+        this.emailAvaliable = false;
+        this.app_user = this.userService.getUser();
+        //Set email profissional saude
+        this.emailProfissionalSaude = 'support.caregivers@emailaregistar.com';
+     
         const id = +this.route.snapshot.params["id"];
         const idx = +this.route.snapshot.params["id_material"];
 
@@ -85,30 +98,24 @@ export class MaterialDetailComponent implements OnInit {
 
         }
 
-        // console.log(JSON.stringify(this.materials, null, 4));
+        
 
-        //openApp("com.facebook.katana");
-        //openUrl("http://192.168.99.100/caregivers/public/materialsAPI/21/showContent")
-		/*let i;
-		let control = false;
-		if(!control)
-		for(i=0;i<this.materials.length;i++){
-			if(this.materials[i].url && this.materials[i].path) {
-				this.materials[i].url+=this.materials[i].path;
-				this.materials[i].path = '';
-			}
-			control = true;		
-		}
-		*/
+        //verify is email avaliable
+        email.available().then(function (avail) {
+            console.log("# COMPONENTE MATERIAL-DETAIL # Email available? " + avail);
+                       return avail;
+        }).then((avail)=>{
+            this.emailAvaliable=avail;
+        })
 
         //Evaluations
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
 
     }
 
-    stopLoading(){
-       this.loading=false;
-       console.log("PASSOU AKI")
+    stopLoading() {
+        this.loading = false;
+        console.log("PASSOU AKI")
     }
 
 
@@ -202,6 +209,39 @@ export class MaterialDetailComponent implements OnInit {
      */
     fillQuestionnaire(ref_questionnaire) {
         this.router.navigate(['/evaluation', ref_questionnaire]);
+    }
+
+
+    /**
+     * Function to send email to profissional saude
+     * 
+     * 
+     * @memberof MaterialDetailComponent
+     */
+    sendMailTo() {
+        email.compose({
+            subject: "Pedido de esclarecimento do cuidador " + this.app_user.name + " com o id: " + this.app_user.id,
+            body: "Bom dia,<p>"
+            +"Necessito esclarecimento sobre o seguinte material:" 
+            + "<p>Id Material: " + this.materialParent.id
+            + "<p>Nome Material: " + this.materialParent.name
+            + "<p>Descrição Material: " + this.materialParent.description
+            + "<p>Id Cuidador: " + this.app_user.id
+            + "<p>Nome Cuidador: " + this.app_user.name
+
+            ,            
+            to: [this.emailProfissionalSaude],
+            cc: [''],
+            bcc: ['', ''],
+            attachments: [
+                ],
+            appPickerTitle: 'Compose with app caregiver' // for Android, default: 'Open with..'
+        }).then(
+            function () {
+                console.log("Email composer closed");
+            }, function (err) {
+                console.log("Error: " + err);
+            });
     }
 
 }
