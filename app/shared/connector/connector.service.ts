@@ -197,8 +197,8 @@ export class ConnectorService {
          //console.log('A criar o Header para o login');
       let headers = new Headers();
         // set headers here e.g.
-        headers.append("AuthKey", "my-key");
-        headers.append("AuthToken", "my-token");
+        //headers.append("AuthKey", "my-key");
+        //headers.append("AuthToken", "my-token");
         headers.append("Content-Type", "application/json");
         return headers;
     }
@@ -224,7 +224,8 @@ export class ConnectorService {
 
         //console.log(JSON.stringify(headers), null, 4);
         //console.log(JSON.stringify(questionnaire), null, 4);
-        
+        console.log("A enviar quiz guardado: ");
+        console.log(JSON.stringify(questionnaire, null, 4));
         return this.http.post(
             request,
             { headers: headers },
@@ -236,14 +237,14 @@ export class ConnectorService {
 
         let headers = this.createLoginHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/accesses/create';
-        console.log(JSON.stringify(patient, null, 4));
+
+
         return this.http.post(
             request,
             { headers: headers },
             {body: {
-                "id": user.id,
-                "patient_id": "",
-                "material": material.id
+                "patient_id": patient.id,
+                "material_id": material.id
             }}
             ).map(res => res.json());
     }

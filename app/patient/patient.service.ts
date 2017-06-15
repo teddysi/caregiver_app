@@ -94,6 +94,7 @@ export class PatientService {
         }
     }
     onSentSuccess(questionnaire_to_send, result) {
+         console.log("Questionário enviado:");
         this.dataService.deleteQuestionnaire(questionnaire_to_send);
         //console.log("enviou questionário com sucesso");
     }
@@ -101,7 +102,7 @@ export class PatientService {
         //console.log("ERROR: " + error);
         //console.log("ERROR LENGTH: " + error.length);
         if(error.length == undefined) {
-             //console.log("Questionário enviado:");
+             console.log("Questionário enviado:");
             //console.log(JSON.stringify(questionnaire_to_send, null, 4));
             this.dataService.deleteQuestionnaire(questionnaire_to_send);
             //console.log("enviou questionário com sucesso");
@@ -141,27 +142,25 @@ export class PatientService {
         notification.done = true;
     }
     checkQuizsToSubmit() {
-        if(this.connectorService.isConnected()) {
-            let quizs = this.dataService.getQuizs();
-            let quizs_to_send = [];
+        let quizs = this.dataService.getQuizs();
+        let quizs_to_send = [];
 
-            if(quizs) {
-                //console.log("QUIZS GUARDADOS PARA ENVIO: ");
-                //console.log(JSON.stringify(quizs, null, 4));
-                quizs.forEach(quiz => {
-                    if(quiz.done) {
-                        quizs_to_send.push(quiz);
-                    }
-                });
-
-                if(quizs_to_send) {
+        if(quizs) {
+            console.log("QUIZS GUARDADOS: ");
+            console.log(JSON.stringify(quizs, null, 4));
+            quizs.forEach(quiz => {
+                if(quiz.done) {
+                    quizs_to_send.push(quiz);
+                }
+            });
+            console.log("QUIZS GUARDADOS PARA ENVIO: ");
+            console.log(JSON.stringify(quizs_to_send, null, 4));
+            if(quizs_to_send) {
                 this.connectorService.updateQuizStatus(quizs_to_send).subscribe(
                     (result) => this.onSentSuccess(quizs_to_send, result),
                     (error) => this.onSentError(quizs_to_send, error)
                 );
             }
-            }
-            
         }
     }
     registerAcessedMaterial(patient, material) {
@@ -177,6 +176,7 @@ export class PatientService {
     }
 
     registeredFailed(error) {
+        console.log(JSON.stringify(error,null,4));
         console.log("Falhou registo de acesso ao material");
     }
     sendRating(rating) {

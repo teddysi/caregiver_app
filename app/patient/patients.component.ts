@@ -49,7 +49,7 @@ export class PatientsComponent implements OnInit {
         this.isLoading = true;
         ////console.log(this.patientService.isConnected());
         if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
-            //this.patientService.checkQuizsToSubmit();
+            this.patientService.checkQuizsToSubmit();
             this.patientService.getPatients().subscribe(
                 (result) => this.onGetDataSuccess(result),
                 (error) => this.onGetDataError(error)
@@ -187,7 +187,7 @@ export class PatientsComponent implements OnInit {
     }
 
     init() {
-
+        this.patientService.checkQuizsToSubmit();
         this.patientService.getPatients().subscribe(
             (result) => this.onGetDataSuccess(result),
             (error) => this.onGetDataError(error)
