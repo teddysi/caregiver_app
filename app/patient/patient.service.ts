@@ -179,6 +179,21 @@ export class PatientService {
     registeredFailed(error) {
         console.log("Falhou registo de acesso ao material");
     }
+    sendRating(rating) {
+         var user = this.userService.getUser();
+
+        this.connectorService.sendMaterialRating(user,rating).subscribe(
+            (result) => this.evaluationSentSuccessfully(result, rating),
+            (error) => this.evaluationSentFail(error)
+        );
+    }
+    evaluationSentSuccessfully(result, rating) {
+        console.log("Enviou rating do material com sucesso");
+    }
+
+    evaluationSentFail(error) {
+        console.log("Falhou envio do rating do material");
+    }
 }
 
 

@@ -1,89 +1,96 @@
 <ActionBar [title]="materialParent.description" class="action-bar">
     <NavigationButton text="Voltar" android.systemIcon="ic_menu_back" [nsRouterLink]="['/patient',patient.id,'materials']"></NavigationButton>
-    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_menu_notifications" ios.position="right"
-        [nsRouterLink]="['/evaluations']"></ActionItem>
+    <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="2" android.systemIcon="ic_menu_notifications" ios.position="right" [nsRouterLink]="['/evaluations']"></ActionItem>
 </ActionBar>
-
+ 
 <StackLayout class="page">
-
+ 
     <ListView [items]="materialsToDisplay" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item" let-i="index">
             <StackLayout orientation="vertical" class="listViewPassosMaterial">
-
+ 
                 <!-- type = image -->
                 <Image *ngIf="item.type == 'image'" [src]="item.url" stretch="aspectFill" height="300" width="400"></Image>
                 <label *ngIf="item.type == 'image'" [text]="item.description" textWrap="true" class="materialImageDescription"></label>
-
+ 
                 <!-- type = text -->
                 <label *ngIf="item.type == 'text'" [text]="item.description" textWrap="true" class="materialTextTitle"></label>
                 <label *ngIf="item.type == 'text'" [text]="item.body" textWrap="true"></label>
-
+ 
                 <!-- type = video -->
-                <ActivityIndicator *ngIf="item.type == 'video'" [busy]="loading" width="50" height="50" [visibility]="loading ? 'visible' : 'collapse'"
-                    color="green"></ActivityIndicator>
-                <VideoPlayer *ngIf="item.type == 'video'" [src]="item.url" autoplay="true" height="300" controls="true" (playbackReady)="stopLoading()">
-                </VideoPlayer>
+                <ActivityIndicator *ngIf="item.type == 'video'" [busy]="loading" width="50" height="50" [visibility]="loading ? 'visible' : 'collapse'" color="green" ></ActivityIndicator>
+                <VideoPlayer *ngIf="item.type == 'video'"  [src]="item.url" autoplay="true" height="300" controls="true" (playbackReady)="stopLoading()" > </VideoPlayer>
                 <label *ngIf="item.type == 'video'" [text]="item.description" textWrap="true" class="materialVideoDescription"></label>
-
+ 
                 <!-- type = emergencyContact-->
                 <label *ngIf="item.type == 'emergencyContact'" [text]="item.description" textWrap="true"></label>
                 <label *ngIf="item.type == 'emergencyContact'" [text]="item.number" textWrap="true"></label>
-
+ 
                 <!-- type = annex-->
                 <!-- <label *ngIf="item.type == 'annex'" [text]="item.description"  href="item.url" textWrap="true"></label>-->
                 <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
-
-
+ 
+ 
                 <!-- EVALULUATION RYG FOR THE MATERIAL-->
                 <StackLayout *ngIf=" materialParent.quizs.length == 0" orientation="vertical">
                     <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="Avaliar Material" style=" text-align: center"></label>
                     <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
                         <GridLayout rows="45, *, *" columns="*, *, *">
-
-
+ 
+ 
                             <Button text="Difícil" class="submit-button" style="background-color:#E00000 " (tap)="evaluateMaterial('-1')" row="0" col="0"></Button>
                             <Button text="Acessível" class="submit-button" style="background-color:#FCFF10 " (tap)="evaluateMaterial('0')" row="0" col="1"></Button>
                             <Button text="Fácil" class="submit-button" style="background-color:#03A33B " (tap)="evaluateMaterial('1')" row="0" col="2"></Button>
-
+ 
                         </GridLayout>
                     </StackLayout>
                 </StackLayout>
                 <!---->
-
+ 
+                    <!-- EVALULUATION COMPLEX OF THE CAREGIVER CAPACITY-->
+                    <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="" style=" text-align: center"></label>
+                    <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
+                        <StackLayout *ngIf="item.quizs" orientation="vertical">
+                            <label *ngIf=" materialParent.quizs.length > 0" class="h3" text="Questionários disponíveis :" style=" text-align: center"></label>
+                            <Button *ngFor="let itemt of materialParent.quizs" class="h4" [text]="'Preencher questionário : ['+itemt.ref_questionnaire +'-'+itemt.reference_name +']'"
+                                class="submit-button" (tap)="fillQuestionnaire(itemt.ref_questionnaire)"></Button>
+ 
+                        </StackLayout>
+                    </StackLayout>
+ 
+                    <!-- SEND EMAIL TO PROFISSIONAL DE SAUDE-->
+                    <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
+                    <StackLayout *ngIf="i == materialsToDisplay.length-1 && emailAvaliable " orientation="horizontal">
+                        <StackLayout  orientation="vertical">
+                           
+                            <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'"
+                                class="submit-button" (tap)="sendMailTo()"></Button>
+ 
+                        </StackLayout>
+                    </StackLayout>
+ 
             </StackLayout>
-
-            <!-- SEND EMAIL TO PROFISSIONAL DE SAUDE-->
-            <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
-            <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal">
-                <StackLayout orientation="vertical">
-
-                    <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'" class="submit-button" (tap)="sendMailTo()"></Button>
-
-                </StackLayout>
-            </StackLayout>
-
+        </ng-template>
+    </ListView>
+ 
 </StackLayout>
-</ng-template>
-</ListView>
-
-</StackLayout>
-
+ 
 <!--
     <label class="h3" text="Marcar Tarefa efectuada" style=" text-align: center"></label>
     <label class="h3" text=" v" style=" text-align: center" row="3"></label>
     <Button text="Tarefa Efectuada" class="submit-button" style="background-color:#056C0A" (tap)="onMaterialPicker()">
             </Button> >
-
-
+ 
+ 
 <StackLayout orientation="horizontal">
     <GridLayout rows="45, *, *" columns="*, *, *">
-
-
+ 
+ 
         <Button text="Difícil" class="submit-button" style="background-color:#E00000 " (tap)="onRed()" row="0" col="0"></Button>
         <Button text="Acessível" class="submit-button" style="background-color:#FCFF10 " (tap)="onYellow()" row="0" col="1"></Button>
         <Button text="Fácil" class="submit-button" style="background-color:#03A33B " (tap)="onGreen()" row="0" col="2"></Button>
-
-
+ 
+ 
     </GridLayout>
 </StackLayout>
 </StackLayout>

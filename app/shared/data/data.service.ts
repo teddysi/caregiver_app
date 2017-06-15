@@ -215,9 +215,9 @@ export class DataService {
         return false;
     }
     public showData(view) {
-        //console.log('A mostrar bd: ' + view + ' com ' + this.database.getDatabase().executeQuery(view).length + ' elementos');
+        console.log('A mostrar bd: ' + view + ' com ' + this.database.getDatabase().executeQuery(view).length + ' elementos');
         if(this.database.getDatabase().executeQuery(view).length > 0) {     
-            //console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
+            console.log(JSON.stringify(this.database.getDatabase().executeQuery(view), null, 4));
         }
     }
      public onCreateFile() {
@@ -322,7 +322,7 @@ export class DataService {
             "data": patientsData,
         })
         
-        //this.showData("data");
+        this.showData("data");
     }
     public getMaterialRating(material_id) {
 

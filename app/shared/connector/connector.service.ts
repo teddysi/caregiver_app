@@ -246,4 +246,22 @@ export class ConnectorService {
             }}
             ).map(res => res.json());
     }
+
+    sendMaterialRating(user,rating): Observable<Http> {
+        
+        let headers = this.createLoginHeader();
+        let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/quizs/submit';
+        
+        return this.http.post(
+            request,
+            { headers: headers },
+            {
+                body: {
+                "user_id": user.id,
+                "material_id": rating.id_material,
+                "evaluation": rating.evaluation
+                }
+            }
+            ).map(res => res.json());
+    }
 }

@@ -98,7 +98,7 @@ export class MaterialDetailComponent implements OnInit {
  
         }
 
-        
+        this.patientService.registerAcessedMaterial(this.materialParent);
 
         //verify is email avaliable
         email.available().then(function (avail) {
@@ -165,13 +165,14 @@ export class MaterialDetailComponent implements OnInit {
     evaluateMaterial(level) {
  
         let rating = new Rating();
-        rating.id = Date.now();
+
         rating.evaluation = level;
         rating.id_material = this.materialParent.id;
  
         this.ratings.push(rating);
  
         this.dataService.setRating(rating);
+        this.patientService.sendRating(rating);
 
     }
 

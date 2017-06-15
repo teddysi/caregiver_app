@@ -1,7 +1,7 @@
 <ActionBar title="Utentes" class="action-bar">
     <ActionItem *ngIf="hasEvaluationsToDo" android.systemIcon="3" android.systemIcon="ic_menu_notifications" ios.position="right"
         [nsRouterLink]="['/evaluations']"></ActionItem>
-    <ActionItem *ngIf="patientService.isConnected()" android.systemIcon="2" android.systemIcon="ic_menu_refresh" ios.position="right" [nsRouterLink]="['/patients']"
+    <ActionItem *ngIf="patientService.isConnected()" android.systemIcon="2" android.systemIcon="ic_popup_sync_2" ios.position="right" [nsRouterLink]="['/patients']"
         (tap)="refreshData()"></ActionItem>
     <ActionItem android.systemIcon="ic_menu_friendslist" ios.position="right" [nsRouterLink]="['/myInfo']"></ActionItem>
 
