@@ -192,6 +192,7 @@ export class PatientService {
     }
 
     evaluationSentFail(error) {
+        console.log(JSON.stringify(error,null,4));
         console.log("Falhou envio do rating do material");
     }
 }

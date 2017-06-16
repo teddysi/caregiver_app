@@ -53,7 +53,7 @@ export class DataService {
 
     init() {
         //console.log("BD USADA");
-        this.showData("caregiver");
+        this.showData("quiz");
         //console.log('A inicializar as variáveis globais');
         //Adicionar numero de avaliações pendentes
         //...

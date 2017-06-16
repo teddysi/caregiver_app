@@ -167,7 +167,7 @@ export class MaterialDetailComponent implements OnInit {
         let rating = new Rating();
 
         rating.evaluation = level;
-        rating.id_material = this.materialParent.id;
+        rating.id_material = this.materialParent.id.toString();
 
         this.ratings.push(rating);
 

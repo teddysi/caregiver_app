@@ -253,13 +253,11 @@ export class ConnectorService {
         
         let headers = this.createLoginHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/evaluations/create';
-        
+        console.log(JSON.stringify(rating, null, 4));
         return this.http.post(
             request,
             { headers: headers },
-            {
-                body: {
-                "user_id": user.id,
+            {body: {
                 "material_id": rating.id_material,
                 "evaluation": rating.evaluation
                 }
