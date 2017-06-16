@@ -10,7 +10,7 @@
         <ng-template let-item="item">     
             <GridLayout rows="*,auto" columns="*, auto" [nsRouterLink]="['/patient',patient.id,'material',item.id]">
                 <StackLayout orientation="vertical" padding="3px 0px 3px 0px">
-                    <Label class="evaluation-color" [ngStyle]="getBorderColor(item.ratings)" height="3"></Label>
+                    <Label class="evaluation-color" [ngStyle]="getBorderColor(item)" height="3"></Label>
                     <Label class="" height="6"></Label>
                     <Label class="h3 text-content" [text]="item.name" textWrap="true" ></Label>
                     <!--<Label class="h3" [text]="item.ratings[item.ratings.length-1]"></Label>-->
@@ -19,7 +19,7 @@
                     <Label class="h4 text-content" [text]="item.need_description" textWrap="true"></Label>
                     <!--<Button text="Auto-avaliar a minha capacidade" class="submit-button" (tap)="autoavaliarCuidador()"></Button>-->
                     <Label class="" height="6"></Label>
-                    <Label class="evaluation-color" [ngStyle]="getBorderColor(item.ratings)" height="3"></Label>
+                    <Label class="evaluation-color" [ngStyle]="getBorderColor(item)" height="3"></Label>
                 </StackLayout>
             </GridLayout>       
             <!--<Label [text]="item.description" textWrap="true" class="needList"></Label>-->

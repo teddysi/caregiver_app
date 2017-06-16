@@ -49,7 +49,7 @@ export class PatientsComponent implements OnInit {
         this.isLoading = true;
         ////console.log(this.patientService.isConnected());
         if (!this.patientService.isFirstRequest() && this.patientService.isConnected()) {
-            this.patientService.checkQuizsToSubmit();
+            //this.patientService.checkQuizsToSubmit();
             this.patientService.getPatients().subscribe(
                 (result) => this.onGetDataSuccess(result),
                 (error) => this.onGetDataError(error)
@@ -86,7 +86,7 @@ export class PatientsComponent implements OnInit {
      */
     private onGetDataSuccess(result) {
         ////console.log("A tratar dados dp do pedido!")
-        //////console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
         //////console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy

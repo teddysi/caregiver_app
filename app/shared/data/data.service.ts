@@ -5,6 +5,7 @@ import { ConnectorService } from '../../shared/connector/connector.service';
 
 import { Injectable } from "@angular/core";
 import { Materials } from "./materials";
+import { Material } from "../../material/material";
 import { Data } from "./data";
 import { Needs } from "./needs";
 import { Patient } from "../../patient/patient";
@@ -35,7 +36,7 @@ export class DataService {
     constructor(public database: Database){
             //console.log('Instanciou - DataService!');
             //this.data = database.getDatabase();
-            this.deleteData('quiz');
+            //this.deleteData('quiz');
             //this.deleteData('user');
             //this.deleteData('global');
             //this.deleteData('data');
@@ -264,34 +265,32 @@ export class DataService {
         }
         return false; 
     }
-    //Guarda avaliações dos materiais
-    public setRating(rating) {
-        //console.log('A registar o rating');
-        //Recebo o rating, com id do material
-        //Vou à BD dos materiais
-        //Para cada material com aquele id, atualizar o seu rating.
-        /*Isto altera a bd dos materiais.
-        let materials = this.database.getDatabase().getDocument(this.materials_id).materials;
+    public setRating(material: Material, level) {
+        let patientsData = this.database.getDatabase().getDocument(this.patientsData_id).data;
         
-        for(let i = 0; i < materials.length; i++) {
-            for(let j = 0; j < materials[i].length; j++) {
-                if(rating.id_material === materials[i][j].id) {
-                    //console.log('registou');
-                    materials[i][j].ratings.push(rating);
+        for(let i = 0; i < patientsData.length; i++) {
+            for(let j = 0; j < patientsData[i].needs.length; j++) {
+                for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
+                    
+                    if(patientsData[i].needs[j].materials[k].id == material.id) {
+
+                        ////console.log(JSON.stringify(patientsData[i][j][k],null,4));
+                        patientsData[i].needs[j].materials[k]['evaluation'] = level;    
+                    }
                 }
             }
         }
-        ////console.log(JSON.stringify(materials, null, 4));
-        
-        this.database.getDatabase().updateDocument(this.materials_id, {
-            "type": "materials",
-            "materials": materials,
+        this.database.getDatabase().updateDocument(this.patientsData_id, {
+            "type": "data",
+            "data": patientsData,
         })
         
-        //this.showData('materials');
-        FIM da alteração na BD dos materiais*/
-        /*Assim altera a BD dos pacientes*/
-        ////console.log(JSON.stringify(this.database.getDatabase().getDocument(this.patientsData_id).data,null,4));
+        this.showData("data");
+    }
+    /*
+    //Guarda avaliações dos materiais
+    public setRating(rating) {
+        /*
         let patientsData = this.database.getDatabase().getDocument(this.patientsData_id).data;
         ////console.log("Entrou no for");
         /*
@@ -303,7 +302,7 @@ export class DataService {
                 }
             }
         }
-        */
+        *//*
         for(let i = 0; i < patientsData.length; i++) {
             for(let j = 0; j < patientsData[i].needs.length; j++) {
                 for(let k = 0; k < patientsData[i].needs[j].materials.length; k++) {
@@ -323,6 +322,7 @@ export class DataService {
         
         this.showData("data");
     }
+    */
     public getMaterialRating(material_id) {
 
     }

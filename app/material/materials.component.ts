@@ -91,19 +91,20 @@ export class MaterialsComponent implements OnInit {
 	 * 
 	 * @memberof MaterialsComponent
 	 */
-	getBorderColor(rating) {
-		if (rating) {
+	getBorderColor(material) {
+		if (material.evaluation == 0 || material.evaluation == 1 || material.evaluation == -1) {
 			console.log('A verficar rating existente dos materiais');
-			console.log(JSON.stringify(rating, null, 4));
-
-			switch (rating.evaluation) {
-				case '0':
+			console.log(JSON.stringify(material, null, 4));
+		
+			console.log("MATERIAL EVALUATION: " + material.evaluation);
+			switch (material.evaluation) {
+				case 0:
 					console.log('Amarelo');
 					return { 'background-color': 'yellow' };
-				case '-1':
+				case -1:
 					console.log('Vermelho');
 					return { 'background-color': 'red' };
-				case '1':
+				case 1:
 					console.log('Verde');
 					return { 'background-color': 'green' };
 				default:

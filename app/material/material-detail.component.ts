@@ -163,7 +163,7 @@ export class MaterialDetailComponent implements OnInit {
      * @memberof MaterialDetailComponent
      */
     evaluateMaterial(level) {
-
+        console.log("NEW EVALUTION: " + level);
         let rating = new Rating();
 
         rating.evaluation = level;
@@ -171,7 +171,7 @@ export class MaterialDetailComponent implements OnInit {
 
         this.ratings.push(rating);
 
-        this.dataService.setRating(rating);
+        this.dataService.setRating(this.materialParent, level);
         this.patientService.sendRating(rating);
 
     }

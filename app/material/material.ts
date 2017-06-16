@@ -11,7 +11,7 @@ export class Material {
     url: string;
     number:number; //number contact emergency
     quizs: Questionnaire[];
-
+    evaluation: number;
     materials: Material[];
     
     created_by: number;
