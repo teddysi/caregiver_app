@@ -10,13 +10,12 @@
         <Label [text]="app_user.email" class="" row ="1" col="1"></Label>
         <Label text="Localização: " class="" row ="2" col="0"></Label>
         <Label [text]="app_user.location" class="" row ="2" col="1"></Label>
-        <Label text="Profissional de Saúde : " class="" row ="3" col="0"></Label>
-        <Label text="Maria Emilia" class="" row ="3" col="1"></Label>
-        <!--Label [text]="app_user.profissional de saude" class="" row ="3" col="1"></Label>-->
-        <Label text="Contato: " class="" row ="4" col="0"></Label>-->
-        <Label text="999999999" class="" row ="4" col="1" (tap) = callHealthContact()></Label>
-        <!--Label text="app_user.contato" class="" row ="4" col="1"></Label-->
-        <Label text="Centro de Saúde: " class="" row ="5" col="0"></Label>
-        <Label text="987765432" class="" row ="5" col="1"></Label>
+        <Label text="Contatos: " class="" row ="3" col="0"></Label>-->
+        <Label text="Profissional de Saúde : " class="" row ="4" col="0"></Label>
+        <!--Label text="Maria Emilia" class="" row ="3" col="1"></Label-->
+        <Label [text]="app_user.contacts[0].name" textWrap="true" class="" row ="4" col="1"></Label>
+        <Label text="Contato: " class="" row ="5" col="0"></Label>
+        <Label [text]="app_user.contacts[0].email" textWrap="true" class="" row ="5" col="1"></Label>
+
     </GridLayout>
 </StackLayout>

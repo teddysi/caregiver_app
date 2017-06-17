@@ -8,4 +8,5 @@ export class User {
     "token": string;
     "created_at": string;
     "updated_at": string;
+    "contacts" : string[];
 }

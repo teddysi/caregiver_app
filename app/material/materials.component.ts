@@ -93,10 +93,10 @@ export class MaterialsComponent implements OnInit {
 	 */
 	getBorderColor(material) {
 		if (material.evaluation == 0 || material.evaluation == 1 || material.evaluation == -1) {
-			console.log('A verficar rating existente dos materiais');
-			console.log(JSON.stringify(material, null, 4));
+			//console.log('A verficar rating existente dos materiais');
+			//console.log(JSON.stringify(material, null, 4));
 		
-			console.log("MATERIAL EVALUATION: " + material.evaluation);
+			//console.log("MATERIAL EVALUATION: " + material.evaluation);
 			switch (material.evaluation) {
 				case 0:
 					console.log('Amarelo');
