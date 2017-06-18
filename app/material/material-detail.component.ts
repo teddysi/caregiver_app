@@ -31,6 +31,7 @@ import { UserService } from "../shared/user/user.service";
 @Component({
     selector: "material-details",
     moduleId: module.id,
+    styleUrls: ["./material-detail.component.css"],
     templateUrl: "./material-detail.component.html",
 })
 export class MaterialDetailComponent implements OnInit {

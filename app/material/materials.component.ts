@@ -99,13 +99,13 @@ export class MaterialsComponent implements OnInit {
 			//console.log("MATERIAL EVALUATION: " + material.evaluation);
 			switch (material.evaluation) {
 				case 0:
-					console.log('Amarelo');
+					//console.log('Amarelo');
 					return { 'background-color': 'yellow' };
 				case -1:
-					console.log('Vermelho');
+					//console.log('Vermelho');
 					return { 'background-color': 'red' };
 				case 1:
-					console.log('Verde');
+					//console.log('Verde');
 					return { 'background-color': 'green' };
 				default:
 					return { 'background-color': 'black' };

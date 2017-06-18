@@ -62,17 +62,10 @@ export class PatientsComponent implements OnInit {
         this.isLoading = false;
         this.listLoaded = true;
 
-        //this.patientService.hasEvaluationsToDo() ? this.hasEvaluationsToDo = true : this.hasEvaluationsToDo = false;
-
-        //verify and notificate if has evaluations to do
-
-        //this.hasEvaluationsToDo = true;
-
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
-        ////console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
-        if (this.hasEvaluationsToDo) {
-            this.patientService.displayNotification('pending evaluations');
-        }
+        console.log("Has notifications to do: " + this.hasEvaluationsToDo);
+
+
     }
 
 
@@ -86,7 +79,7 @@ export class PatientsComponent implements OnInit {
      */
     private onGetDataSuccess(result) {
         ////console.log("A tratar dados dp do pedido!")
-        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        //console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
         //////console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
@@ -106,7 +99,14 @@ export class PatientsComponent implements OnInit {
         //////console.log(JSON.stringify(this.patients[0], null, 4));
         //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         //}
-        ////console.log("Terminou de tratar dados dp do pedido!!!")  
+
+        ////console.log("Terminou de tratar dados dp do pedido!!!")
+          this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
+        ////console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
+        if (this.hasEvaluationsToDo) {
+            this.patientService.displayNotification('pending evaluations');
+        }
+        console.log("Has notifications to do: " + this.hasEvaluationsToDo);
     }
 
     /**

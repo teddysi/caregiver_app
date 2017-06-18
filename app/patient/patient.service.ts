@@ -82,6 +82,7 @@ export class PatientService {
     }
     
     updateQuizStatus(questionnaire) {
+        //console.log(JSON.stringify(questionnaire, null, 4));
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
        
@@ -113,6 +114,7 @@ export class PatientService {
         }
         
     }
+
     userOutdated() {
         this.dataService.deleteData('user');
     }
@@ -194,6 +196,14 @@ export class PatientService {
     evaluationSentFail(error) {
         console.log(JSON.stringify(error,null,4));
         console.log("Falhou envio do rating do material");
+    }
+
+    setNotificationToShowAgain(notification_id) {
+        this.notifications.filter(function(notification) {
+            if(notification.id === notification_id) {
+                notification.done = false;
+            }
+        });
     }
 }
 

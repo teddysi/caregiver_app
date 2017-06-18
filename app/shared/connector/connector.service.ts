@@ -103,7 +103,7 @@ export class ConnectorService {
         //se tem conetividade
         let headers = this.createRequestHeader();
         let request = 'http://' + this.connector.serverURL + '/caregiversAPI/' + this.dataService.getUserID() + '/patients'
-    
+        console.log("Vai devolver os quizs");
         return this.http.get(request, { headers: headers }) //Tiago
             .map(res => res.json());
         

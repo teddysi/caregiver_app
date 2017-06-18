@@ -8,6 +8,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "Caregiver",
     templateUrl: "app.component.html",
-    providers: [DataService, UserService, ConnectorService, PatientService]
+    providers: [DataService, UserService, ConnectorService, PatientService, Database]
 })
 export class AppComponent { }

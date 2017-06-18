@@ -1,3 +1,10 @@
 .materialTextTitle {
     padding: 0px 50px 0px 50px;
 }
+
+.btn_help {
+    color: white;
+    background-color: #686868;
+    text-align: right;
+    text-transform: capitalize;
+}

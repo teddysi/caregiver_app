@@ -5,7 +5,7 @@
  
 <StackLayout class="page">
  
-    <ListView [items]="materialsToDisplay" class="list-group" [class.visible]="listLoaded">
+    <ListView *ngIf="materialsToDisplay.length > 0" [items]="materialsToDisplay" class="list-group" [class.visible]="listLoaded">
         <ng-template let-item="item" let-i="index">
             <StackLayout orientation="vertical" class="listViewPassosMaterial">
  
@@ -62,17 +62,16 @@
                     <label *ngIf="i == materialsToDisplay.length-1 && emailAvaliable" class="h3" text="" style=" text-align: center"></label>
                     <StackLayout *ngIf="i == materialsToDisplay.length-1 && emailAvaliable " orientation="horizontal">
                         <StackLayout  orientation="vertical">
-                           
-                            <Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'"
-                                class="submit-button" (tap)="sendMailTo()"></Button>
- 
+                            <!--Button class="h4" [text]="'Necessito de esclarecimento sobre este material [Enviar email]'"
+                                class="submit-button" (tap)="sendMailTo()"></Button>-->
+                            <Button class="btn_help" [text]="'Ajuda [Enviar email]'" (tap)="sendMailTo()"></Button>
                         </StackLayout>
                     </StackLayout>
  
             </StackLayout>
         </ng-template>
     </ListView>
- 
+    <Label *ngIf="materialsToDisplay.length < 1" text="Não existem items disponíveis de momento"></Label>
 </StackLayout>
  
 <!--

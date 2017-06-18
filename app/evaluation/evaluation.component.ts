@@ -89,7 +89,8 @@ export class EvaluationComponent implements OnInit {
      * @memberof EvaluationComponent
      */
     public setResponse(response, indexQuestion) {
-        this.questionnaire.questions[indexQuestion].response = indexQuestion;
+        console.log("RESPONSE DE RADIO BUTTONS: " + response);
+        this.questionnaire.questions[indexQuestion].response = response;
     }
 
     /**
@@ -99,9 +100,24 @@ export class EvaluationComponent implements OnInit {
      * 
      * @memberof EvaluationComponent
      */
-    submmitEvaluation() {
+    submitEvaluation(questionnaire) {
         //set questionnaire done
         this.questionnaire.done = true;
+        console.log(JSON.stringify(questionnaire, null, 4));
+        for(let i = 0; i < this.questionnaire.questions.length; i++) {
+            console.log("Elemento: " + i);
+            console.log(JSON.stringify(this.questionnaire.questions[i], null, 4));
+            if(this.questionnaire.questions[i]['valuesToRadio']) {
+                for(let j = 0; j < this.questionnaire.questions[i]['valuesToRadio'].length; j++) {
+                //console.log( this.questionnaire.questions[i]['valuesToRadio'].length);
+                    if(this.questionnaire.questions[i]['valuesToRadio'][j] === questionnaire.questions[i].response) {
+                        this.questionnaire.questions[i].response = j.toString();
+                    }
+                }
+            }     
+        }
+        console.log("ARRAY FINAL: ");
+        console.log(JSON.stringify(this.questionnaire, null, 4));
         //update local data
         ////console.log(JSON.stringify(this.questionnaire), null, 4);
         this.patientService.updateQuizStatus(this.questionnaire);
