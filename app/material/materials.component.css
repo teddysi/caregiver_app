@@ -9,4 +9,12 @@
 
 .text-content {
     margin-left: 30px;
+    /*margin: 0 0 0 0;*/
+    height: auto;
+}
+.icon {
+   font-family: 'FontAwesome', fontawesome-webfont;
+   font-size: 32;
+   color: #006666;
+   padding: 10px 0px 0px 20px;
 }

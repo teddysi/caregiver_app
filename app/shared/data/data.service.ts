@@ -409,8 +409,8 @@ export class DataService {
                 //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
                 //console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');           
             }
-            console.log("Depois do SetQuizs!");
-            console.log(JSON.stringify(quizs, null, 4))
+            //console.log("Depois do SetQuizs!");
+            //console.log(JSON.stringify(quizs, null, 4))
     }
 
     public getAllQuizs() {
@@ -502,7 +502,7 @@ export class DataService {
         return null;
     }
     checkQuizStatus() {
-        console.log('A VERIFICAR SE HA QUIZS POR FAZER');
+        //console.log('A VERIFICAR SE HA QUIZS POR FAZER');
         var quizs = this.getQuizs();
         var global = this.database.getDatabase().getDocument(this.globalData_id);
 

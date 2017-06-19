@@ -146,15 +146,15 @@ export class PatientService {
         let quizs_to_send = [];
 
         if(quizs) {
-            console.log("QUIZS GUARDADOS: ");
-            console.log(JSON.stringify(quizs, null, 4));
+            //console.log("QUIZS GUARDADOS: ");
+            //console.log(JSON.stringify(quizs, null, 4));
             quizs.forEach(quiz => {
                 if(quiz.done) {
                     quizs_to_send.push(quiz);
                 }
             });
-            console.log("QUIZS GUARDADOS PARA ENVIO: ");
-            console.log(JSON.stringify(quizs_to_send, null, 4));
+            //console.log("QUIZS GUARDADOS PARA ENVIO: ");
+            //console.log(JSON.stringify(quizs_to_send, null, 4));
             if(quizs_to_send) {
                 this.connectorService.updateQuizStatus(quizs_to_send).subscribe(
                     (result) => this.onSentSuccess(quizs_to_send, result),

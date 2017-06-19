@@ -169,4 +169,16 @@ export class MaterialsComponent implements OnInit {
 
 	}
 
+	getIcon(materialType) {
+		switch (materialType) {
+			case 'text': return '\uf044';
+			case 'image': return '\uf083';
+			case 'video': return '\uf008';
+			case 'composite': return '\uf26c';
+			case 'emergencyContact': return '\uf0f9';
+			default:
+				break;
+		}
+	}
+
 }
