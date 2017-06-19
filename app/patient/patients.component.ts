@@ -65,6 +65,9 @@ export class PatientsComponent implements OnInit {
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         console.log("Has notifications to do: " + this.hasEvaluationsToDo);
 
+        if(this.patientService.isConnected()) {
+            this.patientService.checkQuizsToSubmit();
+        }
 
     }
 

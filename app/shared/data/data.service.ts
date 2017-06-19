@@ -44,9 +44,10 @@ export class DataService {
             //this.showData('data'); //Esta a dar excepcao e a imprimir os users tb???!!!!! (por confirmar) pq n tem dados e estoira?? mas imprime o user pq?
             //this.showData('user');
             //this.showData('materials');
-            //this.showData('quiz');
+            
             this.init();
             //this.showData('global');
+            this.showData('quiz');
             
             //
             
@@ -408,6 +409,8 @@ export class DataService {
                 //console.log(JSON.stringify(this.database.getDatabase().executeQuery('quiz')[0].quiz));
                 //console.log(this.database.getDatabase().executeQuery('quiz')[0].quiz.length + ' elementos');           
             }
+            console.log("Depois do SetQuizs!");
+            console.log(JSON.stringify(quizs, null, 4))
     }
 
     public getAllQuizs() {
@@ -482,6 +485,9 @@ export class DataService {
             quizs.forEach(element_quiz => {
                if(element_quiz.ref_questionnaire == questionnaire.ref_questionnaire) {
                     element_quiz.done = true;
+                    for(let i = 0; i < element_quiz.questions.length; i++) {
+                        element_quiz.questions[i].response = questionnaire.questions[i].response;
+                    }
                }
             });
        
@@ -495,7 +501,7 @@ export class DataService {
         return null;
     }
     checkQuizStatus() {
-        //console.log('A VERIFICAR SE HA QUIZS POR FAZER');
+        console.log('A VERIFICAR SE HA QUIZS POR FAZER');
         var quizs = this.getQuizs();
         var global = this.database.getDatabase().getDocument(this.globalData_id);
 
@@ -534,7 +540,7 @@ export class DataService {
                 "dataRequest" : global.dataRequest
             });
         }
-        ////console.log('passou aqui - 3');   
+        //console.log('Terminou checkQuizstatus');   
     }
     hasEvaluationsToDo() {
         //this.checkQuizStatus();
@@ -602,9 +608,9 @@ export class DataService {
                 'quiz' : quizs,
                 'type' : 'quiz'
             });
+            console.log("NOVO ARRAY DE QUIZS NA BD");
+            console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
         }
-        console.log("NOVO ARRAY DE QUIZS NA BD");
-        console.log(JSON.stringify(this.database.getDatabase().getDocument(this.quizs_id), null, 4));
     }
     addQuestionnaireToDB(questionnaire) {
         if(!this.isSetQuizsDone()) {

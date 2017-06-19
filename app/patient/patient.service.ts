@@ -55,19 +55,14 @@ export class PatientService {
     getPatient(id: number): Patient {
         return this.patients.filter(patient => patient.id === id)[0];
     }
-
-    //temp
-
     setCaregiverQuestionnaires(caregiverQuestionaires) {
         
         this.dataService.setQuizs(caregiverQuestionaires); 
         //this.caregiverQuestionaires = caregiverQuestionaires;
     }
-
     getCaregiverQuestionnaires(){
         return this.dataService.getQuizs();
-    }
-    
+    }  
     hasEvaluationsToDo() {
         return this.dataService.hasEvaluationsToDo();
     /*
@@ -80,18 +75,18 @@ export class PatientService {
         }
     */
     }
-    
     updateQuizStatus(questionnaire) {
         //console.log(JSON.stringify(questionnaire, null, 4));
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
        
-        this.dataService.updateQuizStatus(questionnaire);
         if(this.connectorService.isConnected()){
         this.connectorService.updateQuizStatus(questionnaire_to_send).subscribe(
             (result) => this.onSentSuccess(questionnaire_to_send, result),
             (error) => this.onSentError(questionnaire_to_send, error)
         );
+        } else {
+            this.dataService.updateQuizStatus(questionnaire);
         }
     }
     onSentSuccess(questionnaire_to_send, result) {
@@ -121,7 +116,8 @@ export class PatientService {
     initMessages() {
         this.notifications = [
             new Notification('pending evaluations', 'Aviso - Avaliações', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false),
-            new Notification('error-auth', 'Aviso - Autenticação', 'O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.', false)
+            new Notification('error-auth', 'Aviso - Autenticação', 'O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.', false),
+            new Notification('no net quizs', 'Aviso - Avaliações', 'Encontra-se sem acesso à internet. O seu questionário apenas será submetido quando tiver acesso.', false)
         ]
     }
 

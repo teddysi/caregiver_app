@@ -56,13 +56,8 @@ export class EvaluationListComponent implements OnInit {
         //console.log("# QUESTIONNAIRES :" + this.caregiverQuestionaires.toString())
 
         //test connection
-        if (!this.connectorService.isConnected()) {
-            console.log("# Sem conneccao ")
-            dialogs.alert({
-                title: "Aviso - Avaliações ",
-                message: "Encontra-se sem acesso à internet. Os seus questionários apenas serão submetidos quando tiver novamente acesso.",
-                okButtonText: "OK"
-            })
+        if (!this.connectorService.isConnected()) {       
+           this.patientService.displayNotification('no net quizs');
         }
 
     }

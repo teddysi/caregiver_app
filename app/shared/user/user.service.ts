@@ -26,7 +26,7 @@ export class UserService {
     
     createUser($newUser)
     {
-        console.log('A instanciar o utilizador');
+        //console.log('A instanciar o utilizador');
         this.user = new User();
         this.user.id = $newUser.id;
         this.user.username = $newUser.username;
