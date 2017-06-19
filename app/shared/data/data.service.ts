@@ -479,7 +479,8 @@ export class DataService {
         }         
         return false;
     }
-    public updateQuizStatus(questionnaire) {        
+    public updateQuizStatus(questionnaire) {
+        console.log("A mudar estado de quiz na BD");       
         var quizs = this.getQuizs();
         if(quizs) {
             quizs.forEach(element_quiz => {
@@ -540,7 +541,7 @@ export class DataService {
                 "dataRequest" : global.dataRequest
             });
         }
-        //console.log('Terminou checkQuizstatus');   
+        console.log('Terminou checkQuizstatus');   
     }
     hasEvaluationsToDo() {
         //this.checkQuizStatus();
@@ -562,7 +563,7 @@ export class DataService {
         return false;
     }
     deleteQuestionnaire(questionnaires) {
-        //console.log("A apagar quizs!");
+        console.log("A apagar quizs!");
         var quizs = this.getQuizs();
         var found_equal;
         var quizs_temp = [];

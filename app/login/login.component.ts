@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit{
     ngOnInit() {
       if(this.dataService.isUserAuth()) {
         this.userService.createUser(this.dataService.getLatestUserToRegister()); 
-        console.log(JSON.stringify(this.dataService.getLatestUserToRegister(), null, 4))
         this.login();
       }
       this.ConnectorService.testingDownload();

@@ -79,15 +79,17 @@ export class PatientService {
         //console.log(JSON.stringify(questionnaire, null, 4));
         var questionnaire_to_send = [];
         questionnaire_to_send.push(questionnaire);
-       
+        this.dataService.updateQuizStatus(questionnaire);
+        /*
         if(this.connectorService.isConnected()){
         this.connectorService.updateQuizStatus(questionnaire_to_send).subscribe(
             (result) => this.onSentSuccess(questionnaire_to_send, result),
             (error) => this.onSentError(questionnaire_to_send, error)
         );
         } else {
-            this.dataService.updateQuizStatus(questionnaire);
+            
         }
+        */
     }
     onSentSuccess(questionnaire_to_send, result) {
          console.log("Questionário enviado:");
