@@ -56,6 +56,9 @@ export class PatientsComponent implements OnInit {
             );
         } else {
             ////console.log("A mostrar da BD");
+            if(this.patientService.isConnected()) {
+                this.patientService.checkQuizsToSubmit();
+            }
             this.patients = this.patientService.getPatients_BD();
         }
 
@@ -64,10 +67,6 @@ export class PatientsComponent implements OnInit {
 
         this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         console.log("Has notifications to do: " + this.hasEvaluationsToDo);
-
-        if(this.patientService.isConnected()) {
-            this.patientService.checkQuizsToSubmit();
-        }
 
     }
 
@@ -102,7 +101,7 @@ export class PatientsComponent implements OnInit {
         //////console.log(JSON.stringify(this.patients[0], null, 4));
         //this.router.navigate(["/patient/" + this.patients[0].id + "/needs"]);
         //}
-
+        this.patientService.checkQuizsToSubmit();
         ////console.log("Terminou de tratar dados dp do pedido!!!")
           this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
         ////console.log("EVALUATIONS TO DO: " + this.hasEvaluationsToDo);
@@ -190,7 +189,6 @@ export class PatientsComponent implements OnInit {
     }
 
     init() {
-        this.patientService.checkQuizsToSubmit();
         this.patientService.getPatients().subscribe(
             (result) => this.onGetDataSuccess(result),
             (error) => this.onGetDataError(error)
@@ -205,7 +203,8 @@ export class PatientsComponent implements OnInit {
         //verify and notificate if has evaluations to do
 
         //this.hasEvaluationsToDo = true;
-
+        this.patientService.checkQuizsToSubmit();
+        
         if (this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
             this.patientService.displayNotification('pending evaluations');
         }

@@ -92,7 +92,7 @@ export class PatientService {
         */
     }
     onSentSuccess(questionnaire_to_send, result) {
-         console.log("Questionário enviado:");
+         console.log("Questionário enviado");
         this.dataService.deleteQuestionnaire(questionnaire_to_send);
         //console.log("enviou questionário com sucesso");
     }
@@ -100,7 +100,7 @@ export class PatientService {
         //console.log("ERROR: " + error);
         //console.log("ERROR LENGTH: " + error.length);
         if(error.length == undefined) {
-             console.log("Questionário enviado:");
+             console.log("Questionário enviado(erro)");
             //console.log(JSON.stringify(questionnaire_to_send, null, 4));
             this.dataService.deleteQuestionnaire(questionnaire_to_send);
             //console.log("enviou questionário com sucesso");

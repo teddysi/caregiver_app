@@ -92,7 +92,7 @@ export class DataService {
         //this.quizs_done_id = this.getQuizsOnHold_ID();
 
         //verificar se há questionários para preencher
-        //this.checkQuizStatus();
+        this.checkQuizStatus();
         
     }
     sync() {
@@ -517,7 +517,7 @@ export class DataService {
                 
                 if(!quiz_result) {
                     found_quiz_todo = true;
-                    //console.log("A mudar estado das avaliações");
+                    console.log("A mudar estado das avaliações");
                     this.database.getDatabase().updateDocument(this.globalData_id, {
                         "evaluationsToDo" : "true",
                         "type" : "global",
@@ -544,7 +544,7 @@ export class DataService {
         console.log('Terminou checkQuizstatus');   
     }
     hasEvaluationsToDo() {
-        //this.checkQuizStatus();
+        this.checkQuizStatus();
         /*
         //console.log('GLOBAL ID: ' + this.globalData_id);
         //console.log(JSON.stringify(this.database.getDatabase().getDocument(this.globalData_id), null, 4));
