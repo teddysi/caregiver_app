@@ -112,30 +112,37 @@ export class ConnectorService {
 
     testingDownload() {
         //console.log('Download Started');
+        /*
+        var localr;
         var documents = fs.knownFolders.documents();
-        var path = fs.path.join(documents.path, "app/test.png");
-        //console.log(documents.path);
+        var path = fs.path.join(documents.path, "app/materials/test.png");
+        console.log(documents.path);
         //var filePath = fs.path.join(path, "test.png");
         http.getFile("https://httpbin.org/image/png", path).then(function (r) {
             console.log(JSON.stringify(r, null, 4));
+            localr = r;
         }, function (e) {
             console.log(e);
         });
-        /*
-        var documents = fs.knownFolders.documents();
-        var path = fs.path.join(documents.path, "app/materials");
-        var folder = fs.Folder.fromPath(path);
 
+        var saved =localr.saveToFile(path, "png");
+        console.log(saved);
+        */
+        /*
+        var path = fs.path.join(documents.path, "app/localmaterials");
+        var folder = fs.Folder.fromPath(path);
+        
         folder.getEntities()
         .then(function (entities) {
             // entities is array with the document's files and folders.
             entities.forEach(function (entity) {
-                //console.log(JSON.stringify(entity, null, 4));
+                console.log(JSON.stringify(entity, null, 4));
             });
             //console.log(JSON.stringify(documents, null, 4));
         }, function (error) {
         });
         */
+
     }
     /*
     getAllData(): Observable<Data[]> {

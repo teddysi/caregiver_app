@@ -81,8 +81,6 @@ export class MaterialsComponent implements OnInit {
 		this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo();
 	}
 
-
-
 	/**
 	 * Function to set color of ratting on materials list
 	 * 

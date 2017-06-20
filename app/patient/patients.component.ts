@@ -81,7 +81,7 @@ export class PatientsComponent implements OnInit {
      */
     private onGetDataSuccess(result) {
         ////console.log("A tratar dados dp do pedido!")
-        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        //console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
         //////console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
@@ -203,7 +203,7 @@ export class PatientsComponent implements OnInit {
         //verify and notificate if has evaluations to do
 
         //this.hasEvaluationsToDo = true;
-        this.patientService.checkQuizsToSubmit();
+       // this.patientService.checkQuizsToSubmit();
 
         if (this.hasEvaluationsToDo = this.patientService.hasEvaluationsToDo()) {
             this.patientService.displayNotification('pending evaluations');

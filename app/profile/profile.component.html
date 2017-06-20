@@ -3,19 +3,41 @@
     </NavigationButton>
 </ActionBar>
 <StackLayout class="page">
-    <GridLayout rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" columns="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" >
+    <GridLayout rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" columns="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" >
+        <Label text="Utilizador: " class="" row ="0" col="0"></Label>
+        <Label [text]="app_user.username" class="" row ="1" col="1"></Label>
+        <Label text="Contacto: " class="" row ="2" col="0"></Label>
+        <Label [text]="app_user.email" class="" row ="3" col="1"></Label>
+        <Label text="Localização: " class="" row ="4" col="0"></Label>
+        <Label [text]="app_user.location" class="" row ="5" col="1"></Label>
+        <Label text="Contatos: " class="" row ="6" col="0"></Label>
+
+        <Label text="Profissional de Saúde : " class="" row ="7" col="0"></Label>
+        <!--Label text="Maria Emilia" class="" row ="3" col="1"></Label-->
+        <Label [text]="app_user.contacts[0].name" textWrap="true" class="" row ="8" col="1"></Label>
+        <Label text="Contato: " class="" row ="9" col="0"></Label>
+        <Label [text]="app_user.contacts[0].email" textWrap="true" class="" row ="10" col="1"></Label>
+
+    </GridLayout>
+</StackLayout>
+
+<!--
+    <StackLayout class="page">
+    <GridLayout rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" columns="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" >
         <Label text="Utilizador: " class="" row ="0" col="0"></Label>
         <Label [text]="app_user.username" class="" row ="0" col="1"></Label>
         <Label text="Contacto: " class="" row ="1" col="0"></Label>
         <Label [text]="app_user.email" class="" row ="1" col="1"></Label>
         <Label text="Localização: " class="" row ="2" col="0"></Label>
         <Label [text]="app_user.location" class="" row ="2" col="1"></Label>
-        <Label text="Contatos: " class="" row ="3" col="0"></Label>-->
+        <Label text="Contatos: " class="" row ="3" col="0"></Label>
+
         <Label text="Profissional de Saúde : " class="" row ="4" col="0"></Label>
-        <!--Label text="Maria Emilia" class="" row ="3" col="1"></Label-->
+     
         <Label [text]="app_user.contacts[0].name" textWrap="true" class="" row ="4" col="1"></Label>
         <Label text="Contato: " class="" row ="5" col="0"></Label>
         <Label [text]="app_user.contacts[0].email" textWrap="true" class="" row ="5" col="1"></Label>
 
     </GridLayout>
 </StackLayout>
+-->
