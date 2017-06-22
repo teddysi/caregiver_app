@@ -31,6 +31,7 @@
     "nativescript-radiobutton": "^0.1.0",
     "nativescript-ripple": "^1.1.0",
     "nativescript-theme-core": "~1.0.2",
+    "nativescript-toast": "^1.4.5",
     "nativescript-videoplayer": "^2.5.0",
     "reflect-metadata": "~0.1.8",
     "rxjs": "~5.2.0",

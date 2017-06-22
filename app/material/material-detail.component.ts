@@ -24,6 +24,7 @@ import { ConnectorService } from "../shared/connector/connector.service";
 import 'nativescript-pdf-view';
 
 import * as email from "nativescript-email";
+import * as Toast from 'nativescript-toast';
 
 import { User } from "../shared/user/user";
 import { UserService } from "../shared/user/user.service";
@@ -174,6 +175,10 @@ export class MaterialDetailComponent implements OnInit {
 
         this.dataService.setRating(this.materialParent, level);
         this.patientService.sendRating(rating);
+
+
+
+        Toast.makeText("A sua avaliação do material foi atualizada. Obrigado.").show();
 
     }
 
