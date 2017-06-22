@@ -16,12 +16,11 @@ export class TestService implements OnInit {
         this.getConectivity();
         this.startConnMonitor();
         throw new Error('Method not implemented.');
-
     }
 
     getConectivity() {
         var connectionType = connectivity.getConnectionType();
-
+        console.log('blablabla');
         switch (connectionType) {
             case connectivity.connectionType.none:
                 console.log("No connection");
