@@ -61,6 +61,16 @@ export class EvaluationListComponent implements OnInit {
         }
 
     }
+    getQuizLabel(quizType) {
+        switch (quizType) {
+            case 'caregiver': return 'Cuidador';
+            case 'material': return 'Material';
+            case 'patient': return 'Paciente';
+        
+            default:
+                return 'Sem nome';
+        }
+    }
 
     ngAfterViewInit() {
         if (app.android) {

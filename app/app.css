@@ -22,7 +22,8 @@ refer to http://docs.nativescript.org/ui/theme.
 }
 
 .page {
-  background-color:#e6ffff;
+  /*background-color:#e6ffff;*/
+  background-color: white;
   font-family: Courier New, Courier, monospace;
 }
 

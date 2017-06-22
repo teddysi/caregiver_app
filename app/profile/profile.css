@@ -1,0 +1,38 @@
+.profile-label {
+    text-align: right;
+    font-weight: bold;
+}
+
+.profile-layout {
+    border-width: 1 0 0 0;
+}
+
+.profile-grid {
+    text-align: left;
+    margin-left: 10%;
+}
+
+.profile-grid label {
+    padding: 10 0 10 0;
+}
+.page {
+    margin-top: 5%;
+}
+
+.contacts-grid {
+    margin-left: 5%;
+
+}
+
+.contacts-label {
+    text-align: center;
+    font-size: 16px;
+    padding: 10 0 10 0;
+    border-width: 1 0 0 0;
+    font-weight: bold;
+}
+
+.contacts-name {
+    font-weight: bold;
+    
+}

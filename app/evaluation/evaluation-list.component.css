@@ -1,0 +1,15 @@
+.quiz-grid {
+    margin-left: 10%;
+    padding: 10 0 10 0;
+}
+
+.quiz-name {
+    text-align: center;
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    padding: 0 0 10 0;
+}
+.quiz-layout {
+    padding: 15 0 15 0;
+}
