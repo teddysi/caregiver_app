@@ -48,6 +48,7 @@ export class MaterialDetailComponent implements OnInit {
     emailAvaliable: boolean;
     app_user: User;
     emailProfissionalSaude: string;
+    hasQuiz: boolean;
 
     ratings: Rating[];
     //ratings.push(new Rating("1", "Mau"));
@@ -99,6 +100,9 @@ export class MaterialDetailComponent implements OnInit {
             this.materialsToDisplay.push(this.materialParent);
 
         }
+
+        //verify if has a quiz
+        this.materialHasQuiz();
 
         this.patientService.registerAcessedMaterial(this.patient, this.materialParent);
 
@@ -259,4 +263,19 @@ export class MaterialDetailComponent implements OnInit {
 
     }
 
+    /**
+     * Function to verify if material have some quiz to do.
+     * 
+     * @param {any} material 
+     * @returns 
+     * @memberof MaterialDetailComponent
+     */
+    materialHasQuiz() {
+        this.hasQuiz = false;
+        this.dataService.getQuizs().forEach(element => {
+            if (element.reference == "material" && element.reference_id == this.materialParent.id) {
+                this.hasQuiz = true;
+            }
+        });
+    }
 }

@@ -34,7 +34,7 @@
                 <Button *ngIf="item.type == 'annex'" (tap)="openOnBrowser(item.id)" [text]="item.description" class="materialAnnex"></Button>
 
                 <!-- EVALULUATION RYG FOR THE MATERIAL-->
-                <StackLayout *ngIf=" materialParent.quizs.length == 0" orientation="vertical">
+                <StackLayout *ngIf="!hasQuiz" orientation="vertical">
                     <label *ngIf="i == materialsToDisplay.length-1" class="h3" text="Avaliar Material" style=" text-align: center" class="evaluate-label"></label>
                     <StackLayout *ngIf="i == materialsToDisplay.length-1" orientation="horizontal" class="evaluate-material">
                         <GridLayout rows="45, *, *" columns="*, *, *">
@@ -47,8 +47,8 @@
                 <!---->
 
                 <!-- EVALULUATION COMPLEX OF THE CAREGIVER CAPACITY-->
-                <StackLayout *ngIf="i == materialsToDisplay.length-1 && item.quizs" orientation="horizontal" class="quiz-material">
-                    <StackLayout *ngIf="item.quizs && i == materialsToDisplay.length-1" orientation="horizontal">
+                <StackLayout *ngIf="i == materialsToDisplay.length-1 && hasQuiz" orientation="horizontal" class="quiz-material">
+                    <StackLayout *ngIf="hasQuiz && i == materialsToDisplay.length-1" orientation="horizontal">
                         <GridLayout rows="auto,auto" columns="*" style="text-align: center">
                             <label *ngIf=" materialParent.quizs.length > 0" class="h3" text="Questionários disponíveis" row="0" style="text-align: center"></label>
                             <Button *ngFor="let itemt of materialParent.quizs" class="h4" text="Preencher questionário" class="submit-button" (tap)="fillQuestionnaire(itemt.ref_questionnaire)"
