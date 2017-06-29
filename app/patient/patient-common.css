@@ -19,7 +19,7 @@ ListView {
 .names-label {
   font-size: 16px;
   font-weight: bold;
-  font-family: 'helvetica';
+  font-family: Helvetica;
   margin-top: 15px;
 
 }

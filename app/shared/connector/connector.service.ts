@@ -79,7 +79,6 @@ export class ConnectorService {
         });
     }
     requestLogin(username, password): Observable<User> {
-         //console.log('A fazer login');
         if(!this.isConnected()) {
             return null;
         }

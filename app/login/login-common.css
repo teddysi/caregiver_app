@@ -21,7 +21,7 @@ Button, TextField {
 
 .subtitle
 {
-  font-family: Courier New, Courier, monospace;
+  font-family: Helvetica, Courier;
   margin-top: 50px;
   width: 73%;
   font-size: 14px;
@@ -29,7 +29,7 @@ Button, TextField {
 
 .login-input
 {
-  font-family: Courier New, Courier, monospace;
+  font-family: Helvetica, Courier;
   font-size: 18px;
 }
 

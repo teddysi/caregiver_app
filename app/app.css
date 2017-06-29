@@ -18,13 +18,13 @@ refer to http://docs.nativescript.org/ui/theme.
 }
 
 .action-bar .title{
-    font-family: Courier New, Courier, monospace;
+    font-family: Helvetica, Courier;
 }
 
 .page {
   /*background-color:#e6ffff;*/
   background-color: white;
-  font-family: Courier New, Courier, monospace;
+  font-family: Helvetica, Courier;
 }
 
 .utente {
@@ -53,7 +53,7 @@ refer to http://docs.nativescript.org/ui/theme.
 }
 
 .needList{
-  font-family: Courier New, Courier, monospace;
+  font-family: Helvetica, Courier;
   font-size: 18px;
    padding: 10px 10px 10px 10px;
 }

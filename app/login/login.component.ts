@@ -61,14 +61,6 @@ export class LoginComponent implements OnInit{
       this.dataService.setUser(result);
       this.userService.createUser(result);
       
-      dialogs.alert({
-            title: "Autenticação Validada",
-            message: "Bem vindo(a) " + this.auth_user.name,
-            okButtonText: "OK"
-        }).then(() => {
-            console.log("Dialog closed!");
-        });
-      
       this.dataService.sync();
       this.router.navigate(["/patients"]);
       return true;
