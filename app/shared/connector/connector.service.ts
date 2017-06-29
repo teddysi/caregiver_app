@@ -32,8 +32,9 @@ export class ConnectorService {
         this.connectionType = this.getConnectionType();
         //console.log('Connection TYPE: ' + this.connectionType);
         this.startConnectionMonitor();
-
-        this.connector.serverURL = '35.184.244.41/caregivers/public'; //LIVE
+       
+        this.connector.serverURL = '35.184.244.41'; //LIVE
+        //this.connector.serverURL = '35.184.244.41/caregivers/public'; //LIVE
         //this.connector.serverURL = '192.168.99.100/caregivers/public'; //VM-DEV
         
 
