@@ -272,10 +272,12 @@ export class MaterialDetailComponent implements OnInit {
      */
     materialHasQuiz() {
         this.hasQuiz = false;
-        this.dataService.getQuizs().forEach(element => {
-            if (element.reference == "material" && element.reference_id == this.materialParent.id) {
-                this.hasQuiz = true;
-            }
-        });
+        if (this.dataService.getQuizs().length > 0) {
+            this.dataService.getQuizs().forEach(element => {
+                if (element.reference == "material" && element.reference_id == this.materialParent.id) {
+                    this.hasQuiz = true;
+                }
+            });
+        }
     }
 }
