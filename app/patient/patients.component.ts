@@ -181,7 +181,7 @@ export class PatientsComponent implements OnInit {
             this.router.navigate(['/patient', patient_id, 'materials']);
         } else {
             dialogs.alert({
-                title: "Aviso - Pacientes ",
+                title: "Aviso - Utentes ",
                 message: "Encontra-se sem acesso à internet. Não é possível visualizar os materiais disponíveis para este paciente.",
                 okButtonText: "OK"
             })

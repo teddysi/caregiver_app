@@ -118,7 +118,7 @@ export class PatientService {
     initMessages() {
         this.notifications = [
             new Notification('pending evaluations', 'Aviso - Avaliações', 'Existem avaliações pendentes. Por favor aceda às avaliações no canto superior direito.', false),
-            new Notification('error-auth', 'Aviso - Autenticação', 'O acesso aos pacientes não foi autorizado. Por favor reinicie a aplicação.', false),
+            new Notification('error-auth', 'Aviso - Autenticação', 'O acesso aos utentes não foi autorizado. Por favor reinicie a aplicação.', false),
             new Notification('no net quizs', 'Aviso - Avaliações', 'Encontra-se sem acesso à internet. O seu questionário apenas será submetido quando tiver acesso.', false)
         ]
     }
