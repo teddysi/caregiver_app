@@ -14,6 +14,7 @@ import { UserService } from "../shared/user/user.service";
 import { ConnectorService } from "../shared/connector/connector.service";
 import dialogs = require("ui/dialogs");
 import { SwipeGestureEventData } from "ui/gestures";
+import { exit } from "nativescript-exit";
 
 @Component({
     selector: "ns-items",
@@ -81,7 +82,7 @@ export class PatientsComponent implements OnInit {
      */
     private onGetDataSuccess(result) {
         ////console.log("A tratar dados dp do pedido!")
-        //console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
+        console.log("# COMPONENTE PATIENTES [result]: " + JSON.stringify(result, null, 4));
         //////console.log("# COMPONENTE PATIENTES [quizs]" + JSON.stringify(result.quizs, null, 4));
         this.patients = result.patients; //teddy
         this.caregiverQuestionnaires = result.quizs; //teddy
@@ -120,10 +121,11 @@ export class PatientsComponent implements OnInit {
      * @memberof PatientsComponent
      */
     private onGetDataError(error: Response | any) {
-        //////console.log("# COMPONENTE PATIENTES [result]" + JSON.stringify(error, null, 4));
         if (error.status == '401') {
-            this.patientService.displayNotification('error-auth');
-            this.patientService.userOutdated();
+            dialogs.alert("O acesso aos utentes não foi autorizado. A aplicação irá encerrar.").then(function () {
+                exit();
+            });
+        this.patientService.userOutdated();
         }
     }
 
